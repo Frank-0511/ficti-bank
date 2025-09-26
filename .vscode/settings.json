@@ -1,0 +1,80 @@
+{
+  // ================================
+  // ✨ FORMAT & STYLE / FORMATO Y ESTILO
+  // ================================
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  // ================================
+  // 🚀 AUTO IMPORT & ORGANIZE
+  // ================================
+  "javascript.suggest.autoImports": true,
+  "typescript.suggest.autoImports": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always", // Organize imports
+    "source.removeUnusedImports": "always", // Remove unused
+    "source.fixAll": "always" // Fix ESLint/TS issues
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always", // Update imports if file moves
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  // ================================
+  // 📐 PREFERENCES (STYLE)
+  // ================================
+  "typescript.preferences.importModuleSpecifier": "relative", // Relative imports
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single", // Use single quotes
+  "javascript.preferences.quoteStyle": "single",
+  "javascript.format.semicolons": "insert",
+  "typescript.format.semicolons": "insert",
+  // ================================
+  // 🔧 TOOLS & EXTENSIONS
+  // ================================
+  "eslint.run": "onSave", // Run ESLint on save
+  "errorLens.excludeBySource": [
+    "ts(2339)"
+  ], // Ignore missing prop errors
+  "cSpell.language": "en,es", // Spell check
+  "jest.runMode": "on-demand", // Jest tests
+  "jest.rootPath": "",
+  "jest.jestCommandLine": "yarn jest",
+  // ================================
+  // 📂 FILES & SEARCH
+  // ================================
+  "files.exclude": {},
+  "search.exclude": {
+    "**/.git": true,
+    "**/bower_components": true,
+    "**/node_modules": true,
+    "**/storage": true,
+    "**/tests": true
+  },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+}

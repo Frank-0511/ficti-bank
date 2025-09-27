@@ -18,6 +18,9 @@
 			"**/.stylelintcache": true,
 			"**/tsconfig.tsbuildinfo": true
 		},
-		"explorerExclude.backup": {}
+		"explorerExclude.backup": {},
+		"cSpell.words": [
+			"Ficti"
+		]
 	},
 }

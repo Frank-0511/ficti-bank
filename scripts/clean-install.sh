@@ -1,31 +1,44 @@
-#!/usr/bin/env bash
-set -e
+#!/usr/bin/env zsh
 
-# Spinner de puntos
-dot_spinner() {
+spinner() {
   local pid=$1
-  local action=$2
+  local message=$2
+  local spin=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
   local i=0
-  local dots=("." ".." "...")
-
-  while ps -p $pid &>/dev/null; do
-    printf "\r%s %s" "$action" "${dots[i]}"
-    i=$(( (i + 1) % 3 ))
-    sleep 0.5
+  while kill -0 $pid 2>/dev/null; do
+    printf "\r⏳ %s %s" "${spin[i]}" "$message"
+    ((i=(i+1)%${#spin[@]}))
+    sleep 0.1
   done
-  printf "\r%s ... ✅\n" "$action"
+  printf "\r"
 }
 
-# Limpiar carpetas
-(
-  rm -rf node_modules .next .swc
-) &
-dot_spinner $! "Limpiando carpetas"
+run_step() {
+  local description=$1
+  shift
+  local cmd=("$@")
 
-# Instalar dependencias (logs silenciosos)
-(
-  yarn install 1>/dev/null
-) &
-dot_spinner $! "Instalando dependencias"
+  # Ejecutar comando en background
+  "${cmd[@]}" > >(cat) 2>&1 &
+  local pid=$!
 
-echo "Todo listo! ✅"
+  # Mostrar spinner mientras corre
+  spinner $pid "$description"
+
+  wait $pid
+  local exit_code=$?
+
+  if [ $exit_code -eq 0 ]; then
+    echo "✅ $description completado"
+  else
+    echo "❌ $description falló (ver errores arriba)"
+  fi
+  echo
+}
+
+# ============================
+# Comenzar limpieza e instalación
+# ============================
+
+run_step "Limpiando carpetas" rm -rf node_modules .next .swc || true
+run_step "Instalando dependencias" pnpm install --silent

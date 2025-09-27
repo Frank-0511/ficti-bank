@@ -63,7 +63,7 @@
   "cSpell.language": "en,es", // Spell check
   "jest.runMode": "on-demand", // Jest tests
   "jest.rootPath": "",
-  "jest.jestCommandLine": "yarn jest",
+  "jest.jestCommandLine": "pnpm jest",
   // ================================
   // 📂 FILES & SEARCH
   // ================================

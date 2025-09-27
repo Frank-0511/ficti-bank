@@ -1,11 +1,19 @@
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
-import { Welcome } from '../components/Welcome/Welcome';
+import { Box } from '@mantine/core';
+import { FeaturesSection, Footer, HeroSection, ServicesSection } from '../components';
 
-export default function HomePage() {
+export default function IndexPage() {
   return (
-    <>
-      <Welcome />
-      <ColorSchemeToggle />
-    </>
+    <Box
+      style={{
+        minHeight: '100vh',
+        background:
+          'linear-gradient(135deg, var(--mantine-color-gray-1) 0%, var(--mantine-color-blue-1) 100%)',
+      }}
+    >
+      <HeroSection />
+      <FeaturesSection />
+      <ServicesSection />
+      <Footer />
+    </Box>
   );
 }

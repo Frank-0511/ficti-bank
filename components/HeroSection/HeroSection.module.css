@@ -1,0 +1,17 @@
+.buttonKnowMore {
+  &:hover {
+    background-color: #1c2833;
+    border-color: #1c2833;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgb(28 40 51 / 0.3);
+  }
+}
+
+.buttonSignIn {
+  &:hover {
+    background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+    box-shadow: 0 8px 30px rgb(30 136 229 / 0.4);
+    transform: translateY(-2px);
+  }
+}

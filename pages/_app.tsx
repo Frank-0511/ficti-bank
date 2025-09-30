@@ -1,13 +1,15 @@
+// pages/_app.tsx
+import { MantineProvider } from '@mantine/core';
+
 import '@mantine/core/styles.css';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { MantineProvider } from '@mantine/core';
-import { theme } from '../theme';
+import { cssVariablesResolver, theme } from '../theme';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MantineProvider theme={theme} defaultColorScheme="dark">
+    <>
       <Head>
         <title>Ficti Bank</title>
         <meta
@@ -16,7 +18,14 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <link rel="shortcut icon" href="/favicon.svg" />
       </Head>
-      <Component {...pageProps} />
-    </MantineProvider>
+
+      <MantineProvider
+        theme={theme}
+        cssVariablesResolver={cssVariablesResolver}
+        defaultColorScheme="light"
+      >
+        <Component {...pageProps} />
+      </MantineProvider>
+    </>
   );
 }

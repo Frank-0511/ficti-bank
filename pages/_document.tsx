@@ -1,3 +1,4 @@
+// pages/_document.tsx
 import { Head, Html, Main, NextScript } from 'next/document';
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 
@@ -5,7 +6,7 @@ export default function Document() {
   return (
     <Html lang="en" {...mantineHtmlProps}>
       <Head>
-        <ColorSchemeScript />
+        <ColorSchemeScript defaultColorScheme="light" />
       </Head>
       <body>
         <Main />

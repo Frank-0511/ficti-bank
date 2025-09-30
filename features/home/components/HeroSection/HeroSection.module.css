@@ -1,0 +1,143 @@
+/* HeroSection CSS Module con soporte para temas */
+
+.container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+  }
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.0;
+}
+
+.titleSpan {
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+/* Colores para tema claro */
+[data-mantine-color-scheme="light"] .titleSpan {
+  color: var(--mantine-color-dark-8);
+}
+
+[data-mantine-color-scheme="light"] .description {
+  color: var(--mantine-color-dark-6);
+}
+
+[data-mantine-color-scheme="light"] .outlineButton {
+  color: var(--mantine-color-dark-9);
+  border-color: var(--mantine-color-dark-4);
+}
+
+[data-mantine-color-scheme="light"] .themeIcon {
+  box-shadow: 0 1.5rem 3rem rgb(59 130 246 / 0.2);
+
+}
+
+/* Colores para tema oscuro */
+[data-mantine-color-scheme="dark"] .titleSpan {
+  color: var(--mantine-color-gray-1);
+}
+
+[data-mantine-color-scheme="dark"] .description {
+  color: var(--mantine-color-gray-3);
+}
+
+[data-mantine-color-scheme="dark"] .outlineButton {
+  color: var(--mantine-color-gray-3);
+  border-color: var(--mantine-color-gray-5);
+}
+
+[data-mantine-color-scheme="dark"] .themeIcon {
+  box-shadow: 0 1.5rem 3rem rgb(59 130 246 / 0.3);
+}
+
+.description {
+  font-size: var(--mantine-font-size-xl);
+  line-height: 1.8;
+  font-weight: 400;
+  max-width: 37.5rem;
+  transition: color 0.3s ease;
+}
+
+.themeIcon {
+  width: 13.75rem;
+  height: 13.75rem;
+  border-radius: var(--mantine-radius-xl);
+  background: linear-gradient(45deg, var(--mantine-color-blue-6), var(--mantine-color-cyan-4));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float 3s ease-in-out infinite;
+  color: var(--mantine-color-gray-0);
+}
+
+.decorativeIcon {
+  position: absolute;
+  opacity: 0.1;
+  animation: float 4s ease-in-out infinite;
+}
+
+.decorativeIcon:nth-child(2) {
+  opacity: 0.08;
+  animation: float 3s ease-in-out infinite reverse;
+}
+
+.outlineButton {
+  transition: all 0.2s ease;
+}
+
+.outlineButton:hover {
+  background-color: var(--mantine-color-gray-0);
+}
+
+[data-mantine-color-scheme="dark"] .outlineButton:hover {
+  background-color: var(--mantine-color-dark-7);
+}
+
+/* Animaciones */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-1.25rem);
+  }
+}
+
+@keyframes float-subtle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(0.25rem) rotate(2deg);
+  }
+}
+
+/* Clases para animaciones */
+.floatingIcon {
+  animation: float 3s ease-in-out infinite;
+}
+
+.floatingIconSubtle {
+  animation: float-subtle 4s ease-in-out infinite;
+}
+
+/* Partículas de fondo */
+.particleBackground {
+  background-image: radial-gradient(circle, rgb(59,130,246,0.08) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+  background-position: 0 0, 1.5rem 1.5rem;
+}

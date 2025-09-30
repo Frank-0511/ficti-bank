@@ -16,7 +16,9 @@
 			"**/.swc": true,
 			"**/.yarn": true,
 			"**/.stylelintcache": true,
-			"**/tsconfig.tsbuildinfo": true
+			"**/tsconfig.tsbuildinfo": true,
+			"node_modules": true,
+			"coverage": true
 		},
 		"explorerExclude.backup": {},
 		"cSpell.words": [

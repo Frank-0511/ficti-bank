@@ -1,0 +1,56 @@
+.customSwitch {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lightTrack {
+  cursor: pointer;
+  background: linear-gradient(45deg, var(--mantine-color-blue-1), var(--mantine-color-cyan-1));
+  transition: all 0.3s ease;
+  border: 1px solid var(--mantine-color-blue-3);
+}
+
+.darkTrack {
+  cursor: pointer;
+  background: linear-gradient(45deg, var(--mantine-color-dark-6), var(--mantine-color-dark-7));
+  transition: all 0.3s ease;
+  border: 1px solid var(--mantine-color-dark-4);
+}
+
+.lightThumb {
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--mantine-color-white), var(--mantine-color-gray-0));
+  transition: all 0.3s ease;
+  box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 0.25), 0 2px 0.5rem rgb(34 184 207 / 0.5);
+  border: 2px solid var(--mantine-color-cyan-6);
+
+  &::before {
+    background-color: var(--mantine-color-blue-6);
+  }
+}
+
+.darkThumb {
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--mantine-color-white), var(--mantine-color-gray-0));
+  transition: all 0.3s ease;
+  box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 0.8), 0 2px 0.5rem rgb(34 139 230 / 0.6);
+  border: 2px solid var(--mantine-color-blue-5);
+
+  &::before {
+    background-color: var(--mantine-color-blue-6);
+  }
+}
+
+.simpleToggle {
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.simpleToggle:hover {
+  transform: scale(1.1);
+  background-color: var(--mantine-color-gray-1);
+}
+
+[data-mantine-color-scheme="dark"] .simpleToggle:hover {
+  background-color: var(--mantine-color-dark-6);
+}

@@ -2,10 +2,11 @@
 import { MantineProvider } from '@mantine/core';
 
 import '@mantine/core/styles.css';
+import '../styles/globals.css';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { cssVariablesResolver, theme } from '../theme';
+import { cssVariablesResolver, theme } from '@/lib/theme';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

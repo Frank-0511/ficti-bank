@@ -1,23 +1,7 @@
-/* Home page styles */
-.appShell {
-  min-height: 100vh;
-  transition: background 0.3s ease;
+.appShell{
+  transition: all 0.5s ease-out !important;
 }
 
-/* Usando data attributes de Mantine para manejar themes */
-[data-mantine-color-scheme="light"] .appShell {
-  background: linear-gradient(135deg, var(--mantine-color-gray-1) 0%, var(--mantine-color-blue-1) 100%);
-}
-
-[data-mantine-color-scheme="dark"] .appShell {
-  background: linear-gradient(135deg, var(--mantine-color-dark-8) 0%, var(--mantine-color-dark-6) 100%);
-}
-
-.appShellHeader {
-  background: transparent !important;
-  border: none !important;
-}
-
-.appShellMain {
-  padding-top: 0 !important;
+.appShellAside {
+  border-left: none;
 }

@@ -10,15 +10,18 @@ const customJestConfig = {
     '^@/features/(.*)$': '<rootDir>/features/$1',
     '^@/shared/(.*)$': '<rootDir>/shared/$1',
     '^@/components/(.*)$': '<rootDir>/shared/components/$1',
-    '^@/lib/(.*)$': '<rootDir>/shared/lib/$1',
+    '^@/lib/(.*)$': '<rootDir>/lib/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
   collectCoverageFrom: [
     'features/**/*.{ts,tsx}',
     'shared/**/*.{ts,tsx}',
+    'lib/**/*.{ts,tsx}',
     '!**/*.story.{ts,tsx}',
     '!**/*.test.{ts,tsx}',
     '!**/index.ts', // excluir barrel files
+    '!**/constants/**', // excluir todas las carpetas de constantes
+    '!**/types/**', // excluir todas las definiciones de tipos
     '!pages/_app.tsx',
     '!pages/_document.tsx',
     '!**/node_modules/**',

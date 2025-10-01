@@ -18,11 +18,17 @@
 			"**/.stylelintcache": true,
 			"**/tsconfig.tsbuildinfo": true,
 			"node_modules": true,
-			"coverage": true
+			"coverage": true,
+			".stylelintignore": true,
+			".prettierignore": true,
+			".nvmrc": true,
+			"LICENCE": true,
+			"next-env.d.ts": true
 		},
 		"explorerExclude.backup": {},
 		"cSpell.words": [
-			"Ficti"
+			"Ficti",
+			"mantine"
 		]
 	},
 }

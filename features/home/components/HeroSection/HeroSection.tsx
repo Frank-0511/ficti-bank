@@ -11,8 +11,8 @@ import {
   ThemeIcon,
   Title,
 } from '@mantine/core';
-
-import './HeroSection.module.css';
+import { LoginButton } from '@/shared/components/molecules/LoginButton';
+import styles from './HeroSection.module.css';
 
 export function HeroSection() {
   return (
@@ -21,13 +21,7 @@ export function HeroSection() {
         <Grid.Col span={{ base: 12, md: 7 }}>
           <Stack gap="4xl">
             <Title order={1} fz="6xl" fw={900} lh={1.0}>
-              <Text
-                component="span"
-                c="var(--mantine-color-header-title)"
-                fw={700}
-                inherit
-                style={{ transition: 'color 0.3s ease' }}
-              >
+              <Text component="span" c="var(--mantine-color-header-title)" fw={700} inherit>
                 Bienvenido a{' '}
               </Text>
               <Text
@@ -40,23 +34,14 @@ export function HeroSection() {
               </Text>
             </Title>
 
-            <Text
-              size="xl"
-              c="var(--mantine-color-text-tertiary)"
-              maw={600}
-              lh={1.8}
-              fw={400}
-              style={{ transition: 'color 0.3s ease' }}
-            >
+            <Text size="xl" c="var(--mantine-color-text-tertiary)" maw={600} lh={1.8} fw={400}>
               Sistema integral de gestión bancaria diseñado para brindar seguridad, eficiencia y
               control total sobre tus operaciones financieras. Maneja cuentas, transferencias y
               consultas con la confianza que mereces.
             </Text>
 
             <Group gap="sm">
-              <Button size="md" variant="gradient" gradient={{ from: 'blue', to: 'cyan', deg: 45 }}>
-                Iniciar Sesión
-              </Button>
+              <LoginButton size="md" showIcon={false} />
               <Button size="md" variant="outline" color="var(--mantine-color-text-tertiary)">
                 Conocer Más
               </Button>
@@ -67,26 +52,10 @@ export function HeroSection() {
         <Grid.Col span={{ base: 12, md: 5 }} visibleFrom="md">
           <Flex justify="center" align="center" p="xl" pos="relative">
             {/* Elementos decorativos de fondo */}
-            <Box
-              pos="absolute"
-              top={20}
-              right={50}
-              opacity={0.1}
-              style={{
-                animation: 'float 4s ease-in-out infinite',
-              }}
-            >
+            <Box className={`${styles.decorativeTopRight} ${styles.decorativeIcon}`}>
               <IconBuildingBank size={30} />
             </Box>
-            <Box
-              pos="absolute"
-              bottom={40}
-              left={30}
-              opacity={0.08}
-              style={{
-                animation: 'float 3s ease-in-out infinite reverse',
-              }}
-            >
+            <Box className={`${styles.decorativeBottomLeft} ${styles.decorativeIconReverse}`}>
               <IconBuildingBank size={40} />
             </Box>
 
@@ -96,10 +65,7 @@ export function HeroSection() {
               radius="xl"
               variant="gradient"
               gradient={{ from: 'blue', to: 'cyan', deg: 45 }}
-              style={{
-                boxShadow: 'var(--mantine-color-primary-icon-shadow)',
-                animation: 'float 3s ease-in-out infinite',
-              }}
+              className={styles.mainIcon}
             >
               <IconBuildingBank size={110} />
             </ThemeIcon>

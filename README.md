@@ -1,159 +1,248 @@
-# 📚 Arquitectura de proyecto con Next.js (Pages Router)
+# 🏦 Ficti Bank - Arquitectura de proyecto con Next.js
 
-Este proyecto sigue una organización **feature-based** (por características) para mantener el código escalable, modular y fácil de mantener.
+Sistema integral de gestión bancaria construido con **Next.js (Pages Router)**, **Mantine UI**, **TypeScript**, y **arquitectura feature-based** para máxima escalabilidad y mantenibilidad.
+
+---
+
+## 🚀 Stack Tecnológico
+
+- **Framework**: Next.js 14 (Pages Router)
+- **UI Library**: Mantine 7
+- **Styling**: CSS Modules + PostCSS
+- **State Management**: Zustand + TanStack Query
+- **Testing**: Jest + React Testing Library
+- **TypeScript**: Strict mode
+- **Linting**: ESLint + Prettier + Stylelint
 
 ---
 
 ## 📂 Estructura de carpetas
 
 ```
-/pages/                   # Next.js Pages Router (entrypoints)
+/pages/                   # 🚪 Next.js Pages Router (entrypoints)
  ├── _app.tsx             # Providers globales (Mantine, Zustand, etc.)
- ├── index.tsx            # → "/" importa HomePage
- ├── login.tsx            # → "/login" importa LoginPage
- └── register.tsx         # → "/register" importa RegisterPage
+ ├── _document.tsx        # Document HTML personalizado
+ └── index.tsx            # → "/" importa HomePage
 
-/features/                # Todo el código organizado por feature
+/features/                # 🎯 Código organizado por feature
  ├── home/
- │   ├── pages/           # Páginas específicas del feature
- │   │   └── Home.page.tsx
- │   ├── components/      # UI del feature (cards, modales, etc.)
- │   ├── hooks/           # Hooks específicos
- │   ├── services/        # Lógica de negocio del feature
- │   └── store/           # Estado local del feature (Zustand)
+ │   ├── index.ts         # Barrel exports del feature
+ │   ├── pages/           # Páginas específicas
+ │   │   ├── Home.page.tsx
+ │   │   └── Home.module.css
+ │   └── components/      # UI específica del feature
+ │       ├── HeroSection/
+ │       ├── FeaturesSection/
+ │       └── ServicesSection/
  │
- ├── auth/
- │   ├── pages/
- │   │   ├── Login.page.tsx
- │   │   └── Register.page.tsx
- │   ├── components/      # Ej: LoginForm, LogoutButton
- │   ├── services/        # Casos de uso de Auth (login, registro)
- │   └── store/           # Estado de Auth si fuera aislado (ej: modal login)
- │
- └── shared/              # Código reutilizable entre features
-     ├── components/      # Botones, Layouts, NavBar, AuthGuard...
-     ├── hooks/           # useAuth, useFetch...
-     └── utils/           # helpers, formatters, constantes
+ └── auth/                # 🔐 Feature de autenticación (futuro)
+     ├── components/
+     │   ├── LoginModal/
+     │   └── RegisterModal/
+     ├── hooks/           # useLoginModal, useRegisterModal
+     └── services/        # Lógica de negocio de Auth
 
-/lib/                     # Infraestructura global
- ├── api.ts               # Cliente HTTP global (axios)
- ├── config.ts            # Configuración global
- ├── auth.ts              # Funciones globales de autenticación
- ├── validators.ts        # Validaciones comunes
- ├── logger.ts            # Logger centralizado
- └── store/               # Estado global (Zustand)
-     ├── auth.store.ts    # Auth global
-     └── theme.store.ts   # Modo oscuro/claro global
+/shared/                  # 🔄 Código reutilizable entre features
+ └── components/          # UI components globales
+     ├── Header/
+     ├── Footer/
+     ├── Navbar/
+     ├── ColorSchemeToggle/
+     └── index.ts         # Barrel exports
 
-/styles/                  # Estilos globales
- └── globals.css
+/lib/                     # 📚 Infraestructura y utilidades
+ ├── index.ts             # Barrel exports principal
+ ├── hooks/               # Hooks reutilizables
+ │   ├── index.ts
+ │   └── useScrolled.ts
+ ├── theme/               # Configuración de Mantine
+ │   ├── index.ts
+ │   └── theme.ts
+ └── utils/               # Utilidades globales (futuro)
 
-/theme.ts                 # Config de Mantine
-/next.config.js
-/package.json
+/styles/                  # 🎨 Estilos globales
+ └── globals.css          # Variables CSS, transiciones globales
+
+/types/                   # 📝 Definiciones TypeScript
+ ├── mantine.d.ts         # Extensiones de tipos Mantine
+ └── [feature].d.ts       # Tipos específicos por feature
+
+/test-utils/              # 🧪 Utilidades de testing
+ ├── index.ts
+ └── render.tsx           # Custom render con providers
+
+/public/                  # 📁 Assets estáticos
+/__mocks__/               # 🎭 Mocks para testing
+/coverage/                # 📊 Reportes de cobertura
 ```
 
 ---
 
-## ⚡ Flujo recomendado
+## ⚡ Patrones y Convenciones
 
-### `pages/`
-
-* Solo define entrypoints (URLs).
-* Reexporta los componentes de `features/`.
+### 🎯 **Barrel Exports**
+Todos los módulos usan barrel exports para imports limpios:
 
 ```tsx
-// /pages/index.tsx
-import HomePage from "@/features/home/pages/Home.page";
+// ✅ Imports limpios
+import { Header, Footer, Navbar } from '@/shared/components';
+import { useScrolled } from '@/lib/hooks';
+import { theme } from '@/lib/theme';
+
+// ❌ Evitar
+import { Header } from '@/shared/components/Header/Header';
+```
+
+### 🎨 **CSS Modules**
+Cada componente tiene su propio archivo CSS Module:
+
+```tsx
+// Header.tsx
+import styles from './Header.module.css';
+
+export function Header() {
+  return <div className={styles.container}>...</div>;
+}
+```
+
+### 🌓 **Tema y Variables CSS**
+- **Configuración Mantine**: `lib/theme/theme.ts`
+- **Variables CSS**: `styles/globals.css`
+- **Transiciones globales**: Aplicadas automáticamente
+
+### 🧪 **Testing Strategy**
+- **Unit Tests**: Cada componente tiene su `.test.tsx`
+- **Coverage**: Objetivo 100% en componentes críticos
+- **Test Utils**: Custom render con providers en `test-utils/`
+
+---
+
+## 🚀 Flujo recomendado
+
+### **1. Pages Router**
+Solo define entrypoints que importan de features:
+
+```tsx
+// pages/index.tsx
+import { HomePage } from '@/features/home';
 export default HomePage;
 ```
 
----
-
-### `features/<feature>/services/`
-
-* Implementa la **lógica de negocio del feature** usando `/lib`.
-
-```ts
-// /features/auth/services/auth.service.ts
-import { api } from "@/lib/api";
-
-export async function loginService(email: string, password: string) {
-  const { data } = await api.post("/auth/login", { email, password });
-  return data;
-}
-```
-
----
-
-### `/lib`
-
-* Contiene **infraestructura global** (no UI):
-
-  * Cliente HTTP (axios)
-  * Configuración global
-  * Logger
-  * Validadores
-  * Estado global con Zustand
-
-```ts
-// /lib/store/auth.store.ts
-import { create } from "zustand";
-
-interface AuthState {
-  user: { id: string; name: string } | null;
-  token: string | null;
-  login: (user: AuthState["user"], token: string) => void;
-  logout: () => void;
-}
-
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
-  login: (user, token) => set({ user, token }),
-  logout: () => set({ user: null, token: null }),
-}));
-```
-
----
-
-### `features/shared/components`
-
-* Contiene **UI reutilizable** que consume `/lib` o `services/`.
+### **2. Feature Development**
+Cada feature es auto-contenido:
 
 ```tsx
-// /features/shared/components/AuthGuard.tsx
-import { useRouter } from "next/router";
-import { useAuthStore } from "@/lib/store/auth.store";
-import { ReactNode, useEffect } from "react";
+// features/home/components/HeroSection/HeroSection.tsx
+import { useScrolled } from '@/lib/hooks';
+import styles from './HeroSection.module.css';
 
-export default function AuthGuard({ children }: { children: ReactNode }) {
-  const user = useAuthStore((state) => state.user);
-  const router = useRouter();
+export function HeroSection() {
+  const isScrolled = useScrolled();
+  return <section className={styles.hero}>...</section>;
+}
+```
 
-  useEffect(() => {
-    if (!user) router.push("/login");
-  }, [user, router]);
+### **3. Shared Components**
+UI reutilizable entre features:
 
-  return <>{children}</>;
+```tsx
+// shared/components/Header/Header.tsx
+import { useScrolled } from '@/lib/hooks';
+import { ColorSchemeToggle } from '../ColorSchemeToggle';
+
+export function Header() {
+  // Lógica compartida
+}
+```
+
+### **4. Lib Utilities**
+Hooks y utilidades reutilizables:
+
+```tsx
+// lib/hooks/useScrolled.ts
+export function useScrolled(threshold = 50): boolean {
+  // Lógica del hook
 }
 ```
 
 ---
 
-## 🎯 Reglas clave
+## 🎯 Reglas de Arquitectura
 
-1. **`/lib`** → Infraestructura y lógica global (no UI).
-2. **`services/`** → Casos de uso de cada feature (usa `/lib`).
-3. **`store/`** → Estado (Zustand). Global en `/lib/store`, específico dentro de cada feature.
-4. **`components/`** → UI (global en `shared`, específicos en cada feature).
-5. **`pages/`** → Solo entrypoints que importan `features`.
+### ✅ **DO's**
+1. **Barrel exports** en cada carpeta con `index.ts`
+2. **CSS Modules** para estilos de componentes
+3. **TypeScript strict** para type safety
+4. **Testing** cada componente público
+5. **Features auto-contenidos** con minimal dependencies
+6. **Hooks personalizados** en `lib/hooks/`
+
+### ❌ **DON'Ts**
+1. No imports directos sin barrel exports
+2. No CSS global para componentes específicos
+3. No lógica de negocio en componentes UI
+4. No state management para UI simple (usar `useDisclosure`)
+5. No duplicar código entre features
 
 ---
 
-## ✅ Beneficios
+## 📊 Métricas de Calidad
 
-* **Escalable**: cada feature está aislado.
-* **Reutilizable**: UI y lógica desacopladas.
-* **Profesional**: arquitectura clara, fácil de documentar y mantener.
-* **Flexible**: soporta tanto estado global (auth, theme) como local (cart, home).
+- **TypeScript**: Strict mode, 0 `any` types
+- **Testing**: 100% coverage en componentes críticos
+- **Linting**: ESLint + Prettier + Stylelint
+- **Performance**: Lazy loading, Code splitting
+- **Accessibility**: ARIA labels, keyboard navigation
+
+---
+
+## 🛠️ Scripts de Desarrollo
+
+```bash
+# Desarrollo
+pnpm dev
+
+# Testing
+pnpm test              # Run todos los tests
+pnpm test:watch        # Watch mode
+pnpm test:coverage     # Con coverage
+
+# Linting
+pnpm lint              # ESLint + Stylelint
+pnpm prettier:check    # Format check
+pnpm typecheck         # TypeScript check
+
+# Build
+pnpm build
+pnpm start
+```
+
+---
+
+## 🏗️ Próximas Implementaciones
+
+- [ ] **Auth Feature**: Login/Register modals con Zustand
+- [ ] **TanStack Query**: Data fetching y caching
+- [ ] **API Layer**: Cliente HTTP centralizado
+- [ ] **Form Validation**: Zod + React Hook Form
+- [ ] **Storybook**: Component documentation
+- [ ] **E2E Testing**: Playwright integration
+
+---
+
+## 🤝 Contribución
+
+1. **Feature Branch**: `git checkout -b feature/nueva-funcionalidad`
+2. **Commits**: Usar conventional commits
+3. **Testing**: Mantener 100% coverage
+4. **Review**: PR con al menos 1 reviewer
+5. **Merge**: Squash and merge
+
+---
+
+## 📖 Documentación Técnica
+
+- **Mantine**: [mantine.dev](https://mantine.dev)
+- **Next.js**: [nextjs.org](https://nextjs.org)
+- **Testing**: [testing-library.com](https://testing-library.com)
+- **TypeScript**: [typescriptlang.org](https://typescriptlang.org)

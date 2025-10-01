@@ -1,25 +1,26 @@
-import { AUTH_MODES } from '../../../../lib/constants';
-import { useAuthModal } from '../../../../lib/store';
+import { useAuthModals } from '../../../../lib/hooks';
 import { fireEvent, render, screen } from '../../../../test-utils';
 import { LoginButton } from './LoginButton';
 
-// Mock the auth modal store
-jest.mock('../../../../lib/store', () => ({
-  useAuthModal: jest.fn(),
+// Mock the auth modals hook
+jest.mock('../../../../lib/hooks', () => ({
+  useAuthModals: jest.fn(),
 }));
 
-const mockUseAuthModal = useAuthModal as jest.MockedFunction<typeof useAuthModal>;
+const mockUseAuthModals = useAuthModals as jest.MockedFunction<typeof useAuthModals>;
 
 describe('LoginButton', () => {
-  const mockOpen = jest.fn();
+  const mockOpenLogin = jest.fn();
 
   beforeEach(() => {
-    mockOpen.mockClear();
-    mockUseAuthModal.mockReturnValue({
-      isOpen: false,
-      mode: AUTH_MODES.LOGIN,
-      open: mockOpen,
-      close: jest.fn(),
+    mockOpenLogin.mockClear();
+    mockUseAuthModals.mockReturnValue({
+      openLogin: mockOpenLogin,
+      openRegister: jest.fn(),
+      switchToRegister: jest.fn(),
+      switchToLogin: jest.fn(),
+      closeModal: jest.fn(),
+      closeAll: jest.fn(),
     });
   });
 
@@ -43,8 +44,7 @@ describe('LoginButton', () => {
     const button = screen.getByRole('button', { name: /iniciar sesión/i });
     fireEvent.click(button);
 
-    expect(mockOpen).toHaveBeenCalledWith(AUTH_MODES.LOGIN);
-    expect(mockOpen).toHaveBeenCalledTimes(1);
+    expect(mockOpenLogin).toHaveBeenCalledTimes(1);
   });
 
   it('does not open modal when clicked in submit mode', () => {
@@ -53,7 +53,7 @@ describe('LoginButton', () => {
     const button = screen.getByRole('button', { name: /iniciar sesión/i });
     fireEvent.click(button);
 
-    expect(mockOpen).not.toHaveBeenCalled();
+    expect(mockOpenLogin).not.toHaveBeenCalled();
   });
 
   it('renders as submit button when mode is submit', () => {
@@ -157,8 +157,7 @@ describe('LoginButton', () => {
     fireEvent.click(button);
     fireEvent.click(button);
 
-    expect(mockOpen).toHaveBeenCalledTimes(3);
-    expect(mockOpen).toHaveBeenCalledWith(AUTH_MODES.LOGIN);
+    expect(mockOpenLogin).toHaveBeenCalledTimes(3);
   });
 
   it('maintains accessibility standards', () => {

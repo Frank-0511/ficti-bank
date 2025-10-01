@@ -1,5 +1,23 @@
 import { forgotPasswordSchema, loginSchema, registerSchema } from './auth.schemas';
 
+// Helper para crear datos válidos de registro
+const createValidRegisterData = (overrides: Partial<any> = {}) => ({
+  firstName: 'John',
+  lastName: 'Doe',
+  dni: '12345678',
+  birthDate: '1990-01-01',
+  address: 'Av. Siempre Viva 123, Lima',
+  department: 'lima',
+  province: 'lima',
+  district: 'miraflores',
+  phone: '1234567',
+  mobile: '987654321',
+  email: 'john@example.com',
+  password: 'Password123',
+  confirmPassword: 'Password123',
+  ...overrides,
+});
+
 describe('Auth Schemas', () => {
   describe('loginSchema', () => {
     it('validates correct login data', () => {
@@ -75,6 +93,14 @@ describe('Auth Schemas', () => {
       const validData = {
         firstName: 'John',
         lastName: 'Doe',
+        dni: '12345678',
+        birthDate: '1990-01-01',
+        address: 'Av. Siempre Viva 123, Lima',
+        department: 'lima',
+        province: 'lima',
+        district: 'miraflores',
+        phone: '1234567',
+        mobile: '987654321',
         email: 'john@example.com',
         password: 'Password123',
         confirmPassword: 'Password123',
@@ -88,13 +114,9 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects empty firstName', () => {
-      const invalidData = {
+      const invalidData = createValidRegisterData({
         firstName: '',
-        lastName: 'Doe',
-        email: 'john@example.com',
-        password: 'Password123',
-        confirmPassword: 'Password123',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
@@ -104,13 +126,9 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects firstName shorter than 2 characters', () => {
-      const invalidData = {
+      const invalidData = createValidRegisterData({
         firstName: 'J',
-        lastName: 'Doe',
-        email: 'john@example.com',
-        password: 'Password123',
-        confirmPassword: 'Password123',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
@@ -152,13 +170,9 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects invalid email', () => {
-      const invalidData = {
-        firstName: 'John',
-        lastName: 'Doe',
+      const invalidData = createValidRegisterData({
         email: 'invalid-email',
-        password: 'Password123',
-        confirmPassword: 'Password123',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
@@ -168,13 +182,10 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects password without uppercase letter', () => {
-      const invalidData = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@example.com',
+      const invalidData = createValidRegisterData({
         password: 'password123',
         confirmPassword: 'password123',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
@@ -186,13 +197,10 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects password without lowercase letter', () => {
-      const invalidData = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@example.com',
+      const invalidData = createValidRegisterData({
         password: 'PASSWORD123',
         confirmPassword: 'PASSWORD123',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
@@ -204,13 +212,10 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects password without number', () => {
-      const invalidData = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@example.com',
+      const invalidData = createValidRegisterData({
         password: 'Password',
         confirmPassword: 'Password',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
@@ -222,13 +227,9 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects empty confirmPassword', () => {
-      const invalidData = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@example.com',
-        password: 'Password123',
+      const invalidData = createValidRegisterData({
         confirmPassword: '',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
@@ -238,13 +239,10 @@ describe('Auth Schemas', () => {
     });
 
     it('rejects when passwords do not match', () => {
-      const invalidData = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@example.com',
+      const invalidData = createValidRegisterData({
         password: 'Password123',
         confirmPassword: 'DifferentPassword123',
-      };
+      });
 
       const result = registerSchema.safeParse(invalidData);
       expect(result.success).toBe(false);

@@ -1,6 +1,6 @@
-import { AUTH_MODES } from '../../../lib/constants';
-import { useAuthModal } from '../../../lib/store';
-import { fireEvent, render, screen } from '../../../test-utils';
+import { AUTH_MODES } from '../../../../lib/constants';
+import { useAuthModal } from '../../../../lib/store';
+import { fireEvent, render, screen } from '../../../../test-utils';
 import { LoginModal } from './LoginModal';
 
 // Mock the auth modal store

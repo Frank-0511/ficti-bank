@@ -1,7 +1,6 @@
 import { IconLogin } from '@tabler/icons-react';
 import { Button, type ButtonProps } from '@mantine/core';
-import { AUTH_MODES } from '@/lib/constants';
-import { useAuthModal } from '@/lib/store';
+import { useAuthModals } from '@/lib/hooks';
 
 interface LoginButtonProps extends ButtonProps {
   /** Button text */
@@ -43,10 +42,10 @@ export function LoginButton({
   leftSection,
   ...props
 }: LoginButtonProps) {
-  const { open } = useAuthModal();
+  const { openLogin } = useAuthModals();
 
   const handleNavigationClick = () => {
-    open(AUTH_MODES.LOGIN);
+    openLogin();
   };
 
   const gradientProps =

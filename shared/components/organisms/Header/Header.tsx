@@ -10,9 +10,7 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core';
-import { AUTH_MODES } from '@/lib/constants';
-import { useScrolled } from '@/lib/hooks';
-import { useAuthModal } from '@/lib/store';
+import { useAuthModals, useScrolled } from '@/lib/hooks';
 import { ACCOUNT_TYPES } from '@/shared/constants';
 import { ColorSchemeToggle, LoginButton } from '../../molecules';
 import styles from './Header.module.css';
@@ -24,8 +22,7 @@ interface HeaderProps {
 
 export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps) {
   const isScrolled = useScrolled();
-
-  const { open } = useAuthModal();
+  const { openRegister } = useAuthModals();
 
   const getHeaderClasses = () => {
     const baseClass = styles.headerContainer;
@@ -104,7 +101,7 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
             <Button
               variant="light"
               size="sm"
-              onClick={() => open(AUTH_MODES.REGISTER)}
+              onClick={openRegister}
               leftSection={<IconUserPlus size={16} />}
             >
               Registro

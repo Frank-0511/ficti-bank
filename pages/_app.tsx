@@ -1,11 +1,13 @@
 // pages/_app.tsx
 import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 
 import '@mantine/core/styles.css';
 import '../styles/globals.css';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { LoginModal, RegisterModal } from '@/features/auth/modals';
 import { cssVariablesResolver, theme } from '@/lib/theme';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -25,7 +27,14 @@ export default function App({ Component, pageProps }: AppProps) {
         cssVariablesResolver={cssVariablesResolver}
         defaultColorScheme="light"
       >
-        <Component {...pageProps} />
+        <ModalsProvider
+          modals={{
+            login: LoginModal,
+            register: RegisterModal,
+          }}
+        >
+          <Component {...pageProps} />
+        </ModalsProvider>
       </MantineProvider>
     </>
   );

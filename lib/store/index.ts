@@ -1,2 +1,2 @@
 // export * from './auth.store';
-export * from './authModal.store';
+// authModal.store eliminado - ahora usamos @mantine/modals

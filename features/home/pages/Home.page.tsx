@@ -1,7 +1,6 @@
 import { FeaturesSection, HeroSection, ServicesSection } from '..';
 import { AppShell, RemoveScroll } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { LoginModal } from '@/features/auth';
 import { Footer, Header, Navbar } from '@/shared/components';
 import styles from './Home.module.css';
 
@@ -31,7 +30,6 @@ export const HomePage = () => {
           <ServicesSection />
           <Footer />
         </AppShell.Main>
-        <LoginModal />
       </AppShell>
     </RemoveScroll>
   );

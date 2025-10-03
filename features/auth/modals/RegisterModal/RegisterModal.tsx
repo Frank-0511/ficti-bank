@@ -1,87 +1,91 @@
-import {
-  IconAt,
-  IconCalendar,
-  IconId,
-  IconLock,
-  IconMapPin,
-  IconPhone,
-  IconUser,
-  IconUserPlus,
-} from '@tabler/icons-react';
+import { useState } from 'react';
+import { IconArrowLeft, IconArrowRight, IconUserPlus } from '@tabler/icons-react';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import {
-  Anchor,
-  Button,
-  Divider,
-  Grid,
-  Group,
-  PasswordInput,
-  Select,
-  Stack,
-  Text,
-  TextInput,
-} from '@mantine/core';
+import { Anchor, Button, Divider, Group, Progress, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { type ContextModalProps } from '@mantine/modals';
 import { useAuthModals } from '@/lib/hooks';
-import { registerSchema, type RegisterFormValues } from '../../schemas';
+import {
+  contactInfoSchema,
+  juridicalPersonBasicSchema,
+  naturalPersonBasicSchema,
+  personTypeSchema,
+  securityInfoSchema,
+  type ContactInfoFormValues,
+  type JuridicalPersonBasicFormValues,
+  type NaturalPersonBasicFormValues,
+  type PersonType,
+  type PersonTypeFormValues,
+  type SecurityInfoFormValues,
+} from '../../schemas';
+import {
+  ContactInfoForm,
+  JuridicalPersonBasicForm,
+  NaturalPersonBasicForm,
+  PersonTypeSelector,
+  SecurityInfoForm,
+} from './components';
 
-// Datos de ubicación del Perú (ejemplo simplificado)
-const DEPARTAMENTOS = [
-  { value: 'lima', label: 'Lima' },
-  { value: 'arequipa', label: 'Arequipa' },
-  { value: 'cusco', label: 'Cusco' },
-  { value: 'trujillo', label: 'Trujillo' },
-  { value: 'piura', label: 'Piura' },
-  { value: 'chiclayo', label: 'Chiclayo' },
-  { value: 'huancayo', label: 'Huancayo' },
-  { value: 'iquitos', label: 'Iquitos' },
-];
+type Step = 'personType' | 'basicInfo' | 'contactInfo' | 'securityInfo';
 
-const PROVINCIAS: Record<string, Array<{ value: string; label: string }>> = {
-  lima: [
-    { value: 'lima', label: 'Lima' },
-    { value: 'callao', label: 'Callao' },
-    { value: 'cañete', label: 'Cañete' },
-    { value: 'huaral', label: 'Huaral' },
-  ],
-  arequipa: [
-    { value: 'arequipa', label: 'Arequipa' },
-    { value: 'camana', label: 'Camaná' },
-    { value: 'caylloma', label: 'Caylloma' },
-  ],
-  // Agregar más provincias según necesidades
-};
+interface StepConfig {
+  title: string;
+  description: string;
+}
 
-const DISTRITOS: Record<string, Array<{ value: string; label: string }>> = {
-  lima: [
-    { value: 'miraflores', label: 'Miraflores' },
-    { value: 'san-isidro', label: 'San Isidro' },
-    { value: 'surco', label: 'Surco' },
-    { value: 'la-molina', label: 'La Molina' },
-    { value: 'san-borja', label: 'San Borja' },
-    { value: 'pueblo-libre', label: 'Pueblo Libre' },
-    { value: 'jesus-maria', label: 'Jesús María' },
-    { value: 'lince', label: 'Lince' },
-  ],
-  callao: [
-    { value: 'callao', label: 'Callao' },
-    { value: 'bellavista', label: 'Bellavista' },
-    { value: 'carmen-de-la-legua', label: 'Carmen de la Legua' },
-  ],
-  // Agregar más distritos según necesidades
+const STEPS: Record<Step, StepConfig> = {
+  personType: {
+    title: 'Tipo de Persona',
+    description: 'Selecciona el tipo de cuenta',
+  },
+  basicInfo: {
+    title: 'Datos Básicos',
+    description: 'Información principal',
+  },
+  contactInfo: {
+    title: 'Información de Contacto',
+    description: 'Datos de contacto y ubicación',
+  },
+  securityInfo: {
+    title: 'Seguridad',
+    description: 'Contraseña y confirmación',
+  },
 };
 
 export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
   const { switchToLogin, closeModal } = useAuthModals();
+  const [currentStep, setCurrentStep] = useState<Step>('personType');
+  const [personType, setPersonType] = useState<PersonType | ''>('');
 
-  const form = useForm<RegisterFormValues>({
-    validate: zod4Resolver(registerSchema),
+  // Formularios para cada paso
+  const personTypeForm = useForm<PersonTypeFormValues>({
+    validate: zod4Resolver(personTypeSchema),
+    initialValues: { personType: 'natural' },
+  });
+
+  const naturalPersonBasicForm = useForm<NaturalPersonBasicFormValues>({
+    validate: zod4Resolver(naturalPersonBasicSchema),
     initialValues: {
       firstName: '',
       lastName: '',
       dni: '',
       birthDate: '',
+    },
+  });
+
+  const juridicalPersonBasicForm = useForm<JuridicalPersonBasicFormValues>({
+    validate: zod4Resolver(juridicalPersonBasicSchema),
+    initialValues: {
+      businessName: '',
+      ruc: '',
+      legalRepresentative: '',
+      representativeDni: '',
+    },
+  });
+
+  const contactInfoForm = useForm<ContactInfoFormValues>({
+    validate: zod4Resolver(contactInfoSchema),
+    initialValues: {
       address: '',
       department: '',
       province: '',
@@ -89,227 +93,206 @@ export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
       phone: '',
       mobile: '',
       email: '',
+    },
+  });
+
+  const securityInfoForm = useForm<SecurityInfoFormValues>({
+    validate: zod4Resolver(securityInfoSchema),
+    initialValues: {
       password: '',
       confirmPassword: '',
     },
   });
 
-  const handleSubmit = (values: RegisterFormValues) => {
+  const getStepIndex = (step: Step): number => {
+    const steps: Step[] = ['personType', 'basicInfo', 'contactInfo', 'securityInfo'];
+    return steps.indexOf(step);
+  };
+
+  const getCurrentForm = () => {
+    switch (currentStep) {
+      case 'personType':
+        return personTypeForm;
+      case 'basicInfo':
+        return personType === 'natural' ? naturalPersonBasicForm : juridicalPersonBasicForm;
+      case 'contactInfo':
+        return contactInfoForm;
+      case 'securityInfo':
+        return securityInfoForm;
+      default:
+        return personTypeForm;
+    }
+  };
+
+  const handleNext = () => {
+    const form = getCurrentForm();
+
+    if (currentStep === 'personType') {
+      const isValid = personTypeForm.validate();
+      if (isValid.hasErrors) {
+        return;
+      }
+
+      const selectedPersonType = personTypeForm.values.personType;
+      setPersonType(selectedPersonType);
+      setCurrentStep('basicInfo');
+      return;
+    }
+
+    const validation = form.validate();
+    if (validation.hasErrors) {
+      return;
+    }
+
+    const steps: Step[] = ['personType', 'basicInfo', 'contactInfo', 'securityInfo'];
+    const currentIndex = steps.indexOf(currentStep);
+
+    if (currentIndex < steps.length - 1) {
+      setCurrentStep(steps[currentIndex + 1]);
+    }
+  };
+
+  const handleBack = () => {
+    const steps: Step[] = ['personType', 'basicInfo', 'contactInfo', 'securityInfo'];
+    const currentIndex = steps.indexOf(currentStep);
+
+    if (currentIndex > 0) {
+      setCurrentStep(steps[currentIndex - 1]);
+    }
+  };
+
+  const handleSubmit = () => {
+    // Validar todos los formularios
+    const personTypeValidation = personTypeForm.validate();
+    const basicFormValidation =
+      personType === 'natural'
+        ? naturalPersonBasicForm.validate()
+        : juridicalPersonBasicForm.validate();
+    const contactValidation = contactInfoForm.validate();
+    const securityValidation = securityInfoForm.validate();
+
+    if (
+      personTypeValidation.hasErrors ||
+      basicFormValidation.hasErrors ||
+      contactValidation.hasErrors ||
+      securityValidation.hasErrors
+    ) {
+      return;
+    }
+
+    // Combinar todos los datos
+    const formData = {
+      personType: personTypeForm.values.personType,
+      ...(personType === 'natural'
+        ? naturalPersonBasicForm.values
+        : juridicalPersonBasicForm.values),
+      ...contactInfoForm.values,
+      ...securityInfoForm.values,
+    };
+
     // eslint-disable-next-line no-console
-    console.log('Register values:', values);
-    // await registerUser(values);
+    console.log('Register values:', formData);
+    // await registerUser(formData);
     closeModal(id);
   };
 
   const handleSwitchToLogin = () => {
-    form.reset();
+    // Resetear todos los formularios
+    personTypeForm.reset();
+    naturalPersonBasicForm.reset();
+    juridicalPersonBasicForm.reset();
+    contactInfoForm.reset();
+    securityInfoForm.reset();
+    setCurrentStep('personType');
+    setPersonType('');
     switchToLogin(id);
   };
 
-  // Obtener provincias del departamento seleccionado
-  const selectedDepartment = form.values.department;
-  const availableProvinces = selectedDepartment ? PROVINCIAS[selectedDepartment] || [] : [];
-
-  // Obtener distritos de la provincia seleccionada
-  const selectedProvince = form.values.province;
-  const availableDistricts = selectedProvince ? DISTRITOS[selectedProvince] || [] : [];
-
-  // Limpiar provincia y distrito cuando cambia el departamento
-  const handleDepartmentChange = (value: string | null) => {
-    form.setFieldValue('department', value || '');
-    form.setFieldValue('province', '');
-    form.setFieldValue('district', '');
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 'personType':
+        return (
+          <PersonTypeSelector
+            value={personTypeForm.values.personType}
+            onChange={(value) => personTypeForm.setFieldValue('personType', value)}
+            error={personTypeForm.errors.personType as string}
+          />
+        );
+      case 'basicInfo':
+        return personType === 'natural' ? (
+          <NaturalPersonBasicForm form={naturalPersonBasicForm} />
+        ) : (
+          <JuridicalPersonBasicForm form={juridicalPersonBasicForm} />
+        );
+      case 'contactInfo':
+        return <ContactInfoForm form={contactInfoForm} />;
+      case 'securityInfo':
+        return <SecurityInfoForm form={securityInfoForm} />;
+      default:
+        return null;
+    }
   };
 
-  // Limpiar distrito cuando cambia la provincia
-  const handleProvinceChange = (value: string | null) => {
-    form.setFieldValue('province', value || '');
-    form.setFieldValue('district', '');
-  };
+  const isLastStep = currentStep === 'securityInfo';
+  const isFirstStep = currentStep === 'personType';
+  const progress = ((getStepIndex(currentStep) + 1) / 4) * 100;
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stack gap="lg">
-        {/* Información Personal */}
-        <div>
-          <Text size="sm" fw={500} mb="xs" c="dimmed">
-            Información Personal
+    <Stack gap="lg">
+      {/* Progress bar */}
+      <div>
+        <Progress value={progress} size="sm" radius="xl" />
+        <Group justify="space-between" mt="xs">
+          <Text size="sm" fw={500}>
+            {STEPS[currentStep].title}
           </Text>
-          <Grid>
-            <Grid.Col span={6}>
-              <TextInput
-                data-autofocus
-                label="Nombres"
-                placeholder="Tu nombre"
-                leftSection={<IconUser size={16} />}
-                required
-                {...form.getInputProps('firstName')}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                label="Apellidos"
-                placeholder="Tus apellidos"
-                leftSection={<IconUser size={16} />}
-                required
-                {...form.getInputProps('lastName')}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                label="DNI"
-                placeholder="12345678"
-                leftSection={<IconId size={16} />}
-                required
-                maxLength={8}
-                {...form.getInputProps('dni')}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                label="Fecha de Nacimiento"
-                placeholder="DD/MM/YYYY"
-                type="date"
-                leftSection={<IconCalendar size={16} />}
-                required
-                {...form.getInputProps('birthDate')}
-              />
-            </Grid.Col>
-          </Grid>
-        </div>
-
-        {/* Información de Contacto */}
-        <div>
-          <Text size="sm" fw={500} mb="xs" c="dimmed">
-            Información de Contacto
+          <Text size="sm" c="dimmed">
+            Paso {getStepIndex(currentStep) + 1} de 4
           </Text>
-          <Grid>
-            <Grid.Col span={12}>
-              <TextInput
-                label="Dirección"
-                placeholder="Tu dirección completa"
-                leftSection={<IconMapPin size={16} />}
-                required
-                {...form.getInputProps('address')}
-              />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Select
-                label="Departamento"
-                placeholder="Selecciona"
-                data={DEPARTAMENTOS}
-                searchable
-                required
-                value={form.values.department}
-                onChange={handleDepartmentChange}
-                error={form.errors.department}
-              />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Select
-                label="Provincia"
-                placeholder="Selecciona"
-                data={availableProvinces}
-                searchable
-                required
-                disabled={!selectedDepartment}
-                value={form.values.province}
-                onChange={handleProvinceChange}
-                error={form.errors.province}
-              />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Select
-                label="Distrito"
-                placeholder="Selecciona"
-                data={availableDistricts}
-                searchable
-                required
-                disabled={!selectedProvince}
-                {...form.getInputProps('district')}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                label="Teléfono"
-                placeholder="01-1234567"
-                leftSection={<IconPhone size={16} />}
-                {...form.getInputProps('phone')}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                label="Celular"
-                placeholder="987654321"
-                leftSection={<IconPhone size={16} />}
-                required
-                maxLength={9}
-                {...form.getInputProps('mobile')}
-              />
-            </Grid.Col>
-            <Grid.Col span={12}>
-              <TextInput
-                label="Email"
-                placeholder="tu@email.com"
-                leftSection={<IconAt size={16} />}
-                required
-                {...form.getInputProps('email')}
-              />
-            </Grid.Col>
-          </Grid>
-        </div>
+        </Group>
+      </div>
 
-        {/* Información de Seguridad */}
-        <div>
-          <Text size="sm" fw={500} mb="xs" c="dimmed">
-            Información de Seguridad
-          </Text>
-          <Grid>
-            <Grid.Col span={6}>
-              <PasswordInput
-                label="Contraseña"
-                placeholder="Tu contraseña"
-                leftSection={<IconLock size={16} />}
-                required
-                {...form.getInputProps('password')}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <PasswordInput
-                label="Confirmar Contraseña"
-                placeholder="Confirma tu contraseña"
-                leftSection={<IconLock size={16} />}
-                required
-                {...form.getInputProps('confirmPassword')}
-              />
-            </Grid.Col>
-          </Grid>
-        </div>
+      {/* Step content */}
+      {renderStepContent()}
 
-        {/* Submit Button */}
+      {/* Navigation buttons */}
+      <Group justify="space-between" mt="xl">
         <Button
-          type="submit"
-          variant="gradient"
-          gradient={{ from: 'blue', to: 'cyan', deg: 45 }}
-          size="md"
-          fullWidth
-          leftSection={<IconUserPlus size={16} />}
+          variant="subtle"
+          leftSection={<IconArrowLeft size={16} />}
+          onClick={handleBack}
+          disabled={isFirstStep}
         >
-          Crear Cuenta
+          Anterior
         </Button>
 
-        <Divider label="o" labelPosition="center" />
+        {isLastStep ? (
+          <Button
+            variant="gradient"
+            gradient={{ from: 'blue', to: 'cyan', deg: 45 }}
+            leftSection={<IconUserPlus size={16} />}
+            onClick={handleSubmit}
+          >
+            Crear Cuenta
+          </Button>
+        ) : (
+          <Button rightSection={<IconArrowRight size={16} />} onClick={handleNext}>
+            Siguiente
+          </Button>
+        )}
+      </Group>
 
-        {/* Switch to Login */}
-        <Group justify="center" gap="xs">
-          <Text size="sm" c="dimmed">
-            ¿Ya tienes cuenta?
-          </Text>
-          <Anchor size="sm" onClick={handleSwitchToLogin}>
-            Inicia sesión aquí
-          </Anchor>
-        </Group>
-      </Stack>
-    </form>
+      <Divider label="o" labelPosition="center" />
+
+      {/* Switch to Login */}
+      <Group justify="center" gap="xs">
+        <Text size="sm" c="dimmed">
+          ¿Ya tienes cuenta?
+        </Text>
+        <Anchor size="sm" onClick={handleSwitchToLogin}>
+          Inicia sesión aquí
+        </Anchor>
+      </Group>
+    </Stack>
   );
 };

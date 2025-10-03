@@ -15,9 +15,7 @@ const mockUseAuthModals = useAuthModals as jest.MockedFunction<typeof useAuthMod
 const renderWithProviders = (ui: React.ReactElement) => {
   return render(
     <MantineProvider>
-      <ModalsProvider>
-        {ui}
-      </ModalsProvider>
+      <ModalsProvider>{ui}</ModalsProvider>
     </MantineProvider>
   );
 };

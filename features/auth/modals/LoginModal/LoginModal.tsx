@@ -27,7 +27,7 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
 
   const handleSwitchToRegister = () => {
     form.reset();
-    switchToRegister(id);
+    switchToRegister();
   };
 
   return (

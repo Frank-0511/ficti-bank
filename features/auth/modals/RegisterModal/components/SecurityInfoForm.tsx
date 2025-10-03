@@ -1,6 +1,7 @@
 import { IconLock } from '@tabler/icons-react';
 import { Grid, PasswordInput, Stack, Text } from '@mantine/core';
 import { type UseFormReturnType } from '@mantine/form';
+import { useAutoFocus } from '@/lib/hooks';
 import { type SecurityInfoFormValues } from '../../../schemas';
 
 interface SecurityInfoFormProps {
@@ -8,6 +9,8 @@ interface SecurityInfoFormProps {
 }
 
 export const SecurityInfoForm: React.FC<SecurityInfoFormProps> = ({ form }) => {
+  const firstInputRef = useAutoFocus<HTMLInputElement>();
+
   return (
     <Stack gap="lg">
       <div>
@@ -22,6 +25,7 @@ export const SecurityInfoForm: React.FC<SecurityInfoFormProps> = ({ form }) => {
       <Grid>
         <Grid.Col span={6}>
           <PasswordInput
+            ref={firstInputRef}
             label="Contraseña"
             placeholder="Tu contraseña"
             leftSection={<IconLock size={16} />}

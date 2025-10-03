@@ -37,7 +37,42 @@ export const naturalPersonBasicSchema = z.object({
     .min(1, { message: 'DNI es requerido' })
     .length(8, { message: 'DNI debe tener exactamente 8 dígitos' })
     .regex(/^\d+$/, { message: 'DNI solo puede contener números' }),
-  birthDate: z.string().min(1, { message: 'Fecha de nacimiento es requerida' }),
+  birthDate: z
+    .string()
+    .nullable()
+    .refine(
+      (date) => {
+        // Validación de campo requerido
+        return date !== null && date !== '';
+      },
+      { message: 'Fecha de nacimiento es requerida' }
+    )
+    .refine(
+      (date) => {
+        // Si no hay fecha, no validar edad (ya se validó como requerido arriba)
+        if (!date || date === '') {
+          return true;
+        }
+
+        const birthDate = new Date(date);
+        // Validar que la fecha sea válida
+        if (isNaN(birthDate.getTime())) {
+          return false;
+        }
+
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+
+        // Ajustar si no ha pasado el cumpleaños este año
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          return age - 1 >= 18;
+        }
+
+        return age >= 18;
+      },
+      { message: 'Debes ser mayor de 18 años para registrarte' }
+    ),
 });
 
 /**

@@ -8,10 +8,17 @@ import { modals } from '@mantine/modals';
  * Incluye las mismas transiciones y overlay que tenía BaseModal
  */
 export const useAuthModals = () => {
+  // IDs únicos para trackear modales
+  const AUTH_MODAL_IDS = {
+    LOGIN: 'auth-login-modal',
+    REGISTER: 'auth-register-modal',
+  };
+
   const modalConfig = {
     login: () =>
       modals.openContextModal({
         modal: 'login',
+        modalId: AUTH_MODAL_IDS.LOGIN,
         title: (
           <Group gap="sm">
             <IconLogin size={20} />
@@ -38,6 +45,7 @@ export const useAuthModals = () => {
     register: () =>
       modals.openContextModal({
         modal: 'register',
+        modalId: AUTH_MODAL_IDS.REGISTER,
         title: (
           <Group gap="sm">
             <IconUserPlus size={20} />
@@ -62,6 +70,14 @@ export const useAuthModals = () => {
       }),
   };
 
+  // Función para cerrar modales específicos de auth
+  const closeAuthModals = () => {
+    modals.close(AUTH_MODAL_IDS.LOGIN);
+    modals.close(AUTH_MODAL_IDS.REGISTER);
+    // También usar closeAll como backup
+    modals.closeAll();
+  };
+
   return {
     /**
      * Abre el modal de login con título y configuración completa
@@ -84,27 +100,19 @@ export const useAuthModals = () => {
     closeAll: () => modals.closeAll(),
 
     /**
-     * Transición suave de login a registro
-     * Cierra el modal actual y abre registro con un delay para mejor UX
+     * Transición de login a registro con cierre específico de auth modales
      */
-    switchToRegister: (currentId?: string) => {
-      if (currentId) {
-        modals.close(currentId);
-      }
-      // Pequeño delay para permitir que se complete la animación de cierre
-      setTimeout(modalConfig.register, 200);
+    switchToRegister: () => {
+      closeAuthModals();
+      setTimeout(modalConfig.register, 250);
     },
 
     /**
-     * Transición suave de registro a login
-     * Cierra el modal actual y abre login con un delay para mejor UX
+     * Transición de registro a login con cierre específico de auth modales
      */
-    switchToLogin: (currentId?: string) => {
-      if (currentId) {
-        modals.close(currentId);
-      }
-      // Pequeño delay para permitir que se complete la animación de cierre
-      setTimeout(modalConfig.login, 200);
+    switchToLogin: () => {
+      closeAuthModals();
+      setTimeout(modalConfig.login, 250);
     },
   };
 };

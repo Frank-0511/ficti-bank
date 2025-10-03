@@ -1,6 +1,7 @@
 import { IconBuilding, IconId, IconUser } from '@tabler/icons-react';
 import { Grid, Stack, Text, TextInput } from '@mantine/core';
 import { type UseFormReturnType } from '@mantine/form';
+import { useAutoFocus } from '@/lib/hooks';
 import { type JuridicalPersonBasicFormValues } from '../../../schemas';
 
 interface JuridicalPersonBasicFormProps {
@@ -8,6 +9,8 @@ interface JuridicalPersonBasicFormProps {
 }
 
 export const JuridicalPersonBasicForm: React.FC<JuridicalPersonBasicFormProps> = ({ form }) => {
+  const firstInputRef = useAutoFocus<HTMLInputElement>();
+
   return (
     <Stack gap="lg">
       <div>
@@ -22,7 +25,7 @@ export const JuridicalPersonBasicForm: React.FC<JuridicalPersonBasicFormProps> =
       <Grid>
         <Grid.Col span={12}>
           <TextInput
-            data-autofocus
+            ref={firstInputRef}
             label="Razón Social"
             placeholder="Nombre completo de la empresa"
             leftSection={<IconBuilding size={16} />}

@@ -1,6 +1,7 @@
 import { IconAt, IconMapPin, IconPhone } from '@tabler/icons-react';
 import { Grid, Select, Stack, Text, TextInput } from '@mantine/core';
 import { type UseFormReturnType } from '@mantine/form';
+import { useAutoFocus } from '@/lib/hooks';
 import { type ContactInfoFormValues } from '../../../schemas';
 
 interface ContactInfoFormProps {
@@ -54,6 +55,8 @@ const DISTRITOS: Record<string, Array<{ value: string; label: string }>> = {
 };
 
 export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
+  const firstInputRef = useAutoFocus<HTMLInputElement>();
+
   // Obtener provincias del departamento seleccionado
   const selectedDepartment = form.values.department;
   const availableProvinces = selectedDepartment ? PROVINCIAS[selectedDepartment] || [] : [];
@@ -89,6 +92,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
       <Grid>
         <Grid.Col span={12}>
           <TextInput
+            ref={firstInputRef}
             label="Dirección"
             placeholder="Tu dirección completa"
             leftSection={<IconMapPin size={16} />}

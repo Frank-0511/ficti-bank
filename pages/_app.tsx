@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 import '../styles/globals.css';
 
 import type { AppProps } from 'next/app';

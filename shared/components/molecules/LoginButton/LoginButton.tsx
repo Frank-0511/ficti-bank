@@ -13,6 +13,8 @@ interface LoginButtonProps extends ButtonProps {
    * - 'submit': Acts as form submit button
    */
   mode?: 'navigation' | 'submit';
+  /** Custom onClick handler - overrides default navigation behavior */
+  onClick?: () => void;
 }
 
 /**
@@ -25,6 +27,9 @@ interface LoginButtonProps extends ButtonProps {
  *
  * // Submit mode - For forms
  * <LoginButton mode="submit" type="submit">Iniciar Sesión</LoginButton>
+ *
+ * // Custom onClick handler
+ * <LoginButton onClick={handleCustomAction}>Entrar</LoginButton>
  *
  * // Custom variant
  * <LoginButton variant="light" size="lg">Login</LoginButton>
@@ -40,12 +45,17 @@ export function LoginButton({
   size = 'sm',
   mode = 'navigation',
   leftSection,
+  onClick: customOnClick,
   ...props
 }: LoginButtonProps) {
   const { openLogin } = useAuthModals();
 
-  const handleNavigationClick = () => {
-    openLogin();
+  const handleClick = () => {
+    if (customOnClick) {
+      customOnClick();
+    } else {
+      openLogin();
+    }
   };
 
   const gradientProps =
@@ -63,7 +73,7 @@ export function LoginButton({
     <Button
       variant={variant}
       size={size}
-      {...(mode === 'navigation' ? { onClick: handleNavigationClick } : { type: 'submit' })}
+      {...(mode === 'navigation' ? { onClick: handleClick } : { type: 'submit' })}
       leftSection={iconSection}
       {...gradientProps}
       {...props}

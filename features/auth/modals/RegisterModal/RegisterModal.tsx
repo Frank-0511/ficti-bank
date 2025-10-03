@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { IconArrowLeft, IconArrowRight, IconUserPlus } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
+import { IconArrowLeft, IconArrowRight, IconCircleCheck, IconUserPlus } from '@tabler/icons-react';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Anchor, Button, Divider, Group, Progress, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { type ContextModalProps } from '@mantine/modals';
+import { modals, type ContextModalProps } from '@mantine/modals';
 import { useAuthModals } from '@/lib/hooks';
+import { LoginButton } from '../../../../shared/components';
 import {
   contactInfoSchema,
   juridicalPersonBasicSchema,
@@ -26,7 +27,7 @@ import {
   SecurityInfoForm,
 } from './components';
 
-type Step = 'personType' | 'basicInfo' | 'contactInfo' | 'securityInfo';
+type Step = 'personType' | 'basicInfo' | 'contactInfo' | 'securityInfo' | 'success';
 
 interface StepConfig {
   title: string;
@@ -50,12 +51,35 @@ const STEPS: Record<Step, StepConfig> = {
     title: 'Seguridad',
     description: 'Contraseña y confirmación',
   },
+  success: {
+    title: '¡Registro Exitoso!',
+    description: 'Tu cuenta ha sido creada correctamente',
+  },
 };
 
 export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
-  const { switchToLogin, closeModal } = useAuthModals();
+  const { switchToLogin } = useAuthModals();
   const [currentStep, setCurrentStep] = useState<Step>('personType');
   const [personType, setPersonType] = useState<PersonType | ''>('');
+
+  // Cambiar el título del modal basado en el paso actual
+  useEffect(() => {
+    if (currentStep === 'success') {
+      // Ocultar el título cuando esté en success
+      modals.updateModal({ modalId: id, title: null });
+    } else {
+      // Restaurar el título original
+      modals.updateModal({
+        modalId: id,
+        title: (
+          <Group gap="sm">
+            <IconUserPlus size={20} />
+            <Text fw={600}>Crear Cuenta</Text>
+          </Group>
+        ),
+      });
+    }
+  }, [currentStep, id]);
 
   // Formularios para cada paso
   const personTypeForm = useForm<PersonTypeFormValues>({
@@ -69,7 +93,7 @@ export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
       firstName: '',
       lastName: '',
       dni: '',
-      birthDate: '',
+      birthDate: null,
     },
   });
 
@@ -105,7 +129,7 @@ export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
   });
 
   const getStepIndex = (step: Step): number => {
-    const steps: Step[] = ['personType', 'basicInfo', 'contactInfo', 'securityInfo'];
+    const steps: Step[] = ['personType', 'basicInfo', 'contactInfo', 'securityInfo', 'success'];
     return steps.indexOf(step);
   };
 
@@ -193,7 +217,9 @@ export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
     // eslint-disable-next-line no-console
     console.log('Register values:', formData);
     // await registerUser(formData);
-    closeModal(id);
+
+    // Ir al paso de éxito en lugar de cerrar
+    setCurrentStep('success');
   };
 
   const handleSwitchToLogin = () => {
@@ -205,7 +231,7 @@ export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
     securityInfoForm.reset();
     setCurrentStep('personType');
     setPersonType('');
-    switchToLogin(id);
+    switchToLogin();
   };
 
   const renderStepContent = () => {
@@ -228,6 +254,20 @@ export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
         return <ContactInfoForm form={contactInfoForm} />;
       case 'securityInfo':
         return <SecurityInfoForm form={securityInfoForm} />;
+      case 'success':
+        return (
+          <Stack gap="xl" align="center" py="xl">
+            <IconCircleCheck size={86} color="var(--mantine-color-green-6)" stroke={1.5} />
+            <Stack gap="sm" align="center">
+              <Text size="xl" fw={600} ta="center" c="green">
+                ¡Registro Exitoso!
+              </Text>
+              <Text size="md" c="dimmed" ta="center">
+                Tu cuenta ha sido creada correctamente. Ya puedes iniciar sesión.
+              </Text>
+            </Stack>
+          </Stack>
+        );
       default:
         return null;
     }
@@ -235,64 +275,82 @@ export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
 
   const isLastStep = currentStep === 'securityInfo';
   const isFirstStep = currentStep === 'personType';
-  const progress = ((getStepIndex(currentStep) + 1) / 4) * 100;
+  const isSuccessStep = currentStep === 'success';
+  const progress = isSuccessStep ? 100 : ((getStepIndex(currentStep) + 1) / 4) * 100;
 
   return (
     <Stack gap="lg">
-      {/* Progress bar */}
-      <div>
-        <Progress value={progress} size="sm" radius="xl" />
-        <Group justify="space-between" mt="xs">
-          <Text size="sm" fw={500}>
-            {STEPS[currentStep].title}
-          </Text>
-          <Text size="sm" c="dimmed">
-            Paso {getStepIndex(currentStep) + 1} de 4
-          </Text>
-        </Group>
-      </div>
+      {/* Progress bar - only show if not on success step */}
+      {!isSuccessStep && (
+        <div>
+          <Progress value={progress} size="sm" radius="xl" />
+          <Group justify="space-between" mt="xs">
+            <Text size="sm" fw={500}>
+              {STEPS[currentStep].title}
+            </Text>
+            <Text size="sm" c="dimmed">
+              Paso {getStepIndex(currentStep) + 1} de 4
+            </Text>
+          </Group>
+        </div>
+      )}
 
       {/* Step content */}
       {renderStepContent()}
 
       {/* Navigation buttons */}
-      <Group justify="space-between" mt="xl">
-        <Button
-          variant="subtle"
-          leftSection={<IconArrowLeft size={16} />}
-          onClick={handleBack}
-          disabled={isFirstStep}
-        >
-          Anterior
-        </Button>
-
-        {isLastStep ? (
+      {!isSuccessStep ? (
+        <Group justify="space-between" mt="xl">
           <Button
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan', deg: 45 }}
-            leftSection={<IconUserPlus size={16} />}
-            onClick={handleSubmit}
+            variant="subtle"
+            leftSection={<IconArrowLeft size={16} />}
+            onClick={handleBack}
+            disabled={isFirstStep}
           >
-            Crear Cuenta
+            Anterior
           </Button>
-        ) : (
-          <Button rightSection={<IconArrowRight size={16} />} onClick={handleNext}>
-            Siguiente
-          </Button>
-        )}
-      </Group>
 
-      <Divider label="o" labelPosition="center" />
+          {isLastStep ? (
+            <Button
+              variant="gradient"
+              gradient={{ from: 'blue', to: 'cyan', deg: 45 }}
+              leftSection={<IconUserPlus size={16} />}
+              onClick={handleSubmit}
+            >
+              Crear Cuenta
+            </Button>
+          ) : (
+            <Button rightSection={<IconArrowRight size={16} />} onClick={handleNext}>
+              Siguiente
+            </Button>
+          )}
+        </Group>
+      ) : (
+        <Group justify="center">
+          <LoginButton
+            size="lg"
+            showIcon={false}
+            color="green"
+            variant="filled"
+            onClick={handleSwitchToLogin}
+          />
+        </Group>
+      )}
 
-      {/* Switch to Login */}
-      <Group justify="center" gap="xs">
-        <Text size="sm" c="dimmed">
-          ¿Ya tienes cuenta?
-        </Text>
-        <Anchor size="sm" onClick={handleSwitchToLogin}>
-          Inicia sesión aquí
-        </Anchor>
-      </Group>
+      {/* Switch to Login - only show if not on success step */}
+      {!isSuccessStep && (
+        <>
+          <Divider label="o" labelPosition="center" />
+          <Group justify="center" gap="xs">
+            <Text size="sm" c="dimmed">
+              ¿Ya tienes cuenta?
+            </Text>
+            <Anchor size="sm" onClick={handleSwitchToLogin}>
+              Inicia sesión aquí
+            </Anchor>
+          </Group>
+        </>
+      )}
     </Stack>
   );
 };

@@ -1,15 +1,11 @@
 import { IconCalendar, IconId, IconUser } from '@tabler/icons-react';
 import { Grid, Stack, Text, TextInput } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { type UseFormReturnType } from '@mantine/form';
 import { useAutoFocus } from '@/lib/hooks';
-import { type NaturalPersonBasicFormValues } from '../../../schemas';
+import { useRegistrationContext } from '../context';
 
-interface NaturalPersonBasicFormProps {
-  form: UseFormReturnType<NaturalPersonBasicFormValues>;
-}
-
-export const NaturalPersonBasicForm: React.FC<NaturalPersonBasicFormProps> = ({ form }) => {
+export const NaturalPersonBasicForm: React.FC = () => {
+  const { naturalPersonBasicForm } = useRegistrationContext();
   const firstInputRef = useAutoFocus<HTMLInputElement>();
 
   // Calcular fecha mínima para ser mayor de 18 años
@@ -35,7 +31,7 @@ export const NaturalPersonBasicForm: React.FC<NaturalPersonBasicFormProps> = ({ 
             placeholder="Tu nombre"
             leftSection={<IconUser size={16} />}
             required
-            {...form.getInputProps('firstName')}
+            {...naturalPersonBasicForm.getInputProps('firstName')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -44,7 +40,7 @@ export const NaturalPersonBasicForm: React.FC<NaturalPersonBasicFormProps> = ({ 
             placeholder="Tus apellidos"
             leftSection={<IconUser size={16} />}
             required
-            {...form.getInputProps('lastName')}
+            {...naturalPersonBasicForm.getInputProps('lastName')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -54,7 +50,7 @@ export const NaturalPersonBasicForm: React.FC<NaturalPersonBasicFormProps> = ({ 
             leftSection={<IconId size={16} />}
             required
             maxLength={8}
-            {...form.getInputProps('dni')}
+            {...naturalPersonBasicForm.getInputProps('dni')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -66,7 +62,7 @@ export const NaturalPersonBasicForm: React.FC<NaturalPersonBasicFormProps> = ({ 
             maxDate={maxAllowedDate}
             valueFormat="DD/MM/YYYY"
             clearable
-            {...form.getInputProps('birthDate')}
+            {...naturalPersonBasicForm.getInputProps('birthDate')}
           />
         </Grid.Col>
       </Grid>

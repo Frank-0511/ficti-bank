@@ -1,5 +1,8 @@
-export { ContactInfoForm } from './ContactInfoForm';
-export { JuridicalPersonBasicForm } from './JuridicalPersonBasicForm';
-export { NaturalPersonBasicForm } from './NaturalPersonBasicForm';
-export { PersonTypeSelector } from './PersonTypeSelector';
-export { SecurityInfoForm } from './SecurityInfoForm';
+export * from './ContactInfoForm';
+export * from './JuridicalPersonBasicForm';
+export * from './NaturalPersonBasicForm';
+export * from './PersonTypeSelector';
+export * from './RegistrationNavigation';
+export * from './RegistrationProgress';
+export * from './RegistrationSuccess';
+export * from './SecurityInfoForm';

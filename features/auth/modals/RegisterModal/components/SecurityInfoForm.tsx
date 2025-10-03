@@ -1,14 +1,10 @@
 import { IconLock } from '@tabler/icons-react';
 import { Grid, PasswordInput, Stack, Text } from '@mantine/core';
-import { type UseFormReturnType } from '@mantine/form';
 import { useAutoFocus } from '@/lib/hooks';
-import { type SecurityInfoFormValues } from '../../../schemas';
+import { useRegistrationContext } from '../context';
 
-interface SecurityInfoFormProps {
-  form: UseFormReturnType<SecurityInfoFormValues>;
-}
-
-export const SecurityInfoForm: React.FC<SecurityInfoFormProps> = ({ form }) => {
+export const SecurityInfoForm: React.FC = () => {
+  const { securityInfoForm } = useRegistrationContext();
   const firstInputRef = useAutoFocus<HTMLInputElement>();
 
   return (
@@ -30,7 +26,7 @@ export const SecurityInfoForm: React.FC<SecurityInfoFormProps> = ({ form }) => {
             placeholder="Tu contraseña"
             leftSection={<IconLock size={16} />}
             required
-            {...form.getInputProps('password')}
+            {...securityInfoForm.getInputProps('password')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -39,7 +35,7 @@ export const SecurityInfoForm: React.FC<SecurityInfoFormProps> = ({ form }) => {
             placeholder="Confirma tu contraseña"
             leftSection={<IconLock size={16} />}
             required
-            {...form.getInputProps('confirmPassword')}
+            {...securityInfoForm.getInputProps('confirmPassword')}
           />
         </Grid.Col>
       </Grid>

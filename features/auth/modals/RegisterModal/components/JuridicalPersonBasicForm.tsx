@@ -1,14 +1,10 @@
 import { IconBuilding, IconId, IconUser } from '@tabler/icons-react';
 import { Grid, Stack, Text, TextInput } from '@mantine/core';
-import { type UseFormReturnType } from '@mantine/form';
 import { useAutoFocus } from '@/lib/hooks';
-import { type JuridicalPersonBasicFormValues } from '../../../schemas';
+import { useRegistrationContext } from '../context';
 
-interface JuridicalPersonBasicFormProps {
-  form: UseFormReturnType<JuridicalPersonBasicFormValues>;
-}
-
-export const JuridicalPersonBasicForm: React.FC<JuridicalPersonBasicFormProps> = ({ form }) => {
+export const JuridicalPersonBasicForm: React.FC = () => {
+  const { juridicalPersonBasicForm } = useRegistrationContext();
   const firstInputRef = useAutoFocus<HTMLInputElement>();
 
   return (
@@ -30,7 +26,7 @@ export const JuridicalPersonBasicForm: React.FC<JuridicalPersonBasicFormProps> =
             placeholder="Nombre completo de la empresa"
             leftSection={<IconBuilding size={16} />}
             required
-            {...form.getInputProps('businessName')}
+            {...juridicalPersonBasicForm.getInputProps('businessName')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -40,7 +36,7 @@ export const JuridicalPersonBasicForm: React.FC<JuridicalPersonBasicFormProps> =
             leftSection={<IconId size={16} />}
             required
             maxLength={11}
-            {...form.getInputProps('ruc')}
+            {...juridicalPersonBasicForm.getInputProps('ruc')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -49,7 +45,7 @@ export const JuridicalPersonBasicForm: React.FC<JuridicalPersonBasicFormProps> =
             placeholder="Nombre del representante"
             leftSection={<IconUser size={16} />}
             required
-            {...form.getInputProps('legalRepresentative')}
+            {...juridicalPersonBasicForm.getInputProps('legalRepresentative')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -59,7 +55,7 @@ export const JuridicalPersonBasicForm: React.FC<JuridicalPersonBasicFormProps> =
             leftSection={<IconId size={16} />}
             required
             maxLength={8}
-            {...form.getInputProps('representativeDni')}
+            {...juridicalPersonBasicForm.getInputProps('representativeDni')}
           />
         </Grid.Col>
       </Grid>

@@ -1,18 +1,17 @@
 import { IconBuilding, IconUser } from '@tabler/icons-react';
 import { Group, Radio, Stack, Text, UnstyledButton } from '@mantine/core';
-import { type PersonType } from '../../../schemas';
+import { PERSON_TYPE } from '../constants';
+import { useRegistrationContext } from '../context';
+import { type PersonTypeFormData } from '../schemas';
 
-interface PersonTypeSelectorProps {
-  value: PersonType | '';
-  onChange: (value: PersonType) => void;
-  error?: string;
-}
+export const PersonTypeSelector: React.FC = () => {
+  const { personTypeForm } = useRegistrationContext();
 
-export const PersonTypeSelector: React.FC<PersonTypeSelectorProps> = ({
-  value,
-  onChange,
-  error,
-}) => {
+  const value = personTypeForm.values.personType;
+  const error = personTypeForm.errors.personType as string;
+  const onChange = (val: string) =>
+    personTypeForm.setFieldValue('personType', val as PersonTypeFormData['personType']);
+
   return (
     <Stack gap="md">
       <div>
@@ -24,23 +23,24 @@ export const PersonTypeSelector: React.FC<PersonTypeSelectorProps> = ({
         </Text>
       </div>
 
-      <Radio.Group value={value} onChange={(val) => onChange(val as PersonType)} error={error}>
+      <Radio.Group value={value} onChange={onChange} error={error}>
         <Stack gap="sm">
           <UnstyledButton
-            onClick={() => onChange('natural')}
+            onClick={() => onChange(PERSON_TYPE.NATURAL)}
             style={(theme) => ({
               borderRadius: theme.radius.md,
               border: `1px solid ${
-                value === 'natural' ? theme.colors.blue[6] : theme.colors.gray[3]
+                value === PERSON_TYPE.NATURAL ? theme.colors.blue[6] : theme.colors.gray[3]
               }`,
-              backgroundColor: value === 'natural' ? theme.colors.blue[0] : theme.colors.gray[0],
+              backgroundColor:
+                value === PERSON_TYPE.NATURAL ? theme.colors.blue[0] : theme.colors.gray[0],
               transition: 'all 0.2s ease',
             })}
             p="md"
           >
             <Group>
-              <Radio value="natural" />
-              <IconUser size={24} color={value === 'natural' ? '#1c7ed6' : '#868e96'} />
+              <Radio value={PERSON_TYPE.NATURAL} />
+              <IconUser size={24} color={value === PERSON_TYPE.NATURAL ? '#1c7ed6' : '#868e96'} />
               <div style={{ flex: 1 }}>
                 <Text fw={500} size="md">
                   Persona Natural
@@ -53,20 +53,24 @@ export const PersonTypeSelector: React.FC<PersonTypeSelectorProps> = ({
           </UnstyledButton>
 
           <UnstyledButton
-            onClick={() => onChange('juridica')}
+            onClick={() => onChange(PERSON_TYPE.BUSINESS)}
             style={(theme) => ({
               borderRadius: theme.radius.md,
               border: `1px solid ${
-                value === 'juridica' ? theme.colors.blue[6] : theme.colors.gray[3]
+                value === PERSON_TYPE.BUSINESS ? theme.colors.blue[6] : theme.colors.gray[3]
               }`,
-              backgroundColor: value === 'juridica' ? theme.colors.blue[0] : theme.colors.gray[0],
+              backgroundColor:
+                value === PERSON_TYPE.BUSINESS ? theme.colors.blue[0] : theme.colors.gray[0],
               transition: 'all 0.2s ease',
             })}
             p="md"
           >
             <Group>
-              <Radio value="juridica" />
-              <IconBuilding size={24} color={value === 'juridica' ? '#1c7ed6' : '#868e96'} />
+              <Radio value={PERSON_TYPE.BUSINESS} />
+              <IconBuilding
+                size={24}
+                color={value === PERSON_TYPE.BUSINESS ? '#1c7ed6' : '#868e96'}
+              />
               <div style={{ flex: 1 }}>
                 <Text fw={500} size="md">
                   Persona Jurídica

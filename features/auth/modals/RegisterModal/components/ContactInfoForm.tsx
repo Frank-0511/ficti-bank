@@ -1,12 +1,7 @@
 import { IconAt, IconMapPin, IconPhone } from '@tabler/icons-react';
 import { Grid, Select, Stack, Text, TextInput } from '@mantine/core';
-import { type UseFormReturnType } from '@mantine/form';
 import { useAutoFocus } from '@/lib/hooks';
-import { type ContactInfoFormValues } from '../../../schemas';
-
-interface ContactInfoFormProps {
-  form: UseFormReturnType<ContactInfoFormValues>;
-}
+import { useRegistrationContext } from '../context';
 
 // Datos de ubicación del Perú (ejemplo simplificado)
 const DEPARTAMENTOS = [
@@ -54,28 +49,29 @@ const DISTRITOS: Record<string, Array<{ value: string; label: string }>> = {
   // Agregar más distritos según necesidades
 };
 
-export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
+export const ContactInfoForm: React.FC = () => {
+  const { contactInfoForm } = useRegistrationContext();
   const firstInputRef = useAutoFocus<HTMLInputElement>();
 
   // Obtener provincias del departamento seleccionado
-  const selectedDepartment = form.values.department;
+  const selectedDepartment = contactInfoForm.values.department;
   const availableProvinces = selectedDepartment ? PROVINCIAS[selectedDepartment] || [] : [];
 
   // Obtener distritos de la provincia seleccionada
-  const selectedProvince = form.values.province;
+  const selectedProvince = contactInfoForm.values.province;
   const availableDistricts = selectedProvince ? DISTRITOS[selectedProvince] || [] : [];
 
   // Limpiar provincia y distrito cuando cambia el departamento
   const handleDepartmentChange = (value: string | null) => {
-    form.setFieldValue('department', value || '');
-    form.setFieldValue('province', '');
-    form.setFieldValue('district', '');
+    contactInfoForm.setFieldValue('department', value || '');
+    contactInfoForm.setFieldValue('province', '');
+    contactInfoForm.setFieldValue('district', '');
   };
 
   // Limpiar distrito cuando cambia la provincia
   const handleProvinceChange = (value: string | null) => {
-    form.setFieldValue('province', value || '');
-    form.setFieldValue('district', '');
+    contactInfoForm.setFieldValue('province', value || '');
+    contactInfoForm.setFieldValue('district', '');
   };
 
   return (
@@ -97,7 +93,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
             placeholder="Tu dirección completa"
             leftSection={<IconMapPin size={16} />}
             required
-            {...form.getInputProps('address')}
+            {...contactInfoForm.getInputProps('address')}
           />
         </Grid.Col>
         <Grid.Col span={4}>
@@ -107,9 +103,9 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
             data={DEPARTAMENTOS}
             searchable
             required
-            value={form.values.department}
+            value={contactInfoForm.values.department}
             onChange={handleDepartmentChange}
-            error={form.errors.department}
+            error={contactInfoForm.errors.department}
           />
         </Grid.Col>
         <Grid.Col span={4}>
@@ -120,9 +116,9 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
             searchable
             required
             disabled={!selectedDepartment}
-            value={form.values.province}
+            value={contactInfoForm.values.province}
             onChange={handleProvinceChange}
-            error={form.errors.province}
+            error={contactInfoForm.errors.province}
           />
         </Grid.Col>
         <Grid.Col span={4}>
@@ -133,7 +129,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
             searchable
             required
             disabled={!selectedProvince}
-            {...form.getInputProps('district')}
+            {...contactInfoForm.getInputProps('district')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -141,7 +137,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
             label="Teléfono"
             placeholder="01-1234567"
             leftSection={<IconPhone size={16} />}
-            {...form.getInputProps('phone')}
+            {...contactInfoForm.getInputProps('phone')}
           />
         </Grid.Col>
         <Grid.Col span={6}>
@@ -151,7 +147,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
             leftSection={<IconPhone size={16} />}
             required
             maxLength={9}
-            {...form.getInputProps('mobile')}
+            {...contactInfoForm.getInputProps('mobile')}
           />
         </Grid.Col>
         <Grid.Col span={12}>
@@ -160,7 +156,7 @@ export const ContactInfoForm: React.FC<ContactInfoFormProps> = ({ form }) => {
             placeholder="tu@email.com"
             leftSection={<IconAt size={16} />}
             required
-            {...form.getInputProps('email')}
+            {...contactInfoForm.getInputProps('email')}
           />
         </Grid.Col>
       </Grid>

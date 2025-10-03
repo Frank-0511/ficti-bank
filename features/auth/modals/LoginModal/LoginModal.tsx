@@ -5,7 +5,7 @@ import { useForm } from '@mantine/form';
 import { type ContextModalProps } from '@mantine/modals';
 import { useAuthModals } from '@/lib/hooks';
 import { LoginButton } from '@/shared/components';
-import { loginSchema, type LoginFormValues } from '../../schemas';
+import { loginSchema, type LoginFormValues } from './schemas';
 
 export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
   const { switchToRegister, closeModal } = useAuthModals();

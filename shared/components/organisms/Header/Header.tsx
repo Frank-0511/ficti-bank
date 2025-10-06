@@ -11,8 +11,9 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { useAuthModals, useScrolled } from '@/lib/hooks';
+import { useAuthStore } from '@/lib/store';
 import { ACCOUNT_TYPES } from '@/shared/constants';
-import { ColorSchemeToggle, LoginButton } from '../../molecules';
+import { ColorSchemeToggle, LoginButton, UserMenu } from '../../molecules';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -23,6 +24,7 @@ interface HeaderProps {
 export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps) {
   const isScrolled = useScrolled();
   const { openRegister } = useAuthModals();
+  const { isAuthenticated } = useAuthStore();
 
   const getHeaderClasses = () => {
     const baseClass = styles.headerContainer;
@@ -98,15 +100,21 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
           <Group gap="md" visibleFrom="md">
             <ColorSchemeToggle />
 
-            <Button
-              variant="light"
-              size="sm"
-              onClick={openRegister}
-              leftSection={<IconUserPlus size={16} />}
-            >
-              Registro
-            </Button>
-            <LoginButton />
+            {isAuthenticated ? (
+              <UserMenu />
+            ) : (
+              <>
+                <Button
+                  variant="light"
+                  size="sm"
+                  onClick={openRegister}
+                  leftSection={<IconUserPlus size={16} />}
+                >
+                  Registro
+                </Button>
+                <LoginButton />
+              </>
+            )}
           </Group>
           {/* Menú Mobile */}
           <Group gap="sm" hiddenFrom="md">

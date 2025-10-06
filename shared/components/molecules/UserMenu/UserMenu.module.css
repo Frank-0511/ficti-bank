@@ -1,0 +1,19 @@
+.userButton {
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 150ms ease;
+}
+
+.userButton:hover {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+}
+
+.userInfo {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .userInfo {
+    display: block;
+  }
+}

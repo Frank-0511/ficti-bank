@@ -5,10 +5,12 @@ import { useForm } from '@mantine/form';
 import { type ContextModalProps } from '@mantine/modals';
 import { useAuthModals } from '@/lib/hooks';
 import { LoginButton } from '@/shared/components';
+import { useLogin } from './hooks/useLogin';
 import { loginSchema, type LoginFormValues } from './schemas';
 
 export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
   const { switchToRegister, closeModal } = useAuthModals();
+  const loginMutation = useLogin();
 
   const form = useForm<LoginFormValues>({
     validate: zod4Resolver(loginSchema),
@@ -19,10 +21,13 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
   });
 
   const handleSubmit = (values: LoginFormValues) => {
-    // eslint-disable-next-line no-console
-    console.log('Login values:', values);
-    // await loginUser(values);
-    closeModal(id);
+    loginMutation.mutate(values, {
+      onSuccess: () => {
+        closeModal(id);
+        // TODO: Redirigir al dashboard o página principal
+      },
+      // onError ya está manejado en el hook
+    });
   };
 
   const handleSwitchToRegister = () => {
@@ -53,7 +58,7 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
         />
 
         {/* Submit Button */}
-        <LoginButton mode="submit" size="md" fullWidth />
+        <LoginButton mode="submit" size="md" fullWidth loading={loginMutation.isPending} />
 
         {/* Forgot Password */}
         <Group justify="center">

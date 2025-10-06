@@ -1,35 +1,7 @@
-/**
- * Common types used across the banking system
- */
+import { AUTH_MODES, ENTITY_STATUS, USER_ROLE } from '../constants';
 
-export enum EntityStatus {
-  ACTIVE = 'A',
-  INACTIVE = 'I',
-  BLOCKED = 'B',
-  CANCELLED = 'N',
-}
+export type AuthMode = (typeof AUTH_MODES)[keyof typeof AUTH_MODES];
 
-export interface ApiResponse<T> {
-  data?: T;
-  error?: string;
-  message?: string;
-  success: boolean;
-}
+export type EntityStatusType = (typeof ENTITY_STATUS)[keyof typeof ENTITY_STATUS];
 
-export interface PaginatedResponse<T> {
-  items: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
-
-export interface QueryParams {
-  page?: number;
-  limit?: number;
-  search?: string;
-  status?: EntityStatus;
-}
-
-export type Currency = 'SO' | 'DO'; // Soles | Dollars
-export type UserRole = 'E' | 'A'; // Employee | Admin
+export type UserRoleType = (typeof USER_ROLE)[keyof typeof USER_ROLE];

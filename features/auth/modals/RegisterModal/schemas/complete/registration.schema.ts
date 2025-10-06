@@ -7,9 +7,6 @@ import {
   securityInfoSchema,
 } from '../forms';
 
-/**
- * Complete registration schema combining all form steps
- */
 export const completeRegistrationSchema = z.intersection(
   personTypeSchema,
   z.intersection(

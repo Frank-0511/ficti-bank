@@ -3,41 +3,12 @@ import { Button, type ButtonProps } from '@mantine/core';
 import { useAuthModals } from '@/lib/hooks';
 
 interface LoginButtonProps extends ButtonProps {
-  /** Button text */
   children?: React.ReactNode;
-  /** Show icon */
   showIcon?: boolean;
-  /**
-   * Button mode:
-   * - 'navigation': Opens login modal (default)
-   * - 'submit': Acts as form submit button
-   */
   mode?: 'navigation' | 'submit';
-  /** Custom onClick handler - overrides default navigation behavior */
   onClick?: () => void;
 }
 
-/**
- * Standardized Login Button component used across the app
- *
- * @example
- * ```tsx
- * // Navigation mode (default) - Opens modal
- * <LoginButton>Iniciar Sesión</LoginButton>
- *
- * // Submit mode - For forms
- * <LoginButton mode="submit" type="submit">Iniciar Sesión</LoginButton>
- *
- * // Custom onClick handler
- * <LoginButton onClick={handleCustomAction}>Entrar</LoginButton>
- *
- * // Custom variant
- * <LoginButton variant="light" size="lg">Login</LoginButton>
- *
- * // Without icon
- * <LoginButton showIcon={false}>Entrar</LoginButton>
- * ```
- */
 export function LoginButton({
   children = 'Iniciar Sesión',
   showIcon = true,

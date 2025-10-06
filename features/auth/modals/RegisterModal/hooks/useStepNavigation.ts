@@ -32,10 +32,6 @@ export const STEPS: Record<Step, StepConfig> = {
   },
 };
 
-/**
- * Hook para manejar la navegación entre pasos del registro
- * Responsabilidad: Solo el estado y navegación del stepper
- */
 export const useStepNavigation = () => {
   const [currentStep, setCurrentStep] = useState<Step>('personType');
   const [personType, setPersonType] = useState<PersonType | ''>('');

@@ -27,20 +27,31 @@ export const PersonTypeSelector: React.FC = () => {
         <Stack gap="sm">
           <UnstyledButton
             onClick={() => onChange(PERSON_TYPE.NATURAL)}
-            style={(theme) => ({
-              borderRadius: theme.radius.md,
+            style={() => ({
+              borderRadius: 'var(--mantine-radius-md)',
               border: `1px solid ${
-                value === PERSON_TYPE.NATURAL ? theme.colors.blue[6] : theme.colors.gray[3]
+                value === PERSON_TYPE.NATURAL
+                  ? 'var(--mantine-border-card-selector)'
+                  : 'var(--mantine-color-default-border)'
               }`,
               backgroundColor:
-                value === PERSON_TYPE.NATURAL ? theme.colors.blue[0] : theme.colors.gray[0],
+                value === PERSON_TYPE.NATURAL
+                  ? 'var(--mantine-color-blue-light)'
+                  : 'var(--mantine-color-body)',
               transition: 'all 0.2s ease',
             })}
             p="md"
           >
             <Group>
               <Radio value={PERSON_TYPE.NATURAL} />
-              <IconUser size={24} color={value === PERSON_TYPE.NATURAL ? '#1c7ed6' : '#868e96'} />
+              <IconUser
+                size={24}
+                color={
+                  value === PERSON_TYPE.NATURAL
+                    ? 'var(--mantine-border-card-selector)'
+                    : 'var(--mantine-color-gray-6)'
+                }
+              />
               <div style={{ flex: 1 }}>
                 <Text fw={500} size="md">
                   Persona Natural
@@ -54,13 +65,17 @@ export const PersonTypeSelector: React.FC = () => {
 
           <UnstyledButton
             onClick={() => onChange(PERSON_TYPE.BUSINESS)}
-            style={(theme) => ({
-              borderRadius: theme.radius.md,
+            style={() => ({
+              borderRadius: 'var(--mantine-radius-md)',
               border: `1px solid ${
-                value === PERSON_TYPE.BUSINESS ? theme.colors.blue[6] : theme.colors.gray[3]
+                value === PERSON_TYPE.BUSINESS
+                  ? 'var(--mantine-border-card-selector)'
+                  : 'var(--mantine-color-default-border)'
               }`,
               backgroundColor:
-                value === PERSON_TYPE.BUSINESS ? theme.colors.blue[0] : theme.colors.gray[0],
+                value === PERSON_TYPE.BUSINESS
+                  ? 'var(--mantine-color-blue-light)'
+                  : 'var(--mantine-color-body)',
               transition: 'all 0.2s ease',
             })}
             p="md"
@@ -69,7 +84,11 @@ export const PersonTypeSelector: React.FC = () => {
               <Radio value={PERSON_TYPE.BUSINESS} />
               <IconBuilding
                 size={24}
-                color={value === PERSON_TYPE.BUSINESS ? '#1c7ed6' : '#868e96'}
+                color={
+                  value === PERSON_TYPE.BUSINESS
+                    ? 'var(--mantine-border-card-selector)'
+                    : 'var(--mantine-color-gray-6)'
+                }
               />
               <div style={{ flex: 1 }}>
                 <Text fw={500} size="md">

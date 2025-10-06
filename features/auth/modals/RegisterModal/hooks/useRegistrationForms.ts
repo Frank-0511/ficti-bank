@@ -13,13 +13,8 @@ import {
   type SecurityInfoFormData,
 } from '../schemas';
 
-/**
- * Hook para manejar todos los formularios del registro
- * Responsabilidad: Solo la creación e inicialización de formularios
- */
 export const useRegistrationForms = () => {
   const personTypeForm = useForm<PersonTypeFormData>({
-    mode: 'uncontrolled',
     validate: zod4Resolver(personTypeSchema),
     initialValues: {
       personType: '',
@@ -27,7 +22,6 @@ export const useRegistrationForms = () => {
   });
 
   const naturalPersonBasicForm = useForm<NaturalPersonFormData>({
-    mode: 'uncontrolled',
     validate: zod4Resolver(naturalPersonSchema),
     initialValues: {
       firstName: '',

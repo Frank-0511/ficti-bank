@@ -27,7 +27,11 @@ export const RegistrationNavigation: React.FC = () => {
           Crear Cuenta
         </Button>
       ) : (
-        <Button rightSection={<IconArrowRight size={16} />} onClick={handleFormNext}>
+        <Button
+          variant="filled"
+          rightSection={<IconArrowRight size={16} />}
+          onClick={handleFormNext}
+        >
           Siguiente
         </Button>
       )}

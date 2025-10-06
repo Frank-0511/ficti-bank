@@ -28,7 +28,6 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
 
   const getHeaderClasses = () => {
     const baseClass = styles.headerContainer;
-    // Cambiar color si hay scroll O si el burger está abierto
     const shouldChangeColor = isScrolled || mobileNavOpened;
     return `${baseClass} ${shouldChangeColor ? styles.scrolled : styles.initial}`;
   };
@@ -37,7 +36,6 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
     <Container size="100%" h="100%" className={getHeaderClasses()}>
       <Container size="xl" h="100%" className={styles.innerContainer}>
         <Group h="100%" justify="space-between" wrap="nowrap">
-          {/* Logo */}
           <Group gap="md" wrap="nowrap">
             <UnstyledButton component="a" href="/" className={styles.logoLink}>
               <Group gap="sm" wrap="nowrap">
@@ -61,7 +59,6 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
               </Group>
             </UnstyledButton>
 
-            {/* Menú Tipos de Cuenta */}
             <Menu shadow="md" width={280}>
               <Menu.Target>
                 <UnstyledButton className={styles.menuTrigger}>
@@ -96,7 +93,6 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
               </Menu.Dropdown>
             </Menu>
           </Group>
-          {/* Menú Desktop */}
           <Group gap="md" visibleFrom="md">
             <ColorSchemeToggle />
 
@@ -116,7 +112,6 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
               </>
             )}
           </Group>
-          {/* Menú Mobile */}
           <Group gap="sm" hiddenFrom="md">
             <ColorSchemeToggle />
             <Burger

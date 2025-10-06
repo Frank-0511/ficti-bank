@@ -1,21 +1,13 @@
-/**
- * Registration validation constants and messages
- * Centralized place for all registration validation rules and error messages
- */
-
-// Person type constants
 export const PERSON_TYPE = {
   NATURAL: 'natural',
   BUSINESS: 'business',
 } as const;
 
-// Name field constants
 export const NAME_FIELD = {
   FIRST_NAME: 'firstName',
   LAST_NAME: 'lastName',
 } as const;
 
-// Field length constraints
 export const FIELD_LENGTHS = {
   DNI: 8,
   RUC: 11,
@@ -28,16 +20,13 @@ export const FIELD_LENGTHS = {
   PHONE_MIN: 7,
 } as const;
 
-// Regular expressions
 export const REGEX_PATTERNS = {
   ONLY_DIGITS: /^\d+$/,
   MOBILE_FORMAT: /^9\d{8}$/,
   PASSWORD_STRENGTH: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
 } as const;
 
-// Error messages
 export const ERROR_MESSAGES = {
-  // Required fields
   REQUIRED: {
     EMAIL: 'Email es requerido',
     PASSWORD: 'Contraseña es requerida',
@@ -58,7 +47,6 @@ export const ERROR_MESSAGES = {
     PERSON_TYPE: 'Tipo de persona es requerido',
   },
 
-  // Format validation
   FORMAT: {
     EMAIL_INVALID: 'Email inválido',
     DNI_LENGTH: 'DNI debe tener exactamente 8 dígitos',
@@ -70,7 +58,6 @@ export const ERROR_MESSAGES = {
     PHONE_MIN_LENGTH: 'Teléfono debe tener al menos 7 dígitos',
   },
 
-  // Length validation
   LENGTH: {
     FIRST_NAME_MIN: 'Nombre debe tener al menos 2 caracteres',
     LAST_NAME_MIN: 'Apellido debe tener al menos 2 caracteres',
@@ -80,7 +67,6 @@ export const ERROR_MESSAGES = {
     PASSWORD_MIN: 'La contraseña debe tener al menos 8 caracteres',
   },
 
-  // Business logic validation
   BUSINESS: {
     PASSWORD_STRENGTH:
       'La contraseña debe contener al menos una mayúscula, una minúscula y un número',
@@ -89,7 +75,6 @@ export const ERROR_MESSAGES = {
   },
 } as const;
 
-// Age validation
 export const AGE_REQUIREMENTS = {
   MIN_AGE: 18,
 } as const;

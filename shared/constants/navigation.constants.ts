@@ -1,9 +1,5 @@
 import { IconCalendarTime, IconCreditCard, IconPigMoney } from '@tabler/icons-react';
 
-/**
- * Account types configuration for navigation menus
- * Used in Header and Navbar components
- */
 export const ACCOUNT_TYPES = [
   {
     icon: IconPigMoney,

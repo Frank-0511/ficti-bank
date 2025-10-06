@@ -1,7 +1,5 @@
-// Main composition hook
-export { useRegistration } from './useRegistration';
+export { useRegistration, type UseRegistrationReturn } from './useRegistration';
 
-// Specific hooks (available for individual use if needed)
 export { useFormValidation } from './useFormValidation';
 export { useNavigationActions } from './useNavigationActions';
 export { useRegistrationForms } from './useRegistrationForms';

@@ -1,3 +1,44 @@
+:root {
+  --scrollbar-width: 8px;
+  --scrollbar-thumb-opacity: 0.6;
+  --scrollbar-thumb-hover-opacity: 1;
+}
+
+[data-mantine-color-scheme='light'] {
+  --scrollbar-thumb-color: var(--mantine-color-blue-filled);
+  --scrollbar-track: var(--mantine-color-gray-2);
+}
+
+[data-mantine-color-scheme='dark'] {
+  --scrollbar-thumb-color: var(--mantine-color-blue-filled);
+  --scrollbar-track: var(--mantine-color-dark-5);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  opacity: var(--scrollbar-thumb-opacity);
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  opacity: var(--scrollbar-thumb-hover-opacity);
+}
 
 .global-transition {
   transition:  color 0.3s ease-out,

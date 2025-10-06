@@ -2,11 +2,6 @@ import { z } from 'zod';
 import { AGE_REQUIREMENTS, ERROR_MESSAGES, NAME_FIELD } from '../../constants';
 import { createDniValidation, createNameValidation } from '../../field-validations';
 
-/**
- * Schema for natural person basic information
- */
-
-// Birth date validation (only used here)
 const birthDateValidation = z
   .string()
   .nullable()

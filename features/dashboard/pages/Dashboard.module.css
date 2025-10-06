@@ -1,0 +1,7 @@
+.appShell {
+  transition: all 0.5s ease-out !important;
+}
+
+.appShellAside {
+  border-left: none;
+}

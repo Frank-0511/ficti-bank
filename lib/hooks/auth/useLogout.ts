@@ -1,21 +1,23 @@
 import { useRouter } from 'next/router';
 import { notifications } from '@mantine/notifications';
-import { useAuthStore } from '@/lib/store';
+import { useAccountStore, useAuthStore } from '@/lib/store';
 
 export const useLogout = () => {
   const router = useRouter();
   const logout = useAuthStore((state) => state.logout);
+  const clearAccounts = useAccountStore((state) => state.clearAccounts);
 
   const handleLogout = () => {
     logout();
+    clearAccounts();
 
     notifications.show({
       id: 'auth-logout',
       title: 'Sesión cerrada',
       message: 'Has cerrado sesión correctamente',
       color: 'blue',
-      autoClose: 3000, // Cierra automáticamente después de 3 segundos (default es 4000)
-      withCloseButton: true, // Permite cerrar manualmente
+      autoClose: 3000,
+      withCloseButton: true,
     });
 
     router.push('/');

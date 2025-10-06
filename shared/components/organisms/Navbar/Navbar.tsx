@@ -16,7 +16,6 @@ export function Navbar() {
         transition: 'all 0.3s ease',
       }}
     >
-      {/* Navigation Links */}
       <Stack gap="md">
         <Text size="md" fw={700} c="dimmed" tt="uppercase" px="sm" lts={1}>
           Tipos de Cuenta
@@ -53,7 +52,6 @@ export function Navbar() {
         ))}
       </Stack>
 
-      {/* Action Buttons */}
       <Stack
         gap="lg"
         mt="auto"

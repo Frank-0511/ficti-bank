@@ -59,6 +59,9 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
     '--mantine-color-card-shadow': '0 1.25rem 2.5rem rgba(0, 0, 0, 0.08)',
     '--mantine-color-primary-icon-shadow': '0 0.625rem 2rem rgba(59, 130, 246, 0.2)',
     '--mantine-color-body': 'var(--mantine-color-blue-0)',
+    '--mantine-color-balance-section': 'var(--mantine-color-gray-0)',
+    '--mantine-color-detail-item': 'var(--mantine-color-gray-0)',
+    '--mantine-border-card-selector': 'var(--mantine-color-blue-6)',
   },
   dark: {
     '--mantine-color-scrolled-background': 'var(--mantine-color-dark-9)',
@@ -72,5 +75,8 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
     '--mantine-color-card': 'var(--mantine-color-dark-6)',
     '--mantine-color-card-shadow': '0 1.25rem 2.5rem rgba(0, 0, 0, 0.3)',
     '--mantine-color-primary-icon-shadow': '0 0.625rem 2rem rgba(59, 130, 246, 0.3)',
+    '--mantine-color-balance-section': 'var(--mantine-color-dark-5)',
+    '--mantine-color-detail-item': 'var(--mantine-color-dark-5)',
+    '--mantine-border-card-selector': 'var(--mantine-color-cyan-4)',
   },
 });

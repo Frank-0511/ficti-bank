@@ -3,9 +3,6 @@ import { createPasswordValidation } from '../../../../shared/validations';
 import { ERROR_MESSAGES } from '../../constants';
 import { requiredStringValidation } from '../../field-validations';
 
-/**
- * Schema for security information (passwords)
- */
 export const securityInfoSchema = z
   .object({
     password: createPasswordValidation(), // isLogin = false (registration)

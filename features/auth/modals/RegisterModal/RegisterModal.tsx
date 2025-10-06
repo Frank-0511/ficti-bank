@@ -20,20 +20,16 @@ const RegisterModalContent: React.FC<{ id: string }> = ({ id }) => {
   const { switchToLogin } = useAuthModals();
   const { currentStep, resetStepper, isSuccessStep, personType } = useRegistrationContext();
 
-  // Cleanup cuando el componente se desmonte
   useEffect(() => {
     return () => {
       resetStepper();
     };
-  }, [resetStepper]);
+  }, []);
 
-  // Cambiar el título del modal basado en el paso actual
   useEffect(() => {
     if (currentStep === 'success') {
-      // Ocultar el título cuando esté en success
       modals.updateModal({ modalId: id, title: null });
     } else {
-      // Restaurar el título original
       modals.updateModal({
         modalId: id,
         title: (
@@ -67,20 +63,16 @@ const RegisterModalContent: React.FC<{ id: string }> = ({ id }) => {
 
   return (
     <Stack gap="lg">
-      {/* Progress bar - only show if not on success step */}
       {!isSuccessStep && <RegistrationProgress />}
 
-      {/* Step content */}
       {isSuccessStep ? (
         <RegistrationSuccess onSwitchToLogin={switchToLogin} />
       ) : (
         <>
           {renderStepContent()}
 
-          {/* Navigation buttons */}
           <RegistrationNavigation />
 
-          {/* Switch to Login */}
           <Divider label="o" labelPosition="center" />
           <Group justify="center" gap="xs">
             <Text size="sm" c="dimmed">

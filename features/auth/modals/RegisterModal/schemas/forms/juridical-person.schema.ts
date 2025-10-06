@@ -2,11 +2,6 @@ import { z } from 'zod';
 import { ERROR_MESSAGES, FIELD_LENGTHS, REGEX_PATTERNS } from '../../constants';
 import { createDniValidation } from '../../field-validations';
 
-/**
- * Schema for juridical person basic information
- */
-
-// RUC validation (only used here)
 const rucValidation = z.string().superRefine((val, ctx) => {
   if (!val.trim()) {
     ctx.addIssue({
@@ -30,7 +25,6 @@ const rucValidation = z.string().superRefine((val, ctx) => {
   }
 });
 
-// Business name validation (only used here)
 const businessNameValidation = z.string().superRefine((val, ctx) => {
   if (!val.trim()) {
     ctx.addIssue({
@@ -47,7 +41,6 @@ const businessNameValidation = z.string().superRefine((val, ctx) => {
   }
 });
 
-// Legal representative validation (only used here)
 const legalRepresentativeValidation = z.string().superRefine((val, ctx) => {
   if (!val.trim()) {
     ctx.addIssue({
@@ -68,7 +61,7 @@ export const juridicalPersonSchema = z.object({
   businessName: businessNameValidation,
   ruc: rucValidation,
   legalRepresentative: legalRepresentativeValidation,
-  representativeDni: createDniValidation(true), // isRepresentative = true
+  representativeDni: createDniValidation(true),
 });
 
 export type JuridicalPersonFormData = z.infer<typeof juridicalPersonSchema>;

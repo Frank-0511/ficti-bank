@@ -1,14 +1,43 @@
+import { UseFormReturnType } from '@mantine/form';
+import {
+  type ContactInfoFormData,
+  type JuridicalPersonFormData,
+  type NaturalPersonFormData,
+  type PersonType,
+  type PersonTypeFormData,
+  type SecurityInfoFormData,
+} from '../schemas';
 import { useFormValidation } from './useFormValidation';
 import { useNavigationActions } from './useNavigationActions';
 import { useRegistrationForms } from './useRegistrationForms';
-import { useStepNavigation } from './useStepNavigation';
+import { useStepNavigation, type Step } from './useStepNavigation';
 
-/**
- * Hook principal que compone todos los hooks específicos
- * Responsabilidad: Solo composición y orchestración
- */
-export const useRegistration = () => {
-  // Composición de hooks específicos
+export type UseRegistrationReturn = {
+  currentStep: Step;
+  personType: PersonType | '';
+  getStepIndex: (step: Step) => number;
+  handleNext: () => void;
+  handleBack: () => void;
+  goToSuccess: () => void;
+  resetStepper: () => void;
+  setPersonTypeAndNext: (selectedPersonType: PersonType) => void;
+  isLastStep: boolean;
+  isFirstStep: boolean;
+  isSuccessStep: boolean;
+  progress: number;
+  personTypeForm: UseFormReturnType<PersonTypeFormData>;
+  naturalPersonBasicForm: UseFormReturnType<NaturalPersonFormData>;
+  juridicalPersonBasicForm: UseFormReturnType<JuridicalPersonFormData>;
+  contactInfoForm: UseFormReturnType<ContactInfoFormData>;
+  securityInfoForm: UseFormReturnType<SecurityInfoFormData>;
+  getCurrentForm: () => UseFormReturnType<any>;
+  validateAllForms: () => boolean;
+  getFormData: () => any;
+  handleFormNext: () => void;
+  handleFormSubmit: () => void;
+};
+
+export const useRegistration = (): UseRegistrationReturn => {
   const stepNavigation = useStepNavigation();
   const forms = useRegistrationForms();
 
@@ -29,18 +58,10 @@ export const useRegistration = () => {
     goToSuccess: stepNavigation.goToSuccess,
   });
 
-  // Retornar la interfaz completa combinando todos los hooks
   return {
-    // Step navigation
     ...stepNavigation,
-
-    // Forms
     ...forms,
-
-    // Form validation
     ...formValidation,
-
-    // Navigation actions
     ...navigationActions,
   };
 };

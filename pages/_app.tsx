@@ -1,4 +1,3 @@
-// pages/_app.tsx
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -12,6 +11,7 @@ import '@mantine/notifications/styles.css';
 import '../styles/globals.css';
 
 import { LoginModal, RegisterModal } from '@/features/auth/modals';
+import { CloseAccountModal, OpenAccountModal } from '@/features/dashboard/components';
 
 import '@/lib/mocks/browser';
 
@@ -53,6 +53,8 @@ export default function App({ Component, pageProps }: AppProps) {
             modals={{
               login: LoginModal,
               register: RegisterModal,
+              openAccount: OpenAccountModal,
+              closeAccount: CloseAccountModal,
             }}
           >
             <Notifications />

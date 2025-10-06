@@ -1,4 +1,4 @@
-/* Animación flotante */
+
 @keyframes float {
   0%,
   100% {
@@ -10,7 +10,6 @@
   }
 }
 
-/* Elementos decorativos de fondo */
 .decorativeIcon {
   animation: float 4s ease-in-out infinite;
 }
@@ -19,13 +18,11 @@
   animation: float 3s ease-in-out infinite reverse;
 }
 
-/* Ícono principal con animación */
 .mainIcon {
   box-shadow: var(--mantine-color-primary-icon-shadow);
   animation: float 3s ease-in-out infinite;
 }
 
-/* Elementos posicionados absolutos */
 .decorativeTopRight {
   position: absolute;
   top: 20px;

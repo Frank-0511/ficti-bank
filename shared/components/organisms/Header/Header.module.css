@@ -2,7 +2,6 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Estado inicial */
 .headerContainer.initial {
   background: color-mix(in srgb, var(--mantine-color-body) 10%, transparent);
   backdrop-filter: none;
@@ -10,7 +9,6 @@
   box-shadow: none;
 }
 
-/* Estado con scroll */
 .headerContainer.scrolled {
   background: var(--mantine-color-scrolled-background);
 }

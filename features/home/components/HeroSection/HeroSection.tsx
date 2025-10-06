@@ -51,7 +51,6 @@ export function HeroSection() {
 
         <Grid.Col span={{ base: 12, md: 5 }} visibleFrom="md">
           <Flex justify="center" align="center" p="xl" pos="relative">
-            {/* Elementos decorativos de fondo */}
             <Box className={`${styles.decorativeTopRight} ${styles.decorativeIcon}`}>
               <IconBuildingBank size={30} />
             </Box>
@@ -59,7 +58,6 @@ export function HeroSection() {
               <IconBuildingBank size={40} />
             </Box>
 
-            {/* Ícono principal con animación flotante */}
             <ThemeIcon
               size={220}
               radius="xl"

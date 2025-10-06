@@ -3,10 +3,6 @@ import { emailValidation } from '../../../../shared/validations';
 import { ERROR_MESSAGES, FIELD_LENGTHS, REGEX_PATTERNS } from '../../constants';
 import { requiredStringValidation } from '../../field-validations';
 
-/**
- * Schema for contact information
- */
-
 const addressValidation = z.string().superRefine((val, ctx) => {
   if (!val.trim()) {
     ctx.addIssue({

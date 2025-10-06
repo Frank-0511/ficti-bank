@@ -13,10 +13,6 @@ interface NavigationActionsParams {
   goToSuccess: () => void;
 }
 
-/**
- * Hook para manejar las acciones de navegación del formulario
- * Responsabilidad: Solo la lógica de navegación con validación
- */
 export const useNavigationActions = (params: NavigationActionsParams) => {
   const {
     currentStep,
@@ -34,6 +30,7 @@ export const useNavigationActions = (params: NavigationActionsParams) => {
 
     if (currentStep === 'personType') {
       const isValid = personTypeForm.validate();
+
       if (isValid.hasErrors) {
         return;
       }
@@ -44,6 +41,7 @@ export const useNavigationActions = (params: NavigationActionsParams) => {
     }
 
     const validation = form.validate();
+
     if (validation.hasErrors) {
       return;
     }

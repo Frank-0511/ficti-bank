@@ -1,4 +1,3 @@
-// pages/_document.tsx
 import { Head, Html, Main, NextScript } from 'next/document';
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 

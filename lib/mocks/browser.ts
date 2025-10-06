@@ -1,7 +1,3 @@
-/**
- * Mock Service Worker setup for browser
- */
-
 import { setupWorker } from 'msw/browser';
 import { handlers } from './handlers';
 import { initializeMockData } from './init';

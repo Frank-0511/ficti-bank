@@ -1,0 +1,22 @@
+.navbar {
+  background: var(--mantine-color-scrolled-background);
+  border-left: none;
+}
+
+.navLink {
+  padding: var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-md);
+  transition: all 0.3s ease;
+}
+
+.navLink:hover:not([data-disabled]) {
+  background-color: light-dark(var(--mantine-color-blue-0), var(--mantine-color-dark-5));
+  transform: translateX(4px);
+}
+
+.navLink[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+

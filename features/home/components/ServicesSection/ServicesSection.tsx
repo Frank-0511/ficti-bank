@@ -93,7 +93,6 @@ export function ServicesSection() {
               Gestiona todas tus operaciones bancarias desde un solo lugar:
             </Text>
 
-            {/* Lista de servicios responsive */}
             <Stack gap="md" align="center" hiddenFrom="md">
               {services.map((service, index) => (
                 <ServiceItem key={index} service={service} />

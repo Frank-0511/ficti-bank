@@ -20,10 +20,6 @@ interface FormValidationParams {
   securityInfoForm: UseFormReturnType<SecurityInfoFormData>;
 }
 
-/**
- * Hook para manejar validaciones y obtención de datos de formularios
- * Responsabilidad: Solo validación y extracción de datos
- */
 export const useFormValidation = (params: FormValidationParams) => {
   const {
     currentStep,

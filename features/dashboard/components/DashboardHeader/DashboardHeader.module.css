@@ -1,0 +1,37 @@
+.headerContainer {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.headerContainer.initial {
+  background: color-mix(in srgb, var(--mantine-color-body) 10%, transparent);
+  backdrop-filter: none;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.headerContainer.scrolled {
+  background: var(--mantine-color-scrolled-background);
+}
+
+.innerContainer {
+  margin: 0 auto;
+}
+
+.title {
+  font-size: var(--mantine-h2-font-size);
+  line-height: 1.2;
+}
+
+.welcome {
+  margin-top: rem(4px);
+}
+
+@media (max-width: 48em) {
+  .title {
+    font-size: var(--mantine-h3-font-size);
+  }
+
+  .welcome {
+    font-size: var(--mantine-font-size-xs);
+  }
+}

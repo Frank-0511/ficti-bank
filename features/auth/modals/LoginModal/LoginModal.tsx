@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { IconAt, IconLock } from '@tabler/icons-react';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Anchor, Divider, Group, PasswordInput, Stack, Text, TextInput } from '@mantine/core';
@@ -11,6 +12,7 @@ import { loginSchema, type LoginFormValues } from './schemas';
 export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
   const { switchToRegister, closeModal } = useAuthModals();
   const loginMutation = useLogin();
+  const router = useRouter();
 
   const form = useForm<LoginFormValues>({
     validate: zod4Resolver(loginSchema),
@@ -24,9 +26,8 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
     loginMutation.mutate(values, {
       onSuccess: () => {
         closeModal(id);
-        // TODO: Redirigir al dashboard o página principal
+        router.push('/dashboard');
       },
-      // onError ya está manejado en el hook
     });
   };
 
@@ -38,7 +39,6 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack gap="lg">
-        {/* Email Field */}
         <TextInput
           data-autofocus
           label="Email"
@@ -48,7 +48,6 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
           {...form.getInputProps('email')}
         />
 
-        {/* Password Field */}
         <PasswordInput
           label="Contraseña"
           placeholder="Tu contraseña"
@@ -57,10 +56,8 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
           {...form.getInputProps('password')}
         />
 
-        {/* Submit Button */}
         <LoginButton mode="submit" size="md" fullWidth loading={loginMutation.isPending} />
 
-        {/* Forgot Password */}
         <Group justify="center">
           <Anchor size="sm" c="dimmed">
             ¿Olvidaste tu contraseña?
@@ -69,7 +66,6 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
 
         <Divider label="o" labelPosition="center" />
 
-        {/* Switch to Register */}
         <Group justify="center" gap="xs">
           <Text size="sm" c="dimmed">
             ¿No tienes cuenta?

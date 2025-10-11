@@ -24,9 +24,9 @@ export const LoginModal: React.FC<ContextModalProps> = ({ id }) => {
 
   const handleSubmit = (values: LoginFormValues) => {
     loginMutation.mutate(values, {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await router.push('/dashboard');
         closeModal(id);
-        router.push('/dashboard');
       },
     });
   };

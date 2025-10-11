@@ -6,13 +6,23 @@
 
 [data-mantine-color-scheme='light'] {
   --scrollbar-thumb-color: var(--mantine-color-blue-filled);
-  --scrollbar-track: var(--mantine-color-gray-2);
+  --scrollbar-track: var(--mantine-color-blue-0);
 }
 
 [data-mantine-color-scheme='dark'] {
   --scrollbar-thumb-color: var(--mantine-color-blue-filled);
-  --scrollbar-track: var(--mantine-color-dark-5);
+  --scrollbar-track: var(--mantine-color-dark-7);
 }
+
+/* Cambiar color del track cuando hay scroll */
+html[data-scrolled][data-mantine-color-scheme='light'] {
+  --scrollbar-track: var(--mantine-color-scrolled-background);
+}
+
+html[data-scrolled][data-mantine-color-scheme='dark'] {
+  --scrollbar-track: var(--mantine-color-scrolled-background);
+}
+
 
 * {
   scrollbar-width: thin;
@@ -38,6 +48,25 @@
 
 *::-webkit-scrollbar-thumb:hover {
   opacity: var(--scrollbar-thumb-hover-opacity);
+}
+
+/* NProgress - Barra de progreso de navegación */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: var(--mantine-color-blue-filled);
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--mantine-color-blue-filled), 0 0 5px var(--mantine-color-blue-filled);
 }
 
 .global-transition {

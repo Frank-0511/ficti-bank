@@ -1,6 +1,6 @@
 import { IconLogin } from '@tabler/icons-react';
-import { Button, type ButtonProps } from '@mantine/core';
-import { useAuthModals } from '@/lib/hooks';
+import { Button, Group, Text, type ButtonProps } from '@mantine/core';
+import { modals } from '@mantine/modals';
 
 interface LoginButtonProps extends ButtonProps {
   children?: React.ReactNode;
@@ -19,13 +19,26 @@ export function LoginButton({
   onClick: customOnClick,
   ...props
 }: LoginButtonProps) {
-  const { openLogin } = useAuthModals();
-
   const handleClick = () => {
     if (customOnClick) {
       customOnClick();
     } else {
-      openLogin();
+      modals.openContextModal({
+        modal: 'login',
+        modalId: 'auth-login-modal',
+        title: (
+          <Group gap="sm">
+            <IconLogin size={20} />
+            <Text fw={600}>Iniciar Sesión</Text>
+          </Group>
+        ),
+        size: 'md',
+        centered: true,
+        closeOnClickOutside: true,
+        closeOnEscape: true,
+        trapFocus: true,
+        innerProps: {},
+      });
     }
   };
 

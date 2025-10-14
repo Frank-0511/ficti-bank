@@ -25,36 +25,34 @@ export const DashboardHeader = ({
   };
 
   return (
-    <Container size="100%" h="100%" className={getHeaderClasses()}>
-      <Container size="xl" h="100%" className={styles.innerContainer}>
-        <Group h="100%" justify="space-between" wrap="nowrap">
-          <div>
-            <Title order={2} className={styles.title}>
-              Mis Cuentas
-            </Title>
-            <Text size="sm" c="dimmed" className={styles.welcome}>
-              Bienvenido, {user?.name}
-            </Text>
-          </div>
+    <Container size="100%" h="100%" px={{ base: 'lg', md: 'xl' }} className={getHeaderClasses()}>
+      <Group h="100%" justify="space-between" wrap="nowrap">
+        <div>
+          <Title order={2} className={styles.title}>
+            Mis Cuentas
+          </Title>
+          <Text size="sm" c="dimmed" className={styles.welcome}>
+            Bienvenido, {user?.name}
+          </Text>
+        </div>
 
-          <Group gap="md" visibleFrom="sm" wrap="nowrap">
-            <ColorSchemeToggle />
-            <ActionIcon variant="subtle" size="lg" onClick={handleLogout} title="Cerrar sesión">
-              <IconLogout size={20} />
-            </ActionIcon>
-          </Group>
-
-          <Group gap="sm" hiddenFrom="sm" wrap="nowrap">
-            <ColorSchemeToggle />
-            <Burger
-              opened={mobileNavOpened}
-              onClick={toggleMobileNav}
-              size="sm"
-              aria-label="Toggle navigation"
-            />
-          </Group>
+        <Group gap="md" visibleFrom="sm" wrap="nowrap">
+          <ColorSchemeToggle />
+          <ActionIcon variant="subtle" size="lg" onClick={handleLogout} title="Cerrar sesión">
+            <IconLogout size={20} />
+          </ActionIcon>
         </Group>
-      </Container>
+
+        <Group gap="sm" hiddenFrom="sm" wrap="nowrap">
+          <ColorSchemeToggle />
+          <Burger
+            opened={mobileNavOpened}
+            onClick={toggleMobileNav}
+            size="sm"
+            aria-label="Toggle navigation"
+          />
+        </Group>
+      </Group>
     </Container>
   );
 };

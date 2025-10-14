@@ -72,7 +72,11 @@ export const DashboardPage: React.FC = () => {
         <DashboardNavbar activeSection={activeSection} onSectionChange={setActiveSection} />
       </AppShell.Navbar>
 
-      <AppShell.Main>{renderContent()}</AppShell.Main>
+      <AppShell.Main>
+        <Container size="xl" px={{ base: 'lg', md: 'xl' }}>
+          {renderContent()}
+        </Container>
+      </AppShell.Main>
     </AppShell>
   );
 };

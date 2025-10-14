@@ -76,6 +76,17 @@ export default function App({ Component, pageProps }: AppProps) {
               openAccount: OpenAccountModal,
               closeAccount: CloseAccountModal,
             }}
+            modalProps={{
+              overlayProps: {
+                backgroundOpacity: 0.6,
+                blur: 4,
+              },
+              transitionProps: {
+                transition: 'fade',
+                duration: 300,
+                timingFunction: 'ease-in-out',
+              },
+            }}
           >
             <RouteProgressBar />
             <Notifications />

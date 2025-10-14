@@ -1,8 +1,7 @@
-import { IconBuildingBank, IconChevronDown, IconUserPlus } from '@tabler/icons-react';
+import { IconBuildingBank, IconChevronDown } from '@tabler/icons-react';
 import {
   ActionIcon,
   Burger,
-  Button,
   Container,
   Group,
   Menu,
@@ -10,7 +9,7 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core';
-import { useAuthModals, useScrolled } from '@/lib/hooks';
+import { useScrolled } from '@/lib/hooks';
 import { useAuthStore } from '@/lib/store';
 import { ACCOUNT_TYPES } from '@/shared/constants';
 import { ColorSchemeToggle, LoginButton, UserMenu } from '../../molecules';
@@ -23,7 +22,6 @@ interface HeaderProps {
 
 export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps) {
   const isScrolled = useScrolled();
-  const { openRegister } = useAuthModals();
   const { isAuthenticated } = useAuthStore();
 
   const getHeaderClasses = () => {
@@ -100,14 +98,6 @@ export function Header({ mobileNavOpened = false, toggleMobileNav }: HeaderProps
               <UserMenu />
             ) : (
               <>
-                <Button
-                  variant="light"
-                  size="sm"
-                  onClick={openRegister}
-                  leftSection={<IconUserPlus size={16} />}
-                >
-                  Registro
-                </Button>
                 <LoginButton />
               </>
             )}

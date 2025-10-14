@@ -5,7 +5,7 @@ export const mockAccounts: Account[] = [
   {
     accountType: ACCOUNT_TYPE.SAVINGS,
     accountNumber: 'CA-0001234567',
-    clientCode: 'CLI-001',
+    clientCode: 'CLI001',
     currency: CURRENCY.SOLES,
     openingDate: '2024-01-15',
     initialBalance: 0,
@@ -17,7 +17,7 @@ export const mockAccounts: Account[] = [
   {
     accountType: ACCOUNT_TYPE.CHECKING,
     accountNumber: 'CC-0009876543',
-    clientCode: 'CLI-001',
+    clientCode: 'CLI001',
     currency: CURRENCY.DOLLARS,
     openingDate: '2024-03-10',
     initialBalance: 500,
@@ -30,7 +30,7 @@ export const mockAccounts: Account[] = [
   {
     accountType: ACCOUNT_TYPE.FIXED_TERM,
     accountNumber: 'PF-0005555555',
-    clientCode: 'CLI-001',
+    clientCode: 'CLI001',
     currency: CURRENCY.SOLES,
     openingDate: '2024-06-01',
     initialBalance: 10000,
@@ -44,7 +44,7 @@ export const mockAccounts: Account[] = [
   {
     accountType: ACCOUNT_TYPE.SAVINGS,
     accountNumber: 'CA-0001111111',
-    clientCode: 'CLI-001',
+    clientCode: 'CLI001',
     currency: CURRENCY.SOLES,
     openingDate: '2023-12-01',
     initialBalance: 0,

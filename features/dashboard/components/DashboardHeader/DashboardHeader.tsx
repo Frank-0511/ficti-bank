@@ -1,9 +1,8 @@
-import { IconLogout, IconPlus } from '@tabler/icons-react';
-import { ActionIcon, Burger, Button, Container, Group, Text, Title } from '@mantine/core';
+import { IconLogout } from '@tabler/icons-react';
+import { ActionIcon, Burger, Container, Group, Text, Title } from '@mantine/core';
 import { useLogout, useScrolled } from '@/lib/hooks';
 import { useAuthStore } from '@/lib/store';
 import { ColorSchemeToggle } from '@/shared/components';
-import { useAccountModals } from '../../hooks';
 import styles from './DashboardHeader.module.css';
 
 interface DashboardHeaderProps {
@@ -17,7 +16,6 @@ export const DashboardHeader = ({
 }: DashboardHeaderProps) => {
   const { user } = useAuthStore();
   const handleLogout = useLogout();
-  const { openAccountModal } = useAccountModals();
   const isScrolled = useScrolled();
 
   const getHeaderClasses = () => {
@@ -40,9 +38,6 @@ export const DashboardHeader = ({
           </div>
 
           <Group gap="md" visibleFrom="sm" wrap="nowrap">
-            <Button leftSection={<IconPlus size={18} />} onClick={openAccountModal}>
-              Aperturar Cuenta
-            </Button>
             <ColorSchemeToggle />
             <ActionIcon variant="subtle" size="lg" onClick={handleLogout} title="Cerrar sesión">
               <IconLogout size={20} />

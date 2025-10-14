@@ -8,10 +8,12 @@ import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
+import 'mantine-react-table/styles.css';
 import '../styles/globals.css';
+import '../styles/nprogress.css';
 
-import { LoginModal, RegisterModal } from '@/features/auth/modals';
-import { CloseAccountModal, OpenAccountModal } from '@/features/dashboard/components';
+import { CloseAccountModal, OpenAccountModal, RegisterClientModal } from '@/features/dashboard';
+import { LoginModal, RouteProgressBar } from '@/shared/components';
 
 import '@/lib/mocks/browser';
 
@@ -70,11 +72,12 @@ export default function App({ Component, pageProps }: AppProps) {
           <ModalsProvider
             modals={{
               login: LoginModal,
-              register: RegisterModal,
+              registerClient: RegisterClientModal,
               openAccount: OpenAccountModal,
               closeAccount: CloseAccountModal,
             }}
           >
+            <RouteProgressBar />
             <Notifications />
             <Component {...pageProps} />
           </ModalsProvider>

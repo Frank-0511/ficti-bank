@@ -1,0 +1,1 @@
+export { ClientDetailNavbar } from './ClientDetailNavbar';

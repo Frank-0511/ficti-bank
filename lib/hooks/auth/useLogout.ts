@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { notifications } from '@mantine/notifications';
-import { useAccountStore, useAuthStore } from '@/lib/store';
+import { useAuthStore } from '@/lib/store';
 
 export const useLogout = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const logout = useAuthStore((state) => state.logout);
-  const clearAccounts = useAccountStore((state) => state.clearAccounts);
 
   const handleLogout = () => {
     logout();
-    clearAccounts();
+    queryClient.clear();
 
     notifications.show({
       id: 'auth-logout',

@@ -1,25 +1,20 @@
 import { ENTITY_STATUS, USER_ROLE } from '../../constants';
+import type { User } from '../../types';
 
 export const USERS_STORAGE_KEY = 'T_Usuario';
 
-export interface MockUser {
-  id: string;
-  code: string;
-  username: string;
-  email: string;
+// Extensión de User solo para mocks (incluye password)
+export interface UserWithPassword extends User {
   password: string;
-  name: string;
-  role: typeof USER_ROLE.ADMIN | typeof USER_ROLE.EMPLOYEE;
-  status: typeof ENTITY_STATUS.ACTIVE | typeof ENTITY_STATUS.INACTIVE;
 }
 
-export const DEFAULT_USERS: MockUser[] = [
+export const DEFAULT_USERS: UserWithPassword[] = [
   {
     id: '1',
     code: 'USU001',
     username: 'admin',
     email: 'admin@fictibank.com',
-    password: 'admin123',
+    password: 'Admin123',
     name: 'Administrador Principal',
     role: USER_ROLE.ADMIN,
     status: ENTITY_STATUS.ACTIVE,
@@ -29,7 +24,7 @@ export const DEFAULT_USERS: MockUser[] = [
     code: 'USU002',
     username: 'empleado1',
     email: 'empleado@fictibank.com',
-    password: 'emp123',
+    password: 'Empleado123',
     name: 'Juan Pérez',
     role: USER_ROLE.EMPLOYEE,
     status: ENTITY_STATUS.ACTIVE,

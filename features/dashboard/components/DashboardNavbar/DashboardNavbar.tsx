@@ -1,40 +1,81 @@
-import { IconLogout, IconPlus, IconWallet } from '@tabler/icons-react';
-import { Button, Divider, NavLink, Stack, Text } from '@mantine/core';
+import { IconChevronRight, IconLogout } from '@tabler/icons-react';
+import { Button, Divider, NavLink, ScrollArea, Stack, Text } from '@mantine/core';
 import { useLogout } from '@/lib/hooks';
-import { useAccountModals } from '../../hooks';
+import { useAuthStore } from '@/lib/store';
+import { DASHBOARD_MENU, filterMenuByRole } from '../../constants';
 import styles from './DashboardNavbar.module.css';
 
-export function DashboardNavbar() {
+interface DashboardNavbarProps {
+  activeSection: string;
+  onSectionChange: (section: string) => void;
+}
+
+export function DashboardNavbar({ activeSection, onSectionChange }: DashboardNavbarProps) {
   const handleLogout = useLogout();
-  const { openAccountModal } = useAccountModals();
+  const user = useAuthStore((state) => state.user);
+
+  const menuItems = user ? filterMenuByRole(DASHBOARD_MENU, user.role) : [];
+
+  const handleSectionClick = (section: string) => {
+    onSectionChange(section);
+  };
 
   return (
     <Stack p="lg" h="100%" gap="md" className={styles.navbar}>
-      <Stack gap="xs">
-        <Text size="xs" fw={700} c="dimmed" tt="uppercase" px="sm" lts={1}>
-          Acciones
-        </Text>
+      <Text size="xs" fw={700} c="dimmed" tt="uppercase" px="sm" lts={1}>
+        Menú
+      </Text>
 
-        <NavLink
-          leftSection={<IconPlus size={22} />}
-          label="Aperturar Cuenta"
-          description="Abre una nueva cuenta bancaria"
-          onClick={openAccountModal}
-          className={styles.navLink}
-        />
+      <ScrollArea flex={1}>
+        <Stack gap="xs">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
 
-        <NavLink
-          leftSection={<IconWallet size={22} />}
-          label="Mis Cuentas"
-          description="Ver todas mis cuentas"
-          disabled
-          className={styles.navLink}
-        />
-      </Stack>
+            if (item.items) {
+              return (
+                <NavLink
+                  key={item.label}
+                  leftSection={<Icon size={22} />}
+                  label={item.label}
+                  childrenOffset={28}
+                  defaultOpened
+                  className={styles.navLink}
+                >
+                  {item.items.map((subItem) => {
+                    const sectionId = subItem.path.split('/').pop() || '';
+                    return (
+                      <NavLink
+                        key={subItem.path}
+                        label={subItem.label}
+                        onClick={() => handleSectionClick(sectionId)}
+                        active={activeSection === sectionId}
+                        className={styles.subNavLink}
+                      />
+                    );
+                  })}
+                </NavLink>
+              );
+            }
+
+            const sectionId = item.path?.split('/').pop() || '';
+            return (
+              <NavLink
+                key={item.label}
+                leftSection={<Icon size={22} />}
+                rightSection={<IconChevronRight size={16} />}
+                label={item.label}
+                onClick={() => handleSectionClick(sectionId)}
+                active={activeSection === sectionId}
+                className={styles.navLink}
+              />
+            );
+          })}
+        </Stack>
+      </ScrollArea>
 
       <Divider />
 
-      <Stack gap="md" mt="auto" pt="md">
+      <Stack gap="md" pt="md">
         <Button
           variant="light"
           color="red"

@@ -4,11 +4,17 @@ import { Account } from '@/lib/types/account.types';
 import { mockAccounts } from '../data/accounts.data';
 
 export const accountHandlers = [
-  http.get('/api/accounts', () => {
+  http.get('/api/accounts', ({ request }) => {
+    const url = new URL(request.url);
+    const clientCode = url.searchParams.get('clientCode');
+    let data = mockAccounts;
+    if (clientCode) {
+      data = mockAccounts.filter((acc) => acc.clientCode === clientCode);
+    }
     const response: ApiResponse<Account[]> = {
       success: true,
       message: 'Cuentas obtenidas exitosamente',
-      data: mockAccounts,
+      data,
     };
 
     return HttpResponse.json(response);

@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw';
 import { ENTITY_STATUS } from '../../constants';
 import { LoginCredentials, LoginResponse } from '../../types';
-import { MockUser, USERS_STORAGE_KEY } from '../data/users.data';
+import { USERS_STORAGE_KEY, UserWithPassword } from '../data/users.data';
 
-const getUsers = (): MockUser[] => {
+const getUsers = (): UserWithPassword[] => {
   const stored = localStorage.getItem(USERS_STORAGE_KEY);
   return stored ? JSON.parse(stored) : [];
 };

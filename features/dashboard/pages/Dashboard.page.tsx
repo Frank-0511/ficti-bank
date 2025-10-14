@@ -1,36 +1,78 @@
-import { AppShell, Container, RemoveScroll } from '@mantine/core';
+import { useState } from 'react';
+import { AppShell, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { AccountsList, DashboardHeader, DashboardNavbar } from '../components';
+import { DashboardHeader, DashboardNavbar } from '../components';
+import { ClientsSection } from '../features/clients';
 import styles from './Dashboard.module.css';
 
-export const DashboardPage = () => {
+export const DashboardPage: React.FC = () => {
   const [mobileNavOpened, { toggle: toggleMobileNav }] = useDisclosure();
+  const [activeSection, setActiveSection] = useState('clients');
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'clients':
+        return <ClientsSection />;
+      case 'deposits':
+        return (
+          <Container size="xl" py="xl">
+            Depósitos (Próximamente)
+          </Container>
+        );
+      case 'withdrawals':
+        return (
+          <Container size="xl" py="xl">
+            Retiros (Próximamente)
+          </Container>
+        );
+      case 'transfers':
+        return (
+          <Container size="xl" py="xl">
+            Transferencias (Próximamente)
+          </Container>
+        );
+      case 'exchange-rate':
+        return (
+          <Container size="xl" py="xl">
+            Tipo de Cambio (Próximamente)
+          </Container>
+        );
+      case 'daily-summary':
+        return (
+          <Container size="xl" py="xl">
+            Resumen del Día (Próximamente)
+          </Container>
+        );
+      case 'users':
+        return (
+          <Container size="xl" py="xl">
+            Usuarios (Próximamente)
+          </Container>
+        );
+      default:
+        return <ClientsSection />;
+    }
+  };
 
   return (
-    <RemoveScroll enabled={mobileNavOpened}>
-      <AppShell
-        header={{ height: 70 }}
-        aside={{
-          width: 300,
-          breakpoint: 'sm',
-          collapsed: { desktop: true, mobile: !mobileNavOpened },
-        }}
-        className={styles.appShell}
-      >
-        <AppShell.Header>
-          <DashboardHeader mobileNavOpened={mobileNavOpened} toggleMobileNav={toggleMobileNav} />
-        </AppShell.Header>
+    <AppShell
+      header={{ height: 70 }}
+      navbar={{
+        width: 300,
+        breakpoint: 'sm',
+        collapsed: { desktop: false, mobile: !mobileNavOpened },
+      }}
+      className={styles.appShell}
+    >
+      <AppShell.Header>
+        <DashboardHeader mobileNavOpened={mobileNavOpened} toggleMobileNav={toggleMobileNav} />
+      </AppShell.Header>
 
-        <AppShell.Aside className={styles.appShellAside}>
-          <DashboardNavbar />
-        </AppShell.Aside>
+      <AppShell.Navbar className={styles.appShellAside}>
+        <DashboardNavbar activeSection={activeSection} onSectionChange={setActiveSection} />
+      </AppShell.Navbar>
 
-        <AppShell.Main>
-          <Container size="xl" py="xl">
-            <AccountsList />
-          </Container>
-        </AppShell.Main>
-      </AppShell>
-    </RemoveScroll>
+      <AppShell.Main>{renderContent()}</AppShell.Main>
+    </AppShell>
   );
 };

@@ -17,6 +17,7 @@ export const accountService = {
   },
 
   create: async (accountData: OpenAccountData): Promise<ApiResponse<Account>> => {
+    console.log('🚀 ~ accountData:', accountData);
     const { data: response } = await apiClient.post<ApiResponse<Account>>('/accounts', accountData);
 
     if (!response.success || !response.data) {

@@ -112,7 +112,11 @@ export function ClientDetailNavbar({ client }: ClientDetailNavbarProps) {
       <Divider my="md" hiddenFrom="sm" />
       <div style={{ marginTop: 'auto' }}>
         <Group gap="md" hiddenFrom="sm">
-          <Button fullWidth leftSection={<IconPlus size={18} />} onClick={openAccountModal}>
+          <Button
+            fullWidth
+            leftSection={<IconPlus size={18} />}
+            onClick={() => openAccountModal(client.code)}
+          >
             Aperturar Cuenta
           </Button>
           <Button

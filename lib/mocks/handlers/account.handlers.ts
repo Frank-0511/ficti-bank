@@ -1,32 +1,43 @@
 import { http, HttpResponse } from 'msw';
 import { ApiResponse } from '@/lib/types';
 import { Account } from '@/lib/types/account.types';
-import { mockAccounts } from '../data/accounts.data';
+import { ACCOUNTS_STORAGE_KEY } from '../data';
+
+function getAccountsFromStorage(): Account[] {
+  const stored = globalThis.localStorage?.getItem(ACCOUNTS_STORAGE_KEY);
+  if (stored) {
+    return JSON.parse(stored) as Account[];
+  }
+  return [];
+}
+
+function setAccountsToStorage(accounts: Account[]): void {
+  globalThis.localStorage?.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
+}
 
 export const accountHandlers = [
   http.get('/api/accounts', ({ request }) => {
     const url = new URL(request.url);
     const clientCode = url.searchParams.get('clientCode');
-    let data = mockAccounts;
+    let accounts = getAccountsFromStorage();
     if (clientCode) {
-      data = mockAccounts.filter((acc) => acc.clientCode === clientCode);
+      accounts = accounts.filter((acc: Account) => acc.clientCode === clientCode);
     }
     const response: ApiResponse<Account[]> = {
       success: true,
       message: 'Cuentas obtenidas exitosamente',
-      data,
+      data: accounts,
     };
-
     return HttpResponse.json(response);
   }),
 
   http.post('/api/accounts', async ({ request }) => {
     const body = (await request.json()) as any;
-
+    const accounts = getAccountsFromStorage();
     const newAccount: Account = {
       accountType: body.accountType,
       accountNumber: `${body.accountType}-${Date.now()}`,
-      clientCode: 'CLI-001',
+      clientCode: body.clientCode || 'CLI-001',
       currency: body.currency,
       openingDate: new Date().toISOString().split('T')[0],
       initialBalance: body.initialBalance || 0,
@@ -38,22 +49,20 @@ export const accountHandlers = [
       monthlyInterest: body.monthlyInterest,
       overdraftLimit: body.overdraftLimit,
     };
-
-    mockAccounts.push(newAccount);
-
+    accounts.push(newAccount);
+    setAccountsToStorage(accounts);
     const response: ApiResponse<Account> = {
       success: true,
       message: 'Cuenta aperturada exitosamente',
       data: newAccount,
     };
-
     return HttpResponse.json(response, { status: 201 });
   }),
 
   http.delete('/api/accounts/:accountNumber', ({ params }) => {
     const { accountNumber } = params;
-    const accountIndex = mockAccounts.findIndex((acc) => acc.accountNumber === accountNumber);
-
+    const accounts = getAccountsFromStorage();
+    const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
     if (accountIndex === -1) {
       const response: ApiResponse<null> = {
         success: false,
@@ -62,9 +71,7 @@ export const accountHandlers = [
       };
       return HttpResponse.json(response, { status: 404 });
     }
-
-    const account = mockAccounts[accountIndex];
-
+    const account = accounts[accountIndex];
     if (account.currentBalance !== 0) {
       const response: ApiResponse<null> = {
         success: false,
@@ -73,15 +80,13 @@ export const accountHandlers = [
       };
       return HttpResponse.json(response, { status: 400 });
     }
-
-    mockAccounts.splice(accountIndex, 1);
-
+    accounts.splice(accountIndex, 1);
+    setAccountsToStorage(accounts);
     const response: ApiResponse<null> = {
       success: true,
       message: 'Cuenta cerrada exitosamente',
       data: null,
     };
-
     return HttpResponse.json(response);
   }),
 ];

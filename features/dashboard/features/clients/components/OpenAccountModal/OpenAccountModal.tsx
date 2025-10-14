@@ -12,7 +12,13 @@ import {
 import { useOpenAccount } from '../../hooks';
 import { openAccountSchema, type OpenAccountFormData } from '../../schemas';
 
-export const OpenAccountModal: React.FC<ContextModalProps> = ({ id, context }) => {
+export const OpenAccountModal: React.FC<ContextModalProps<{ clientCode?: string }>> = ({
+  id,
+  context,
+  innerProps,
+}) => {
+  const { clientCode } = innerProps;
+  console.log('🚀 ~ OpenAccountModal ~ clientCode:', clientCode);
   const openAccountMutation = useOpenAccount();
 
   const form = useForm<OpenAccountFormData>({
@@ -26,12 +32,15 @@ export const OpenAccountModal: React.FC<ContextModalProps> = ({ id, context }) =
   });
 
   const handleSubmit = (values: OpenAccountFormData) => {
-    openAccountMutation.mutate(values, {
-      onSuccess: () => {
-        context.closeModal(id);
-        form.reset();
-      },
-    });
+    openAccountMutation.mutate(
+      { ...values, clientCode },
+      {
+        onSuccess: () => {
+          context.closeModal(id);
+          form.reset();
+        },
+      }
+    );
   };
 
   const isFixedTerm = form.values.accountType === ACCOUNT_TYPE.FIXED_TERM;

@@ -1,7 +1,8 @@
 import { ACCOUNT_STATUS, ACCOUNT_TYPE, CURRENCY } from '@/lib/constants';
 import { Account } from '@/lib/types';
 
-export const mockAccounts: Account[] = [
+export const ACCOUNTS_STORAGE_KEY = 'T_ACCOUNTS';
+export const DEFAULT_ACCOUNTS: Account[] = [
   {
     accountType: ACCOUNT_TYPE.SAVINGS,
     accountNumber: 'CA-0001234567',

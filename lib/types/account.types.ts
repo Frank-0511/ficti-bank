@@ -30,6 +30,7 @@ export interface OpenAccountData {
   term?: number;
   monthlyInterest?: number;
   overdraftLimit?: number;
+  clientCode?: string;
 }
 
 export interface CloseAccountData {

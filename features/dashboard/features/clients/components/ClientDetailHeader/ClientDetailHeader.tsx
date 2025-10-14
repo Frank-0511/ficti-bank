@@ -18,6 +18,7 @@ export function ClientDetailHeader({
   mobileNavOpened,
   toggleMobileNav,
 }: ClientDetailHeaderProps) {
+  console.log('🚀 ~ ClientDetailHeader ~ client:', client);
   const router = useRouter();
   const handleLogout = useLogout();
   const { openAccountModal } = useAccountModals();
@@ -42,7 +43,7 @@ export function ClientDetailHeader({
         <Button
           ml="md"
           leftSection={<IconPlus size={18} />}
-          onClick={openAccountModal}
+          onClick={() => client && openAccountModal(client.code)}
           visibleFrom="sm"
         >
           Aperturar Cuenta

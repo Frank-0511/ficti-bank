@@ -2,13 +2,14 @@ import { useCallback } from 'react';
 import { modals } from '@mantine/modals';
 
 export const useAccountModals = () => {
-  const openAccountModal = useCallback(() => {
+  const openAccountModal = useCallback((clientCode?: string) => {
+    console.log('🚀 ~ useAccountModals ~ clientCode:', clientCode);
     modals.openContextModal({
       modal: 'openAccount',
       title: 'Abrir Nueva Cuenta',
       size: 'md',
       centered: true,
-      innerProps: {},
+      innerProps: { clientCode },
     });
   }, []);
 

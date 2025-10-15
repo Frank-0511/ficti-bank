@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw';
+import { ACCOUNT_STATUS } from '@/lib/constants';
 import { ApiResponse } from '@/lib/types';
 import { Account } from '@/lib/types/account.types';
 import { ACCOUNTS_STORAGE_KEY } from '../data';
@@ -16,6 +17,28 @@ function setAccountsToStorage(accounts: Account[]): void {
 }
 
 export const accountHandlers = [
+  // PATCH /api/accounts/:accountNumber/inactivate - Inactivar cuenta
+  http.patch('/api/accounts/:accountNumber/inactivate', async ({ params }) => {
+    const { accountNumber } = params;
+    const accounts = getAccountsFromStorage();
+    const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
+    if (accountIndex === -1) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Cuenta no encontrada',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 404 });
+    }
+    accounts[accountIndex].status = ACCOUNT_STATUS.INACTIVE;
+    setAccountsToStorage(accounts);
+    const response: ApiResponse<Account> = {
+      success: true,
+      message: 'Cuenta inactivada exitosamente',
+      data: accounts[accountIndex],
+    };
+    return HttpResponse.json(response);
+  }),
   http.get('/api/accounts', ({ request }) => {
     const url = new URL(request.url);
     const clientCode = url.searchParams.get('clientCode');

@@ -3,4 +3,5 @@ export { useAccounts } from './useAccounts';
 export { useClientModals } from './useClientModals';
 export { useClients } from './useClients';
 export { useCloseAccount } from './useCloseAccount';
+export { useInactivateAccount } from './useInactivateAccount';
 export { useOpenAccount } from './useOpenAccount';

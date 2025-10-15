@@ -1,5 +1,6 @@
 import { IconX } from '@tabler/icons-react';
 import { Badge, Button, Card, Group, Stack, Text } from '@mantine/core';
+import { openContextModal } from '@mantine/modals';
 import {
   ACCOUNT_STATUS,
   ACCOUNT_STATUS_LABELS,
@@ -107,6 +108,25 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
           )}
         </Group>
 
+        {/* Botón para inactivar cuenta solo para CA y CC */}
+        {account.status === ACCOUNT_STATUS.ACTIVE &&
+          (account.accountType === 'CA' || account.accountType === 'CC') && (
+            <Button
+              variant="light"
+              color="gray"
+              size="xs"
+              onClick={() =>
+                openContextModal({
+                  modal: 'inactivateAccount',
+                  title: 'Inactivar Cuenta',
+                  innerProps: { accountNumber: account.accountNumber },
+                })
+              }
+              style={{ marginBottom: 8 }}
+            >
+              Inactivar Cuenta
+            </Button>
+          )}
         {account.status === ACCOUNT_STATUS.ACTIVE && (
           <Button
             variant="light"

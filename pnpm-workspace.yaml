@@ -3,3 +3,10 @@ onlyBuiltDependencies:
   - esbuild
   - sharp
   - unrs-resolver
+
+packages:
+  - 'features/**'
+  - 'lib/**'
+  - 'shared/**'
+  - 'pages/**'
+  - 'test-utils/**'

@@ -12,7 +12,12 @@ import 'mantine-react-table/styles.css';
 import '../styles/globals.css';
 import '../styles/nprogress.css';
 
-import { CloseAccountModal, OpenAccountModal, RegisterClientModal } from '@/features/dashboard';
+import {
+  CloseAccountModal,
+  InactivateAccountModal,
+  OpenAccountModal,
+  RegisterClientModal,
+} from '@/features/dashboard';
 import { LoginModal, RouteProgressBar } from '@/shared/components';
 
 import '@/lib/mocks/browser';
@@ -75,6 +80,7 @@ export default function App({ Component, pageProps }: AppProps) {
               registerClient: RegisterClientModal,
               openAccount: OpenAccountModal,
               closeAccount: CloseAccountModal,
+              inactivateAccount: InactivateAccountModal,
             }}
             modalProps={{
               overlayProps: {

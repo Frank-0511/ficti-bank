@@ -5,4 +5,5 @@ export { ClientsSection } from './ClientsSection';
 export { ClientsTable } from './ClientsTable';
 export { ClientsTableSkeleton } from './ClientsTableSkeleton';
 export { CloseAccountModal } from './CloseAccountModal';
+export { InactivateAccountModal } from './InactivateAccountModal';
 export { OpenAccountModal } from './OpenAccountModal';

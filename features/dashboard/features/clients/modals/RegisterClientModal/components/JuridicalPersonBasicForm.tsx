@@ -1,11 +1,26 @@
+import React from 'react';
 import { IconBuilding, IconId, IconUser } from '@tabler/icons-react';
-import { Grid, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Grid, Loader, Stack, Text, TextInput } from '@mantine/core';
 import { useAutoFocus } from '@/lib/hooks';
+import { useRucToForm } from '../../../hooks/useRucToForm';
 import { useRegistrationContext } from '../context';
 
 export const JuridicalPersonBasicForm: React.FC = () => {
   const { juridicalPersonBasicForm } = useRegistrationContext();
   const firstInputRef = useAutoFocus<HTMLInputElement>();
+  // const rucMutation = useRucStore();
+  const rucMutation = useRucToForm();
+  // Nuevo estado para saber si ya se intentó consultar el RUC
+  const [hasConsultedRuc, setHasConsultedRuc] = React.useState(false);
+
+  // Cuando se llama mutate, marcamos que ya se consultó
+  const handleRucSearch = () => {
+    const ruc = juridicalPersonBasicForm.values.ruc;
+    if (ruc && ruc.length === 11) {
+      setHasConsultedRuc(true);
+      rucMutation.mutate(ruc);
+    }
+  };
 
   return (
     <Stack gap="lg">
@@ -14,23 +29,13 @@ export const JuridicalPersonBasicForm: React.FC = () => {
           Información de la Empresa
         </Text>
         <Text size="sm" c="dimmed">
-          Ingresa los datos básicos de tu empresa
+          Ingresa el RUC para consultar los datos automáticamente
         </Text>
       </div>
-
       <Grid>
-        <Grid.Col span={12}>
-          <TextInput
-            ref={firstInputRef}
-            label="Razón Social"
-            placeholder="Nombre completo de la empresa"
-            leftSection={<IconBuilding size={16} />}
-            required
-            {...juridicalPersonBasicForm.getInputProps('businessName')}
-          />
-        </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
+            ref={firstInputRef}
             label="RUC"
             placeholder="12345678901"
             leftSection={<IconId size={16} />}
@@ -39,25 +44,64 @@ export const JuridicalPersonBasicForm: React.FC = () => {
             {...juridicalPersonBasicForm.getInputProps('ruc')}
           />
         </Grid.Col>
-        <Grid.Col span={6}>
-          <TextInput
-            label="Representante Legal"
-            placeholder="Nombre del representante"
-            leftSection={<IconUser size={16} />}
-            required
-            {...juridicalPersonBasicForm.getInputProps('legalRepresentative')}
-          />
+        <Grid.Col span={6} style={{ display: 'flex', alignItems: 'end' }}>
+          <Button
+            onClick={handleRucSearch}
+            loading={rucMutation.isPending}
+            disabled={rucMutation.isPending || juridicalPersonBasicForm.values.ruc.length !== 11}
+          >
+            Consultar RUC
+          </Button>
         </Grid.Col>
-        <Grid.Col span={6}>
-          <TextInput
-            label="DNI del Representante"
-            placeholder="12345678"
-            leftSection={<IconId size={16} />}
-            required
-            maxLength={8}
-            {...juridicalPersonBasicForm.getInputProps('representativeDni')}
-          />
-        </Grid.Col>
+        {/* Solo mostrar loader o campos si ya se consultó al menos una vez */}
+        {hasConsultedRuc &&
+          (rucMutation.isPending ? (
+            <Grid.Col
+              span={12}
+              pt="md"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Loader size="lg" />
+              <Text mt="md">Consultando datos de SUNAT...</Text>
+            </Grid.Col>
+          ) : (
+            <>
+              <Grid.Col span={12}>
+                <TextInput
+                  label="Razón Social"
+                  placeholder="Nombre completo de la empresa"
+                  leftSection={<IconBuilding size={16} />}
+                  required
+                  {...juridicalPersonBasicForm.getInputProps('businessName')}
+                  disabled={rucMutation.isPending}
+                />
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <TextInput
+                  label="Representante Legal"
+                  placeholder="Nombre del representante"
+                  leftSection={<IconUser size={16} />}
+                  required
+                  {...juridicalPersonBasicForm.getInputProps('legalRepresentative')}
+                />
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <TextInput
+                  label="DNI del Representante"
+                  placeholder="12345678"
+                  leftSection={<IconId size={16} />}
+                  required
+                  maxLength={8}
+                  {...juridicalPersonBasicForm.getInputProps('representativeDni')}
+                />
+              </Grid.Col>
+            </>
+          ))}
       </Grid>
     </Stack>
   );

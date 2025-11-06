@@ -73,3 +73,50 @@ export const ERROR_MESSAGES = {
 export const AGE_REQUIREMENTS = {
   MIN_AGE: 18,
 } as const;
+
+// Datos de ubicación del Perú (ejemplo simplificado)
+export const DEPARTAMENTOS = [
+  { value: 'lima', label: 'Lima' },
+  { value: 'arequipa', label: 'Arequipa' },
+  { value: 'cusco', label: 'Cusco' },
+  { value: 'trujillo', label: 'Trujillo' },
+  { value: 'piura', label: 'Piura' },
+  { value: 'chiclayo', label: 'Chiclayo' },
+  { value: 'huancayo', label: 'Huancayo' },
+  { value: 'iquitos', label: 'Iquitos' },
+];
+
+export const PROVINCIAS: Record<string, Array<{ value: string; label: string }>> = {
+  lima: [
+    { value: 'lima', label: 'Lima' },
+    { value: 'callao', label: 'Callao' },
+    { value: 'cañete', label: 'Cañete' },
+    { value: 'huaral', label: 'Huaral' },
+  ],
+  arequipa: [
+    { value: 'arequipa', label: 'Arequipa' },
+    { value: 'camana', label: 'Camaná' },
+    { value: 'caylloma', label: 'Caylloma' },
+  ],
+  // Agregar más provincias según necesidades
+};
+
+export const DISTRITOS: Record<string, Array<{ value: string; label: string }>> = {
+  lima: [
+    { value: 'miraflores', label: 'Miraflores' },
+    { value: 'san-isidro', label: 'San Isidro' },
+    { value: 'surco', label: 'Surco' },
+    { value: 'la-molina', label: 'La Molina' },
+    { value: 'san-borja', label: 'San Borja' },
+    { value: 'pueblo-libre', label: 'Pueblo Libre' },
+    { value: 'jesus-maria', label: 'Jesús María' },
+    { value: 'lince', label: 'Lince' },
+    { value: 'la-victoria', label: 'La Victoria' },
+  ],
+  callao: [
+    { value: 'callao', label: 'Callao' },
+    { value: 'bellavista', label: 'Bellavista' },
+    { value: 'carmen-de-la-legua', label: 'Carmen de la Legua' },
+  ],
+  // Agregar más distritos según necesidades
+};

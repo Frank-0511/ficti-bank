@@ -9,7 +9,7 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
   initializeMockData();
 
   worker.start({
-    onUnhandledRequest: 'warn',
+    onUnhandledRequest: 'bypass',
     serviceWorker: {
       url: '/mockServiceWorker.js',
     },

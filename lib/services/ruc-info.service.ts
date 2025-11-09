@@ -1,5 +1,5 @@
+import { rucAdapter } from '../adapters';
 import { RucApiResponse, RucData } from '../types';
-import { rucAdapter } from './ruc.adapter';
 
 const API_URL = '/api/ruc';
 

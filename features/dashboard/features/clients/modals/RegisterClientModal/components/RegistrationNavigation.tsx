@@ -28,7 +28,7 @@ export const RegistrationNavigation: React.FC = () => {
         </Button>
       ) : (
         <Button
-          variant="filled"
+          variant="outline"
           rightSection={<IconArrowRight size={16} />}
           onClick={handleFormNext}
         >

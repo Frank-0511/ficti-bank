@@ -9,6 +9,10 @@ export function useRucToForm() {
   return useMutation<RucData, Error, string>({
     mutationFn: fetchRucData,
     onSuccess: (data) => {
+      // Limpiar los formularios antes de setear los datos
+      juridicalPersonBasicForm.reset();
+      contactInfoForm.reset();
+
       if (data.businessName) {
         juridicalPersonBasicForm.setFieldValue('businessName', data.businessName);
       }

@@ -33,7 +33,7 @@ export const JuridicalPersonBasicForm: React.FC = () => {
         </Text>
       </div>
       <Grid>
-        <Grid.Col span={6}>
+        <Grid.Col span={8}>
           <TextInput
             ref={firstInputRef}
             label="RUC"
@@ -44,8 +44,9 @@ export const JuridicalPersonBasicForm: React.FC = () => {
             {...juridicalPersonBasicForm.getInputProps('ruc')}
           />
         </Grid.Col>
-        <Grid.Col span={6} style={{ display: 'flex', alignItems: 'end' }}>
+        <Grid.Col span={4} style={{ display: 'flex', alignItems: 'end' }}>
           <Button
+            variant="filled"
             onClick={handleRucSearch}
             loading={rucMutation.isPending}
             disabled={rucMutation.isPending || juridicalPersonBasicForm.values.ruc.length !== 11}

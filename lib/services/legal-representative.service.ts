@@ -1,5 +1,5 @@
+import { rucRepresentanteAdapter } from '../adapters';
 import { RucRepresentanteApiResponse, RucRepresentanteData } from '../types';
-import { rucRepresentanteAdapter } from './ruc-representante.adapter';
 
 export async function fetchLegalRepresentatives(ruc: string): Promise<RucRepresentanteData[]> {
   const response = await fetch('/api/ruc-representante', {

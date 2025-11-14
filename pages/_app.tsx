@@ -14,6 +14,7 @@ import '../styles/nprogress.css';
 
 import {
   CloseAccountModal,
+  DepositAccountModal,
   FreezeAccountModal,
   InactivateAccountModal,
   OpenAccountModal,
@@ -83,6 +84,7 @@ export default function App({ Component, pageProps }: AppProps) {
               closeAccount: CloseAccountModal,
               inactivateAccount: InactivateAccountModal,
               freezeAccount: FreezeAccountModal,
+              depositAccount: DepositAccountModal,
             }}
             modalProps={{
               centered: true,

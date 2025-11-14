@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { AppShell, Center, Container, Loader, Text } from '@mantine/core';
+import { IconUserOff } from '@tabler/icons-react';
+import { AppShell, Button, Center, Container, Stack, Text } from '@mantine/core';
 import styles from '@/features/dashboard/pages/Dashboard.module.css';
 import { Client } from '@/lib/types';
 import { AccountsList } from '../components/AccountsList';
@@ -44,20 +45,24 @@ export function ClientDetailPage() {
         />
       </AppShell.Header>
       <AppShell.Navbar className={styles.appShellAside}>
-        <ClientDetailNavbar client={client} />
+        <ClientDetailNavbar client={client} loadingData={loading} />
       </AppShell.Navbar>
       <AppShell.Main>
         <Container size="xl" py="xl">
-          {loading ? (
-            <Center h={300}>
-              <Loader />
-            </Center>
-          ) : !client ? (
-            <Center h={300}>
-              <Text>No se encontró el cliente</Text>
+          {!client && !loading ? (
+            <Center h={340}>
+              <Stack align="center" gap={8}>
+                <IconUserOff size={64} color="#adb5bd" />
+                <Text size="lg" fw={600} c="dimmed">
+                  No se encontró el cliente
+                </Text>
+                <Button variant="light" onClick={() => router.push('/dashboard')} mt={8}>
+                  Ir al inicio
+                </Button>
+              </Stack>
             </Center>
           ) : (
-            <AccountsList clientCode={client.code} />
+            <AccountsList clientCode={client?.code} loadingData={loading} />
           )}
         </Container>
       </AppShell.Main>

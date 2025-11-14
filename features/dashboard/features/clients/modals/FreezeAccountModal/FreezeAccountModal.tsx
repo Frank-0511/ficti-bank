@@ -2,11 +2,13 @@ import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Button, Group, NumberInput, Radio, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { ContextModalProps } from '@mantine/modals';
+import { CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
 import { useFreezeAccount } from '../../hooks';
 import { FreezeFormValues, freezeSchema } from './schema';
 
 interface FreezeAccountModalProps {
   accountNumber: string;
+  currency: keyof typeof CURRENCY_SYMBOLS;
 }
 
 export const FreezeAccountModal = ({
@@ -63,7 +65,13 @@ export const FreezeAccountModal = ({
           </Group>
         </Radio.Group>
         {type === 'partial' && (
-          <NumberInput label="Monto a embargar" {...form.getInputProps('amount')} hideControls />
+          <NumberInput
+            label="Monto a embargar"
+            {...form.getInputProps('amount')}
+            hideControls
+            step={0.01}
+            leftSection={CURRENCY_SYMBOLS[innerProps.currency] || ''}
+          />
         )}
         <Group justify="flex-end" mt="md">
           <Button variant="default" onClick={() => context.closeModal(id)}>

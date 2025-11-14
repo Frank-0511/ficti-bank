@@ -47,3 +47,12 @@ export interface FreezeAccountData {
 export interface FreezeAccountResponse {
   accountNumber: string;
 }
+
+export interface DepositAccountData {
+  accountNumber: string;
+  amount: number;
+}
+
+export interface DepositAccountResponse {
+  accountNumber: string;
+}

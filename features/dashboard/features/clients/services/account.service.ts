@@ -2,6 +2,8 @@ import { apiClient } from '@/lib/api/client';
 import {
   Account,
   ApiResponse,
+  DepositAccountData,
+  DepositAccountResponse,
   FreezeAccountData,
   FreezeAccountResponse,
   OpenAccountData,
@@ -61,6 +63,20 @@ export const accountService = {
 
     if (!response.success || !response.data) {
       throw new Error(response.message || 'Error al inactivar la cuenta');
+    }
+
+    return response;
+  },
+  deposit: async (
+    depositData: DepositAccountData
+  ): Promise<ApiResponse<DepositAccountResponse>> => {
+    const { data: response } = await apiClient.post<ApiResponse<DepositAccountResponse>>(
+      `/accounts/${depositData.accountNumber}/deposit`,
+      { amount: depositData.amount }
+    );
+
+    if (!response.success || !response.data) {
+      throw new Error(response.message || 'Error al depositar en la cuenta');
     }
 
     return response;

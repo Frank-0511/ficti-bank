@@ -10,7 +10,7 @@ import {
   CURRENCY_SYMBOLS,
 } from '@/lib/constants/account.constants';
 import { useOpenAccount } from '../../hooks';
-import { openAccountSchema, type OpenAccountFormData } from '../../schemas';
+import { openAccountSchema, type OpenAccountFormData } from './schema';
 
 export const OpenAccountModal: React.FC<ContextModalProps<{ clientCode?: string }>> = ({
   id,

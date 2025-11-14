@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 import { Client } from '@/lib/types';
@@ -28,7 +28,7 @@ export const ClientsTable = ({ clients }: ClientsTableProps) => {
     initialState: {
       density: 'xs',
       pagination: { pageSize: 10, pageIndex: 0 },
-      columnPinning: { left: ['code', 'name'] },
+      columnPinning: { left: ['code', 'name'], right: ['mrt-row-actions'] },
     },
     mantineTableContainerProps: {
       style: { maxHeight: 600 },
@@ -52,6 +52,19 @@ export const ClientsTable = ({ clients }: ClientsTableProps) => {
       />
     ),
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1535) {
+        table.setColumnPinning({ left: [], right: [] });
+      } else {
+        table.setColumnPinning({ left: ['code', 'name'], right: ['mrt-row-actions'] });
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [table]);
 
   return <MantineReactTable table={table} />;
 };

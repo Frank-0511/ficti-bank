@@ -4,6 +4,7 @@ export * from './useClientModals';
 export * from './useClients';
 export * from './useCloseAccount';
 export * from './useCreateClient';
+export * from './useDepositAccount';
 export * from './useDniToForm';
 export * from './useFreezeAccount';
 export * from './useInactivateAccount';

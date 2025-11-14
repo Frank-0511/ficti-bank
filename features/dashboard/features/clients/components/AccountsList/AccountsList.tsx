@@ -7,13 +7,14 @@ import styles from './AccountsList.module.css';
 
 interface AccountsListProps {
   clientCode?: string;
+  loadingData?: boolean;
 }
 
-export const AccountsList = ({ clientCode }: AccountsListProps) => {
+export const AccountsList = ({ clientCode, loadingData }: AccountsListProps) => {
   const { data: accounts, isLoading } = useAccounts(clientCode);
   const { openCloseAccountModal } = useAccountModals();
 
-  if (isLoading) {
+  if (isLoading || loadingData) {
     return (
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="lg" className={styles.grid}>
         {Array.from({ length: 8 }).map((_, index) => (

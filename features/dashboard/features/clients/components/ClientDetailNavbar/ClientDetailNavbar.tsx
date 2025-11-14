@@ -1,5 +1,5 @@
 import { IconLogout, IconPlus } from '@tabler/icons-react';
-import { Button, Divider, Grid, Group, Text } from '@mantine/core';
+import { Button, Divider, Grid, Group, Skeleton, Text } from '@mantine/core';
 import { PERSON_TYPE_LABELS } from '@/lib/constants/person.constants';
 import { useLogout } from '@/lib/hooks';
 import { Client } from '@/lib/types';
@@ -7,11 +7,45 @@ import { useAccountModals } from '../../hooks';
 
 interface ClientDetailNavbarProps {
   client: Client | null;
+  loadingData?: boolean;
 }
 
-export function ClientDetailNavbar({ client }: ClientDetailNavbarProps) {
+export function ClientDetailNavbar({ client, loadingData }: ClientDetailNavbarProps) {
   const { openAccountModal } = useAccountModals();
   const handleLogout = useLogout();
+
+  if (loadingData) {
+    return (
+      <div
+        style={{
+          padding: 24,
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          minHeight: 0,
+        }}
+      >
+        <Skeleton height={20} width={140} mb="xs" radius="sm" />
+        <Divider mb="md" />
+        <Grid>
+          {[...Array(8)].map((_, i) => (
+            <Grid.Col span={12} key={i}>
+              <Skeleton height={14} width={80} mb={4} radius="sm" />
+              <Skeleton height={18} width="60%" radius="sm" />
+            </Grid.Col>
+          ))}
+        </Grid>
+        <Divider my="md" hiddenFrom="sm" />
+        <div style={{ marginTop: 'auto' }}>
+          <Group gap="md" hiddenFrom="sm">
+            <Skeleton height={36} width="100%" radius="sm" />
+            <Skeleton height={36} width="100%" radius="sm" />
+          </Group>
+        </div>
+      </div>
+    );
+  }
+
   if (!client) {
     return null;
   }

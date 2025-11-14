@@ -142,4 +142,27 @@ export const accountHandlers = [
     };
     return HttpResponse.json(response);
   }),
+  http.post('/api/accounts/:accountNumber/deposit', async ({ params, request }) => {
+    const { accountNumber } = params;
+    const body = (await request.json()) as { amount: number };
+    const accounts = getAccountsFromStorage();
+    const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
+    if (accountIndex === -1) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Cuenta no encontrada',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 404 });
+    }
+    accounts[accountIndex].currentBalance += body.amount;
+    accounts[accountIndex].availableBalance += body.amount;
+    setAccountsToStorage(accounts);
+    const response: ApiResponse<{ accountNumber: string }> = {
+      success: true,
+      message: 'Depósito realizado exitosamente',
+      data: { accountNumber: String(accountNumber) },
+    };
+    return HttpResponse.json(response);
+  }),
 ];

@@ -1,4 +1,11 @@
-import { IconDotsVertical, IconGavel, IconLock, IconX } from '@tabler/icons-react';
+import {
+  IconDotsVertical,
+  IconGavel,
+  IconLock,
+  IconTransferIn,
+  IconTransferOut,
+  IconX,
+} from '@tabler/icons-react';
 import { Button, Menu } from '@mantine/core';
 import { openContextModal } from '@mantine/modals';
 import { ACCOUNT_STATUS, ACCOUNT_TYPE } from '@/lib/constants';
@@ -14,7 +21,6 @@ export const AccountActionsMenu = ({
   onClose,
   className,
 }: AccountActionsMenuProps & { className?: string }) => {
-  console.log('🚀 ~ AccountActionsMenu ~ account:', account);
   if (account.status !== ACCOUNT_STATUS.ACTIVE) {
     return null;
   }
@@ -36,18 +42,49 @@ export const AccountActionsMenu = ({
       <Menu.Dropdown>
         {(account.accountType === ACCOUNT_TYPE.SAVINGS ||
           account.accountType === ACCOUNT_TYPE.CHECKING) && (
-          <Menu.Item
-            leftSection={<IconLock size={14} />}
-            onClick={() =>
-              openContextModal({
-                modal: 'inactivateAccount',
-                title: 'Inactivar Cuenta',
-                innerProps: { accountNumber: account.accountNumber },
-              })
-            }
-          >
-            Inactivar Cuenta
-          </Menu.Item>
+          <>
+            <Menu.Item
+              leftSection={<IconLock size={14} />}
+              onClick={() =>
+                openContextModal({
+                  modal: 'inactivateAccount',
+                  title: 'Inactivar Cuenta',
+                  innerProps: { accountNumber: account.accountNumber },
+                })
+              }
+            >
+              Inactivar Cuenta
+            </Menu.Item>
+            <Menu.Item
+              leftSection={<IconTransferIn size={14} />}
+              onClick={() =>
+                openContextModal({
+                  modal: 'depositAccount',
+                  title: 'Depositar',
+                  innerProps: { accountNumber: account.accountNumber, currency: account.currency },
+                })
+              }
+            >
+              Depositar
+            </Menu.Item>
+            {account.accountType === ACCOUNT_TYPE.SAVINGS && (
+              <Menu.Item
+                leftSection={<IconTransferOut size={14} style={{ transform: 'rotate(180deg)' }} />}
+                onClick={() =>
+                  openContextModal({
+                    modal: 'withdrawAccount',
+                    title: 'Retiro',
+                    innerProps: {
+                      accountNumber: account.accountNumber,
+                      currency: account.currency,
+                    },
+                  })
+                }
+              >
+                Retiro
+              </Menu.Item>
+            )}
+          </>
         )}
         <Menu.Item
           leftSection={<IconGavel size={14} />}
@@ -55,7 +92,7 @@ export const AccountActionsMenu = ({
             openContextModal({
               modal: 'freezeAccount',
               title: 'Embargar Cuenta',
-              innerProps: { accountNumber: account.accountNumber },
+              innerProps: { accountNumber: account.accountNumber, currency: account.currency },
             });
           }}
         >

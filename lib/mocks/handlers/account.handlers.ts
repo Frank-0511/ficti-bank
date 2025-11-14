@@ -82,6 +82,36 @@ export const accountHandlers = [
     return HttpResponse.json(response, { status: 201 });
   }),
 
+  // POST /api/accounts/:accountNumber/freeze - Congelar/embargar cuenta
+  http.post('/api/accounts/:accountNumber/freeze', async ({ params, request }) => {
+    const { accountNumber } = params;
+    const body = (await request.json()) as { type: 'total' | 'partial'; amount?: number };
+    const accounts = getAccountsFromStorage();
+    const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
+    if (accountIndex === -1) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Account not found',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 404 });
+    }
+    // Simular congelamiento: solo cambiamos el status a 'B' (bloqueada)
+    accounts[accountIndex].status = ACCOUNT_STATUS.BLOCKED;
+    // Si es parcial, restar el monto del saldo disponible
+    if (body.type === 'partial' && typeof body.amount === 'number') {
+      accounts[accountIndex].availableBalance -= body.amount;
+    } else if (body.type === 'total') {
+      accounts[accountIndex].availableBalance = 0;
+    }
+    setAccountsToStorage(accounts);
+    const response: ApiResponse<{ accountNumber: string }> = {
+      success: true,
+      message: 'Account frozen successfully',
+      data: { accountNumber: String(accountNumber) },
+    };
+    return HttpResponse.json(response);
+  }),
   http.delete('/api/accounts/:accountNumber', ({ params }) => {
     const { accountNumber } = params;
     const accounts = getAccountsFromStorage();

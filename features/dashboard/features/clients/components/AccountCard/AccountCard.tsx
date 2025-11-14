@@ -40,11 +40,17 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
     <Card shadow="sm" padding="lg" radius="md" withBorder className={styles.card}>
       <Stack gap="md">
         <Card.Section withBorder inheritPadding py="xs">
-          <Group justify="space-between">
-            <Text fw={600} size="lg" w="max-content">
+          <Group justify="space-between" align="flex-start" wrap="nowrap">
+            <Text
+              fw={600}
+              size="lg"
+              style={{ flex: 1, minWidth: 0, wordBreak: 'break-word', whiteSpace: 'normal' }}
+            >
               {ACCOUNT_TYPE_LABELS[account.accountType]}
             </Text>
-            <AccountActionsMenu account={account} onClose={onClose} />
+            <div style={{ flexShrink: 0 }}>
+              <AccountActionsMenu account={account} onClose={onClose} />
+            </div>
           </Group>
         </Card.Section>
 
@@ -64,7 +70,17 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
             <Text size="xs" c="dimmed">
               Saldo Disponible
             </Text>
-            <Text size="xl" fw={700} className={styles.balance}>
+            <Text
+              size="xl"
+              fw={700}
+              className={styles.balance}
+              c={
+                account.availableBalance < 0 ||
+                (account.availableBalance === 0 && account.status === ACCOUNT_STATUS.BLOCKED)
+                  ? 'red'
+                  : undefined
+              }
+            >
               {formatCurrency(account.availableBalance)}
             </Text>
           </div>
@@ -74,14 +90,6 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
         </div>
 
         <Group gap="xs" className={styles.details}>
-          <div className={styles.detailItem}>
-            <Text size="xs" c="dimmed">
-              Saldo Actual
-            </Text>
-            <Text size="sm" fw={500}>
-              {formatCurrency(account.currentBalance)}
-            </Text>
-          </div>
           {account.accountType === 'CC' && account.overdraftLimit && (
             <div className={styles.detailItem}>
               <Text size="xs" c="dimmed">

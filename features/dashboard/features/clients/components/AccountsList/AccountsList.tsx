@@ -42,7 +42,7 @@ export const AccountsList = ({ clientCode }: AccountsListProps) => {
   }
 
   return (
-    <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 3 }} spacing="lg" className={styles.grid}>
+    <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="lg" className={styles.grid}>
       {accounts.map((account) => (
         <AccountCard
           key={account.accountNumber}

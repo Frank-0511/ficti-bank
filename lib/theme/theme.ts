@@ -23,6 +23,14 @@ export const fontSizes = {
 } as const;
 
 export const theme = createTheme({
+  breakpoints: {
+    xxs: '26em',
+    xs: '36em',
+    sm: '48em',
+    md: '62em',
+    lg: '75em',
+    xl: '88em',
+  },
   spacing,
   fontSizes,
   components: {

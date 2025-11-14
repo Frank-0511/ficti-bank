@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { IconArrowLeft, IconLogout, IconPlus } from '@tabler/icons-react';
-import { ActionIcon, Badge, Burger, Button, Group, Title } from '@mantine/core';
+import { ActionIcon, Badge, Box, Burger, Button, Group, Text, Title } from '@mantine/core';
 import { ENTITY_STATUS } from '@/lib/constants';
 import { useLogout } from '@/lib/hooks';
 import { Client } from '@/lib/types';
@@ -18,7 +18,6 @@ export function ClientDetailHeader({
   mobileNavOpened,
   toggleMobileNav,
 }: ClientDetailHeaderProps) {
-  console.log('🚀 ~ ClientDetailHeader ~ client:', client);
   const router = useRouter();
   const handleLogout = useLogout();
   const { openAccountModal } = useAccountModals();
@@ -26,12 +25,24 @@ export function ClientDetailHeader({
   return (
     <Group justify="space-between" align="center" py="md" px={{ base: 0, md: 'md' }}>
       <Group>
+        <style jsx global>{`
+          .mantine-Button-section {
+            margin-inline-end: 0 !important;
+          }
+        `}</style>
         <Button
           variant="subtle"
           leftSection={<IconArrowLeft size={18} />}
           onClick={() => router.back()}
+          w="max-content"
+          pr={{
+            base: 12,
+            xs: 18,
+          }}
         >
-          Volver
+          <Text fw={600} visibleFrom="xs" pl={{ base: 12, xs: 18 }}>
+            Volver
+          </Text>
         </Button>
         <Title order={3} fw={700}>
           {client
@@ -49,7 +60,9 @@ export function ClientDetailHeader({
           Aperturar Cuenta
         </Button>
         <Badge size="md" color={client?.status === ENTITY_STATUS.ACTIVE ? 'green' : 'red'}>
-          {client?.status === ENTITY_STATUS.ACTIVE ? 'Activo' : 'Inactivo'}
+          <Text visibleFrom="xs" size="sm" fw={600}>
+            {client?.status === ENTITY_STATUS.ACTIVE ? 'Activo' : 'Inactivo'}
+          </Text>
         </Badge>
       </Group>
       <Group gap="md" visibleFrom="sm" wrap="nowrap">
@@ -59,7 +72,9 @@ export function ClientDetailHeader({
         </ActionIcon>
       </Group>
       <Group gap="sm" hiddenFrom="sm" wrap="nowrap">
-        <ColorSchemeToggle />
+        <Box visibleFrom="xxs">
+          <ColorSchemeToggle />
+        </Box>
         <Burger
           opened={mobileNavOpened}
           onClick={toggleMobileNav}

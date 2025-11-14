@@ -1,4 +1,4 @@
-import { IconCash, IconSettings, IconUsers } from '@tabler/icons-react';
+import { IconSettings, IconUsers } from '@tabler/icons-react';
 import { USER_ROLE } from '@/lib/constants';
 
 export interface MenuItem {
@@ -21,7 +21,7 @@ export const DASHBOARD_MENU: MenuItem[] = [
     icon: IconUsers,
     path: '/dashboard/clients',
   },
-  {
+  /*   {
     label: 'Operaciones',
     icon: IconCash,
     items: [
@@ -29,7 +29,7 @@ export const DASHBOARD_MENU: MenuItem[] = [
       { label: 'Retiros', path: '/dashboard/operations/withdrawals' },
       { label: 'Transferencias', path: '/dashboard/operations/transfers' },
     ],
-  },
+  }, */
   {
     label: 'Administración',
     icon: IconSettings,

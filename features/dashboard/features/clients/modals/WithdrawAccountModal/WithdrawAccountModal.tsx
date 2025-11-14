@@ -1,20 +1,17 @@
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { z } from 'zod';
 import { Button, Group, NumberInput, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { ContextModalProps } from '@mantine/modals';
-import { CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
+import { ACCOUNT_TYPE, CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
 import { useWithdrawAccount } from '../../hooks';
-
-const withdrawSchema = z.object({
-  amount: z.number().min(0.01, 'El monto debe ser mayor a 0').optional(),
-});
-
-type WithdrawFormValues = z.infer<typeof withdrawSchema>;
+import { WithdrawFormValues, withdrawSchema } from './schema';
 
 interface WithdrawAccountModalProps {
   accountNumber: string;
   currency: keyof typeof CURRENCY_SYMBOLS;
+  accountType?: string;
+  availableBalance?: number;
+  overdraftLimit?: number;
 }
 
 export const WithdrawAccountModal = ({
@@ -22,9 +19,14 @@ export const WithdrawAccountModal = ({
   id,
   innerProps,
 }: ContextModalProps<WithdrawAccountModalProps>) => {
+  // Determinar el límite máximo de retiro
+  const maxAmount = innerProps.availableBalance || 0;
+
+  const schema = withdrawSchema(maxAmount);
+
   const form = useForm<WithdrawFormValues>({
     initialValues: { amount: undefined },
-    validate: zod4Resolver(withdrawSchema),
+    validate: zod4Resolver(schema),
   });
 
   const withdrawAccountMutation = useWithdrawAccount();
@@ -49,7 +51,6 @@ export const WithdrawAccountModal = ({
         </Text>
         <NumberInput
           label="Monto a retirar"
-          min={0.01}
           hideControls
           step={0.01}
           decimalScale={2}
@@ -58,6 +59,11 @@ export const WithdrawAccountModal = ({
           leftSection={CURRENCY_SYMBOLS[innerProps.currency] || ''}
           {...form.getInputProps('amount')}
         />
+        <Text size="sm" c="dimmed">
+          {innerProps.accountType === ACCOUNT_TYPE.CHECKING
+            ? `Límite disponible: ${(CURRENCY_SYMBOLS[innerProps.currency] || '') + maxAmount.toFixed(2)} (Saldo + Sobregiro)`
+            : `Saldo disponible: ${(CURRENCY_SYMBOLS[innerProps.currency] || '') + maxAmount.toFixed(2)}`}
+        </Text>
         <Group justify="flex-end" mt="md">
           <Button
             variant="default"

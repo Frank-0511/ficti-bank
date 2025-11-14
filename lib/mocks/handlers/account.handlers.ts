@@ -2,6 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { ACCOUNT_STATUS } from '@/lib/constants';
 import { ApiResponse } from '@/lib/types';
 import { Account } from '@/lib/types/account.types';
+import { roundTwo } from '../../utils';
 import { ACCOUNTS_STORAGE_KEY } from '../data';
 
 function getAccountsFromStorage(): Account[] {
@@ -178,7 +179,8 @@ export const accountHandlers = [
       };
       return HttpResponse.json(response, { status: 404 });
     }
-    if (accounts[accountIndex].availableBalance < body.amount) {
+    const acc = accounts[accountIndex];
+    if (body.amount > acc.availableBalance) {
       const response: ApiResponse<null> = {
         success: false,
         message: 'Fondos insuficientes',
@@ -186,8 +188,13 @@ export const accountHandlers = [
       };
       return HttpResponse.json(response, { status: 400 });
     }
-    accounts[accountIndex].currentBalance -= body.amount;
-    accounts[accountIndex].availableBalance -= body.amount;
+
+    accounts[accountIndex].currentBalance = roundTwo(
+      accounts[accountIndex].currentBalance - body.amount
+    );
+    accounts[accountIndex].availableBalance = roundTwo(
+      accounts[accountIndex].availableBalance - body.amount
+    );
     setAccountsToStorage(accounts);
     const response: ApiResponse<{ accountNumber: string }> = {
       success: true,

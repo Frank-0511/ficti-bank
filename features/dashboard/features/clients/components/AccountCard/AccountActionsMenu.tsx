@@ -67,23 +67,24 @@ export const AccountActionsMenu = ({
             >
               Depositar
             </Menu.Item>
-            {account.accountType === ACCOUNT_TYPE.SAVINGS && (
-              <Menu.Item
-                leftSection={<IconTransferOut size={14} />}
-                onClick={() =>
-                  openContextModal({
-                    modal: 'withdrawAccount',
-                    title: 'Retiro',
-                    innerProps: {
-                      accountNumber: account.accountNumber,
-                      currency: account.currency,
-                    },
-                  })
-                }
-              >
-                Retiro
-              </Menu.Item>
-            )}
+            <Menu.Item
+              leftSection={<IconTransferOut size={14} />}
+              onClick={() =>
+                openContextModal({
+                  modal: 'withdrawAccount',
+                  title: 'Retiro',
+                  innerProps: {
+                    accountNumber: account.accountNumber,
+                    currency: account.currency,
+                    accountType: account.accountType,
+                    availableBalance: account.availableBalance,
+                    overdraftLimit: account.overdraftLimit,
+                  },
+                })
+              }
+            >
+              Retiro
+            </Menu.Item>
           </>
         )}
         <Menu.Item

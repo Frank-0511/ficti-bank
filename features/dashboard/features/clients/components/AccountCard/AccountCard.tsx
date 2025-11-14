@@ -3,6 +3,7 @@ import { Badge, Card, Group, Stack, Text } from '@mantine/core';
 import {
   ACCOUNT_STATUS,
   ACCOUNT_STATUS_LABELS,
+  ACCOUNT_TYPE,
   ACCOUNT_TYPE_LABELS,
   CURRENCY_LABELS,
   CURRENCY_SYMBOLS,
@@ -75,13 +76,13 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
               fw={700}
               className={styles.balance}
               c={
-                account.availableBalance < 0 ||
-                (account.availableBalance === 0 && account.status === ACCOUNT_STATUS.BLOCKED)
+                account.currentBalance < 0 ||
+                (account.currentBalance === 0 && account.status === ACCOUNT_STATUS.BLOCKED)
                   ? 'red'
                   : undefined
               }
             >
-              {formatCurrency(account.availableBalance)}
+              {formatCurrency(account.currentBalance)}
             </Text>
           </div>
           <Text size="xs" c="dimmed">
@@ -90,7 +91,7 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
         </div>
 
         <Group gap="xs" className={styles.details}>
-          {account.accountType === 'CC' && account.overdraftLimit && (
+          {account.accountType === ACCOUNT_TYPE.CHECKING && account.overdraftLimit && (
             <div className={styles.detailItem}>
               <Text size="xs" c="dimmed">
                 Sobregiro
@@ -100,7 +101,7 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
               </Text>
             </div>
           )}
-          {account.accountType === 'PF' && (
+          {account.accountType === ACCOUNT_TYPE.FIXED_TERM && (
             <>
               <div className={styles.detailItem}>
                 <Text size="xs" c="dimmed">

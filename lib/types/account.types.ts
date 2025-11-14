@@ -56,3 +56,12 @@ export interface DepositAccountData {
 export interface DepositAccountResponse {
   accountNumber: string;
 }
+
+export interface WithdrawAccountData {
+  accountNumber: string;
+  amount: number;
+}
+
+export interface WithdrawAccountResponse {
+  accountNumber: string;
+}

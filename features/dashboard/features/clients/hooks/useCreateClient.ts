@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
-import { Client } from '@/lib/types';
+import { ApiResponseError, Client } from '@/lib/types';
 import { clientService } from '../services';
 
 export const useCreateClient = () => {
@@ -17,10 +18,10 @@ export const useCreateClient = () => {
       // Refrescar la lista de clientes
       queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ApiResponseError>) => {
       notifications.show({
         title: 'Error al registrar cliente',
-        message: error?.message || 'No se pudo registrar el cliente',
+        message: error.response?.data.message || 'No se pudo registrar el cliente',
         color: 'red',
       });
     },

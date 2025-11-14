@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
 import { authService } from '@/lib/services';
 import { useAuthStore } from '@/lib/store';
@@ -27,13 +28,11 @@ export const useLogin = () => {
       });
     },
 
-    onError: (error: ApiResponseError) => {
-      const errorMessage = error.message || 'Error de autenticación';
-
+    onError: (error: AxiosError<ApiResponseError>) => {
       notifications.show({
         id: 'auth-error',
-        title: error.message,
-        message: errorMessage,
+        title: 'Error de autenticación',
+        message: error.response?.data.message || 'Ocurrió un error al iniciar sesión',
         color: 'red',
         autoClose: 3000,
         withCloseButton: true,

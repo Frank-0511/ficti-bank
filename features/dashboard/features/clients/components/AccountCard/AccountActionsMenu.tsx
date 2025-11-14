@@ -69,7 +69,7 @@ export const AccountActionsMenu = ({
             </Menu.Item>
             {account.accountType === ACCOUNT_TYPE.SAVINGS && (
               <Menu.Item
-                leftSection={<IconTransferOut size={14} style={{ transform: 'rotate(180deg)' }} />}
+                leftSection={<IconTransferOut size={14} />}
                 onClick={() =>
                   openContextModal({
                     modal: 'withdrawAccount',

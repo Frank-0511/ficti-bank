@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
 import { ApiResponseError, DepositAccountData } from '@/lib/types';
 import { accountService } from '../services';
@@ -19,10 +20,10 @@ export const useDepositAccount = () => {
       });
     },
 
-    onError: (error: ApiResponseError) => {
+    onError: (error: AxiosError<ApiResponseError>) => {
       notifications.show({
         title: 'Error al realizar depósito',
-        message: error.message || 'Ocurrió un error al realizar el depósito',
+        message: error.response?.data.message || 'Ocurrió un error al realizar el depósito',
         color: 'red',
         autoClose: 3000,
       });

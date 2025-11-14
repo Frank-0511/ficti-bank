@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
 import { ApiResponse, ApiResponseError } from '@/lib/types';
 import { accountService } from '../services';
@@ -24,10 +25,10 @@ export const useCloseAccount = () => {
       });
     },
 
-    onError: (error: ApiResponseError) => {
+    onError: (error: AxiosError<ApiResponseError>) => {
       notifications.show({
         title: 'Error al cerrar cuenta',
-        message: error.message || 'Ocurrió un error al cerrar la cuenta',
+        message: error.response?.data.message || 'Ocurrió un error al cerrar la cuenta',
         color: 'red',
         autoClose: 3000,
       });

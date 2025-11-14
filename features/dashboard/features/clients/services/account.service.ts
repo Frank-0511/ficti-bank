@@ -7,6 +7,8 @@ import {
   FreezeAccountData,
   FreezeAccountResponse,
   OpenAccountData,
+  WithdrawAccountData,
+  WithdrawAccountResponse,
 } from '@/lib/types';
 
 export const accountService = {
@@ -17,19 +19,11 @@ export const accountService = {
     }
     const { data: response } = await apiClient.get<ApiResponse<Account[]>>(url);
 
-    if (!response.success || !response.data) {
-      throw new Error(response.message || 'Error al obtener las cuentas');
-    }
-
     return response;
   },
 
   create: async (accountData: OpenAccountData): Promise<ApiResponse<Account>> => {
     const { data: response } = await apiClient.post<ApiResponse<Account>>('/accounts', accountData);
-
-    if (!response.success || !response.data) {
-      throw new Error(response.message || 'Error al crear la cuenta');
-    }
 
     return response;
   },
@@ -39,10 +33,6 @@ export const accountService = {
       `/accounts/${accountNumber}`
     );
 
-    if (!response.success) {
-      throw new Error(response.message || 'Error al cerrar la cuenta');
-    }
-
     return response;
   },
   freeze: async (freezeData: FreezeAccountData): Promise<ApiResponse<FreezeAccountResponse>> => {
@@ -51,19 +41,12 @@ export const accountService = {
       freezeData
     );
 
-    if (!response.success && !response.data) {
-      throw new Error(response.message || 'Error al embargar la cuenta');
-    }
     return response;
   },
   inactivate: async (accountNumber: string): Promise<ApiResponse<Account>> => {
     const { data: response } = await apiClient.patch<ApiResponse<Account>>(
       `/accounts/${accountNumber}/inactivate`
     );
-
-    if (!response.success || !response.data) {
-      throw new Error(response.message || 'Error al inactivar la cuenta');
-    }
 
     return response;
   },
@@ -75,9 +58,15 @@ export const accountService = {
       { amount: depositData.amount }
     );
 
-    if (!response.success || !response.data) {
-      throw new Error(response.message || 'Error al depositar en la cuenta');
-    }
+    return response;
+  },
+  withdraw: async (
+    withdrawData: WithdrawAccountData
+  ): Promise<ApiResponse<WithdrawAccountResponse>> => {
+    const { data: response } = await apiClient.post<ApiResponse<WithdrawAccountResponse>>(
+      `/accounts/${withdrawData.accountNumber}/withdraw`,
+      { amount: withdrawData.amount }
+    );
 
     return response;
   },

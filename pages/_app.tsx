@@ -19,6 +19,7 @@ import {
   InactivateAccountModal,
   OpenAccountModal,
   RegisterClientModal,
+  WithdrawAccountModal,
 } from '@/features/dashboard';
 import { LoginModal, RouteProgressBar } from '@/shared/components';
 
@@ -85,6 +86,7 @@ export default function App({ Component, pageProps }: AppProps) {
               inactivateAccount: InactivateAccountModal,
               freezeAccount: FreezeAccountModal,
               depositAccount: DepositAccountModal,
+              withdrawAccount: WithdrawAccountModal,
             }}
             modalProps={{
               centered: true,

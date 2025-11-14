@@ -10,3 +10,4 @@ export * from './useFreezeAccount';
 export * from './useInactivateAccount';
 export * from './useOpenAccount';
 export * from './useRucToForm';
+export * from './useWithdrawAccount';

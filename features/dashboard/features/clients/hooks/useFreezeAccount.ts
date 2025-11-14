@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
 import { ApiResponseError, FreezeAccountData } from '@/lib/types';
 import { accountService } from '../services';
@@ -20,10 +21,10 @@ export const useFreezeAccount = () => {
       });
     },
 
-    onError: (error: ApiResponseError) => {
+    onError: (error: AxiosError<ApiResponseError>) => {
       notifications.show({
         title: 'Error al embargar cuenta',
-        message: error.message || 'Ocurrió un error al embargar la cuenta',
+        message: error.response?.data.message || 'Ocurrió un error al embargar la cuenta',
         color: 'red',
         autoClose: 3000,
       });

@@ -18,7 +18,6 @@ export const OpenAccountModal: React.FC<ContextModalProps<{ clientCode?: string 
   innerProps,
 }) => {
   const { clientCode } = innerProps;
-  console.log('🚀 ~ OpenAccountModal ~ clientCode:', clientCode);
   const openAccountMutation = useOpenAccount();
 
   const form = useForm<OpenAccountFormData>({

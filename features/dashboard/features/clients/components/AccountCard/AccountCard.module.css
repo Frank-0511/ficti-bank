@@ -1,3 +1,11 @@
+/* Menú en la esquina superior derecha del card */
+.menuCorner {
+  position: absolute;
+  top: 24px;
+  right: 4px;
+  z-index: 1;
+}
+
 .balanceSection {
   padding: var(--mantine-spacing-md);
   background: var(--mantine-color-balance-section);

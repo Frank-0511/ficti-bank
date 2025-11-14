@@ -37,3 +37,13 @@ export interface CloseAccountData {
   accountNumber: string;
   reason?: string;
 }
+
+export interface FreezeAccountData {
+  accountNumber: string;
+  type: 'total' | 'partial';
+  amount?: number;
+}
+
+export interface FreezeAccountResponse {
+  accountNumber: string;
+}

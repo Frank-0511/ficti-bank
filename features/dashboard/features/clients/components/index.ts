@@ -1,9 +1,8 @@
-export { AccountCard } from './AccountCard';
-export { AccountCardSkeleton } from './AccountCardSkeleton';
-export { AccountsList } from './AccountsList';
-export { ClientsSection } from './ClientsSection';
-export { ClientsTable } from './ClientsTable';
-export { ClientsTableSkeleton } from './ClientsTableSkeleton';
-export { CloseAccountModal } from './CloseAccountModal';
-export { InactivateAccountModal } from './InactivateAccountModal';
-export { OpenAccountModal } from './OpenAccountModal';
+export * from './AccountCard';
+export * from './AccountCardSkeleton';
+export * from './AccountsList';
+export * from './ClientDetailHeader';
+export * from './ClientDetailNavbar';
+export * from './ClientsSection';
+export * from './ClientsTable';
+export * from './ClientsTableSkeleton';

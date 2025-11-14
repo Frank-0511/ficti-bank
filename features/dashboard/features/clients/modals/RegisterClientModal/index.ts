@@ -1,1 +1,1 @@
-export * from './RegisterModal';
+export * from './RegisterClientModal';

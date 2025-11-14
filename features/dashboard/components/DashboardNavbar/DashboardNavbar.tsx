@@ -73,9 +73,9 @@ export function DashboardNavbar({ activeSection, onSectionChange }: DashboardNav
         </Stack>
       </ScrollArea>
 
-      <Divider />
+      <Divider hiddenFrom="sm" />
 
-      <Stack gap="md" pt="md">
+      <Stack gap="md" pt="md" hiddenFrom="sm">
         <Button
           variant="light"
           color="red"

@@ -73,7 +73,7 @@ const RegisterModalContent: React.FC<{ id: string }> = ({ id }) => {
   );
 };
 
-export const RegisterModal: React.FC<ContextModalProps> = ({ id }) => {
+export const RegisterClientModal: React.FC<ContextModalProps> = ({ id }) => {
   return (
     <RegistrationProvider>
       <RegisterModalContent id={id} />

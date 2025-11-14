@@ -1,7 +1,11 @@
-export { useAccountModals } from './useAccountModals';
-export { useAccounts } from './useAccounts';
-export { useClientModals } from './useClientModals';
-export { useClients } from './useClients';
-export { useCloseAccount } from './useCloseAccount';
-export { useInactivateAccount } from './useInactivateAccount';
-export { useOpenAccount } from './useOpenAccount';
+export * from './useAccountModals';
+export * from './useAccounts';
+export * from './useClientModals';
+export * from './useClients';
+export * from './useCloseAccount';
+export * from './useCreateClient';
+export * from './useDniToForm';
+export * from './useFreezeAccount';
+export * from './useInactivateAccount';
+export * from './useOpenAccount';
+export * from './useRucToForm';

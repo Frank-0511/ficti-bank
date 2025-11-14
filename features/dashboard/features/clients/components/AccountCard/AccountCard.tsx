@@ -1,6 +1,5 @@
-import { IconX } from '@tabler/icons-react';
-import { Badge, Button, Card, Group, Stack, Text } from '@mantine/core';
-import { openContextModal } from '@mantine/modals';
+// ...existing code...
+import { Badge, Card, Group, Stack, Text } from '@mantine/core';
 import {
   ACCOUNT_STATUS,
   ACCOUNT_STATUS_LABELS,
@@ -9,6 +8,7 @@ import {
   CURRENCY_SYMBOLS,
 } from '@/lib/constants';
 import type { Account } from '@/lib/types';
+import { AccountActionsMenu } from './AccountActionsMenu';
 import styles from './AccountCard.module.css';
 
 interface AccountCardProps {
@@ -39,18 +39,24 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder className={styles.card}>
       <Stack gap="md">
-        <Group justify="space-between">
-          <div>
-            <Text fw={600} size="lg">
+        <Card.Section withBorder inheritPadding py="xs">
+          <Group justify="space-between">
+            <Text fw={600} size="lg" w="max-content">
               {ACCOUNT_TYPE_LABELS[account.accountType]}
             </Text>
-            <Text size="xs" c="dimmed">
-              {account.accountNumber}
-            </Text>
-          </div>
-          <Badge color={getStatusColor(account.status)} variant="light">
-            {ACCOUNT_STATUS_LABELS[account.status]}
-          </Badge>
+            <AccountActionsMenu account={account} onClose={onClose} />
+          </Group>
+        </Card.Section>
+
+        <Group justify="space-between" align="flex-start">
+          <Text size="sm" c="gray.6" fw="600">
+            {account.accountNumber}
+          </Text>
+          <Group gap={4} align="flex-start">
+            <Badge color={getStatusColor(account.status)} variant="light">
+              {ACCOUNT_STATUS_LABELS[account.status]}
+            </Badge>
+          </Group>
         </Group>
 
         <div className={styles.balanceSection}>
@@ -108,37 +114,7 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
           )}
         </Group>
 
-        {/* Botón para inactivar cuenta solo para CA y CC */}
-        {account.status === ACCOUNT_STATUS.ACTIVE &&
-          (account.accountType === 'CA' || account.accountType === 'CC') && (
-            <Button
-              variant="light"
-              color="gray"
-              size="xs"
-              onClick={() =>
-                openContextModal({
-                  modal: 'inactivateAccount',
-                  title: 'Inactivar Cuenta',
-                  innerProps: { accountNumber: account.accountNumber },
-                })
-              }
-              style={{ marginBottom: 8 }}
-            >
-              Inactivar Cuenta
-            </Button>
-          )}
-        {account.status === ACCOUNT_STATUS.ACTIVE && (
-          <Button
-            variant="light"
-            color="red"
-            size="xs"
-            leftSection={<IconX size={14} />}
-            onClick={() => onClose(account.accountNumber)}
-            disabled={account.currentBalance !== 0}
-          >
-            Cerrar Cuenta
-          </Button>
-        )}
+        {/* ...resto del contenido... */}
       </Stack>
     </Card>
   );

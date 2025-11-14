@@ -14,6 +14,7 @@ import '../styles/nprogress.css';
 
 import {
   CloseAccountModal,
+  FreezeAccountModal,
   InactivateAccountModal,
   OpenAccountModal,
   RegisterClientModal,
@@ -81,8 +82,10 @@ export default function App({ Component, pageProps }: AppProps) {
               openAccount: OpenAccountModal,
               closeAccount: CloseAccountModal,
               inactivateAccount: InactivateAccountModal,
+              freezeAccount: FreezeAccountModal,
             }}
             modalProps={{
+              centered: true,
               overlayProps: {
                 backgroundOpacity: 0.6,
                 blur: 4,

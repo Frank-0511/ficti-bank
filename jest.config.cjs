@@ -1,39 +1,28 @@
-const nextJest = require('next/jest');
-
-const createJestConfig = nextJest({
-  dir: './',
-});
-
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.cjs'],
   moduleNameMapper: {
-    '^@/features/(.*)$': '<rootDir>/features/$1',
-    '^@/shared/(.*)$': '<rootDir>/shared/$1',
-    '^@/components/(.*)$': '<rootDir>/shared/components/$1',
-    '^@/lib/(.*)$': '<rootDir>/lib/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
   collectCoverageFrom: [
-    'features/**/*.{ts,tsx}',
-    'shared/**/*.{ts,tsx}',
-    'lib/**/*.{ts,tsx}',
+    'src/features/**/*.{ts,tsx}',
+    'src/shared/**/*.{ts,tsx}',
+    'src/lib/**/*.{ts,tsx}',
     '!**/*.story.{ts,tsx}',
     '!**/*.test.{ts,tsx}',
-    '!**/index.ts', // excluir barrel files
-    '!**/constants/**', // excluir todas las carpetas de constantes
-    '!**/types/**', // excluir todas las definiciones de tipos
-    '!pages/_app.tsx',
-    '!pages/_document.tsx',
+    '!**/index.ts',
+    '!**/constants/**',
+    '!**/types/**',
     '!**/node_modules/**',
-    '!**/.next/**',
+    '!**/dist/**',
     '!**/test-utils/**',
   ],
   coverageReporters: ['text', 'html', 'lcov'],
   coverageDirectory: 'coverage',
-  testMatch: ['<rootDir>/**/*.(test|spec).[jt]s?(x)'],
+  testMatch: ['<rootDir>/src/**/*.(test|spec).[jt]s?(x)'],
   // Configuración de mocks
   moduleDirectories: ['node_modules', '<rootDir>/'],
-  transformIgnorePatterns: ['node_modules/(?!(next)/)'],
+  transformIgnorePatterns: ['node_modules/(?!(msw)/)'],
 };
 
-module.exports = createJestConfig(customJestConfig);
+module.exports = customJestConfig;

@@ -83,7 +83,12 @@ web_modules/
 .cache
 .parcel-cache
 
-# Next.js build output
+# Vite
+dist
+dist-ssr
+*.local
+
+# Next.js build output (legacy)
 .next
 out
 

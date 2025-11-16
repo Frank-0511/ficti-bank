@@ -3,47 +3,43 @@
     "types": [
       "node",
       "jest",
-      "@testing-library/jest-dom"
+      "@testing-library/jest-dom",
     ],
-    "target": "es5",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
     ],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
+      ],
+      "@tests/*": [
+        "./test-utils/*"
       ]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    }
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "./types/**/*.d.ts",
-    "next-env.d.ts"
+    "src"
   ],
   "exclude": [
+    "node_modules",
+    "dist",
     "**/*.test.ts",
-    "**/*.test.tsx",
-    "node_modules"
+    "**/*.test.tsx"
   ]
 }

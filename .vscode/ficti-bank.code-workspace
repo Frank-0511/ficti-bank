@@ -12,7 +12,6 @@
 			"**/.DS_Store": true,
 			"**/Thumbs.db": true,
 			"**/node_modules": true,
-			"**/.next": true,
 			"**/.swc": true,
 			"**/.yarn": true,
 			"**/.stylelintcache": true,
@@ -23,7 +22,7 @@
 			".prettierignore": true,
 			".nvmrc": true,
 			"LICENCE": true,
-			"next-env.d.ts": true
+			"tsconfig.tsbuildinfo": true
 		},
 		"explorerExclude.backup": {},
 		"cSpell.words": [
@@ -31,6 +30,7 @@
 			"FACILIZA",
 			"Ficti",
 			"mantine",
+			"nprogress",
 			"tabler",
 			"Ubigeo"
 		]

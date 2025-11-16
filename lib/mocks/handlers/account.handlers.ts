@@ -103,10 +103,10 @@ export const accountHandlers = [
       accounts[accountIndex].availableBalance = 0;
       accounts[accountIndex].currentBalance = 0;
     } else if (body.type === EMBARGO_TYPE.PARTIAL && typeof body.amount === 'number') {
-      const faltaRetener = body.amount - accounts[accountIndex].availableBalance;
-      accounts[accountIndex].currentBalance -= faltaRetener;
-      accounts[accountIndex].availableBalance -= faltaRetener;
+      accounts[accountIndex].currentBalance -= body.amount;
+      accounts[accountIndex].availableBalance -= body.amount;
       accounts[accountIndex].embargoAmount = body.amount;
+      console.log('Partial freeze amount:', JSON.stringify(accounts[accountIndex]));
     }
     setAccountsToStorage(accounts);
     const response: ApiResponse<{ accountNumber: string }> = {

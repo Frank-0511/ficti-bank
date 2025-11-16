@@ -54,7 +54,6 @@ export const AccountActionsMenu = ({
             <Menu.Item
               leftSection={<IconTransferIn size={14} />}
               onClick={() => {
-                console.log('Deposit clicked');
                 openContextModal({
                   modal: 'depositAccount',
                   title: 'Depositar',
@@ -63,6 +62,21 @@ export const AccountActionsMenu = ({
               }}
             >
               Depositar
+            </Menu.Item>
+            <Menu.Item
+              leftSection={<IconTransferIn size={14} />}
+              onClick={() => {
+                openContextModal({
+                  modal: 'transferAccount',
+                  title: 'Transferencia',
+                  innerProps: {
+                    accountNumber: account.accountNumber,
+                    currency: account.currency,
+                  },
+                });
+              }}
+            >
+              Transferencia
             </Menu.Item>
             <Menu.Item
               leftSection={<IconTransferOut size={14} />}

@@ -6,7 +6,6 @@ import { accountService } from '../services';
 
 export const useDepositAccount = () => {
   const queryClient = useQueryClient();
-  console.log('useDepositAccount montado');
 
   return useMutation({
     mutationFn: (depositData: DepositAccountData) => accountService.deposit(depositData),

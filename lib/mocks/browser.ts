@@ -1,17 +1,16 @@
+// browser.ts
 import { setupWorker } from 'msw/browser';
 import { handlers } from './handlers';
-import { initializeMockData } from './init';
+import { initializeMockData } from './initData';
 
-export const worker =
-  typeof window !== 'undefined' ? setupWorker(...handlers) : ({} as ReturnType<typeof setupWorker>);
+export const worker = setupWorker(...handlers);
 
-if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+// Solo correr en desarrollo y en navegador
+if (process.env.NODE_ENV === 'development') {
+  // Inicializa tu data antes de iniciar MSW
   initializeMockData();
 
   worker.start({
     onUnhandledRequest: 'bypass',
-    serviceWorker: {
-      url: '/mockServiceWorker.js',
-    },
   });
 }

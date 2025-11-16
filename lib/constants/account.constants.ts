@@ -55,3 +55,8 @@ export const CURRENCY_OPTIONS = [
     label: `${CURRENCY_LABELS[CURRENCY.DOLLARS]} (${CURRENCY_SYMBOLS[CURRENCY.DOLLARS]})`,
   },
 ] as const;
+
+export const EMBARGO_TYPE = {
+  TOTAL: 'total',
+  PARTIAL: 'partial',
+} as const;

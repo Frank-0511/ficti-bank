@@ -24,6 +24,7 @@ export const DepositAccountModal = ({
   const depositAccountMutation = useDepositAccount();
 
   const handleSubmit = (values: DepositFormValues) => {
+    console.log('🚀 ~ handleSubmit values:', values);
     depositAccountMutation.mutate(
       {
         accountNumber: innerProps.accountNumber,

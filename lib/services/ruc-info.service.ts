@@ -1,13 +1,16 @@
 import { rucAdapter } from '../adapters';
 import { RucApiResponse, RucData } from '../types';
 
-const API_URL = '/api/ruc';
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL_FACILIZA}/ruc/info`;
+const API_TOKEN = process.env.NEXT_PUBLIC_TOKEN_FACILIZA;
 
 export async function fetchRucInfo(ruc: string): Promise<RucData> {
-  const rucResponse = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ruc }),
+  const rucResponse = await fetch(`${API_URL}/${ruc}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
   });
 
   if (rucResponse.status !== 200) {

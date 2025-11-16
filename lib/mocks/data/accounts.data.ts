@@ -14,6 +14,8 @@ export const DEFAULT_ACCOUNTS: Account[] = [
     availableBalance: 1500.5,
     userCode: 'USR-001',
     status: ACCOUNT_STATUS.ACTIVE,
+    embargoAmount: 0,
+    embargoType: undefined,
   },
   {
     accountType: ACCOUNT_TYPE.CHECKING,
@@ -27,6 +29,8 @@ export const DEFAULT_ACCOUNTS: Account[] = [
     userCode: 'USR-001',
     status: ACCOUNT_STATUS.ACTIVE,
     overdraftLimit: 2000,
+    embargoAmount: 0,
+    embargoType: undefined,
   },
   {
     accountType: ACCOUNT_TYPE.FIXED_TERM,
@@ -41,6 +45,8 @@ export const DEFAULT_ACCOUNTS: Account[] = [
     status: ACCOUNT_STATUS.ACTIVE,
     term: 12,
     monthlyInterest: 2.5,
+    embargoAmount: 0,
+    embargoType: undefined,
   },
   {
     accountType: ACCOUNT_TYPE.SAVINGS,
@@ -53,5 +59,7 @@ export const DEFAULT_ACCOUNTS: Account[] = [
     availableBalance: 0,
     userCode: 'USR-001',
     status: ACCOUNT_STATUS.INACTIVE,
+    embargoAmount: 0,
+    embargoType: undefined,
   },
 ];

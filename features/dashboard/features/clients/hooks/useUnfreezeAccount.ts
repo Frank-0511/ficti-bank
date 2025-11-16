@@ -1,30 +1,27 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
-import { ApiResponseError, DepositAccountData } from '@/lib/types';
+import { ApiResponseError } from '@/lib/types';
 import { accountService } from '../services';
 
-export const useDepositAccount = () => {
+export const useUnfreezeAccount = () => {
   const queryClient = useQueryClient();
-  console.log('useDepositAccount montado');
 
   return useMutation({
-    mutationFn: (depositData: DepositAccountData) => accountService.deposit(depositData),
-
-    onSuccess: (response) => {
+    mutationFn: (accountNumber: string) => accountService.unfreeze(accountNumber),
+    onSuccess: (response: any) => {
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
       notifications.show({
         title: response.message,
-        message: `Depósito realizado en la cuenta ${response.data.accountNumber}`,
+        message: `Cuenta ${response.data.accountNumber} desembargada`,
         color: 'green',
         autoClose: 3000,
       });
     },
-
     onError: (error: AxiosError<ApiResponseError>) => {
       notifications.show({
-        title: 'Error al realizar depósito',
-        message: error.response?.data.message || 'Ocurrió un error al realizar el depósito',
+        title: 'Error al desembargar cuenta',
+        message: error.response?.data.message || 'Ocurrió un error al desembargar la cuenta',
         color: 'red',
         autoClose: 3000,
       });

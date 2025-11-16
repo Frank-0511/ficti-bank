@@ -7,6 +7,7 @@ import {
   FreezeAccountData,
   FreezeAccountResponse,
   OpenAccountData,
+  UnfreezeAccountResponse,
   WithdrawAccountData,
   WithdrawAccountResponse,
 } from '@/lib/types';
@@ -53,6 +54,7 @@ export const accountService = {
   deposit: async (
     depositData: DepositAccountData
   ): Promise<ApiResponse<DepositAccountResponse>> => {
+    console.log('accountService.deposit called');
     const { data: response } = await apiClient.post<ApiResponse<DepositAccountResponse>>(
       `/accounts/${depositData.accountNumber}/deposit`,
       { amount: depositData.amount }
@@ -68,6 +70,12 @@ export const accountService = {
       { amount: withdrawData.amount }
     );
 
+    return response;
+  },
+  unfreeze: async (accountNumber: string): Promise<ApiResponse<UnfreezeAccountResponse>> => {
+    const { data: response } = await apiClient.post<ApiResponse<{ accountNumber: string }>>(
+      `/accounts/${accountNumber}/unfreeze`
+    );
     return response;
   },
 };

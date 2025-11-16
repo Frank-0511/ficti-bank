@@ -2,7 +2,8 @@ import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Button, Group, NumberInput, Radio, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { ContextModalProps } from '@mantine/modals';
-import { CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
+import { CURRENCY_SYMBOLS, EMBARGO_TYPE } from '@/lib/constants';
+import { EmbargoType } from '@/lib/types';
 import { useFreezeAccount } from '../../hooks';
 import { FreezeFormValues, freezeSchema } from './schema';
 
@@ -19,7 +20,7 @@ export const FreezeAccountModal = ({
   const freezeAccountMutation = useFreezeAccount();
 
   const form = useForm<FreezeFormValues>({
-    initialValues: { type: 'total', amount: undefined },
+    initialValues: { type: EMBARGO_TYPE.TOTAL, amount: undefined },
     transformValues: (values) => ({
       ...values,
       amount:
@@ -57,14 +58,14 @@ export const FreezeAccountModal = ({
           name="type"
           label="Tipo de embargo"
           value={form.values.type}
-          onChange={(value) => form.setFieldValue('type', value as 'total' | 'partial')}
+          onChange={(value) => form.setFieldValue('type', value as EmbargoType)}
         >
           <Group pt="sm">
             <Radio value="total" label="Total (todo el saldo disponible)" />
             <Radio value="partial" label="Parcial (monto específico)" />
           </Group>
         </Radio.Group>
-        {type === 'partial' && (
+        {type === EMBARGO_TYPE.PARTIAL && (
           <NumberInput
             label="Monto a embargar"
             {...form.getInputProps('amount')}

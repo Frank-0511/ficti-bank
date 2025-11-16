@@ -19,7 +19,6 @@ export const WithdrawAccountModal = ({
   id,
   innerProps,
 }: ContextModalProps<WithdrawAccountModalProps>) => {
-  // Determinar el límite máximo de retiro
   const maxAmount = innerProps.availableBalance || 0;
 
   const schema = withdrawSchema(maxAmount);

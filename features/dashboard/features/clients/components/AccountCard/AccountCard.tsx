@@ -6,9 +6,9 @@ import {
   ACCOUNT_TYPE,
   ACCOUNT_TYPE_LABELS,
   CURRENCY_LABELS,
-  CURRENCY_SYMBOLS,
 } from '@/lib/constants';
 import type { Account } from '@/lib/types';
+import { formatCurrency } from '@/lib/utils';
 import { AccountActionsMenu } from './AccountActionsMenu';
 import styles from './AccountCard.module.css';
 
@@ -31,10 +31,6 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
       default:
         return 'gray';
     }
-  };
-
-  const formatCurrency = (amount: number) => {
-    return `${CURRENCY_SYMBOLS[account.currency]}${amount.toFixed(2)}`;
   };
 
   return (
@@ -82,8 +78,13 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
                   : undefined
               }
             >
-              {formatCurrency(account.currentBalance)}
+              {formatCurrency(account.currentBalance, account.currency)}
             </Text>
+            {account.status === ACCOUNT_STATUS.BLOCKED && account.embargoAmount && (
+              <Text size="sm" c="orange" mt={4}>
+                Monto embargado: <b>{formatCurrency(account.embargoAmount, account.currency)}</b>
+              </Text>
+            )}
           </div>
           <Text size="xs" c="dimmed">
             {CURRENCY_LABELS[account.currency]}
@@ -97,7 +98,7 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
                 Sobregiro
               </Text>
               <Text size="sm" fw={500}>
-                {formatCurrency(account.overdraftLimit)}
+                {formatCurrency(account.overdraftLimit, account.currency)}
               </Text>
             </div>
           )}

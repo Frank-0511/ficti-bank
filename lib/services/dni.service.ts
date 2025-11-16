@@ -1,23 +1,22 @@
 import { dniAdapter } from '../adapters';
-import { DniData } from '../types';
 
-const API_URL = '/api/dni';
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL_FACILIZA}/dni/info`;
+const API_TOKEN = process.env.NEXT_PUBLIC_TOKEN_FACILIZA;
 
-export async function fetchDniData(dni: string): Promise<DniData> {
-  const res = await fetch(API_URL, {
-    method: 'POST',
+export async function fetchDniData(dni: string): Promise<any> {
+  const response = await fetch(`${API_URL}/${dni}`, {
+    method: 'GET',
     headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ dni }),
   });
-  if (!res.ok) {
+  if (response.status !== 200) {
     throw new Error('Error consultando DNI');
   }
-  const json = await res.json();
-  if (!json.success || !json.data) {
-    throw new Error(json.message || 'Error consultando DNI');
+  const data = await response.json();
+  if (data.status !== 200 || !data.data) {
+    throw new Error(data.message || 'Error consultando DNI');
   }
-  // Adaptar la respuesta a DniData usando el adapter
-  return dniAdapter(json);
+  return dniAdapter(data);
 }

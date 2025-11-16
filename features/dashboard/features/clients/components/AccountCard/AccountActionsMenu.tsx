@@ -21,10 +21,6 @@ export const AccountActionsMenu = ({
   onClose,
   className,
 }: AccountActionsMenuProps & { className?: string }) => {
-  if (account.status !== ACCOUNT_STATUS.ACTIVE) {
-    return null;
-  }
-
   return (
     <Menu shadow="md" width={200} position="bottom-end">
       <Menu.Target>
@@ -57,13 +53,14 @@ export const AccountActionsMenu = ({
             </Menu.Item>
             <Menu.Item
               leftSection={<IconTransferIn size={14} />}
-              onClick={() =>
+              onClick={() => {
+                console.log('Deposit clicked');
                 openContextModal({
                   modal: 'depositAccount',
                   title: 'Depositar',
                   innerProps: { accountNumber: account.accountNumber, currency: account.currency },
-                })
-              }
+                });
+              }}
             >
               Depositar
             </Menu.Item>
@@ -87,18 +84,34 @@ export const AccountActionsMenu = ({
             </Menu.Item>
           </>
         )}
-        <Menu.Item
-          leftSection={<IconGavel size={14} />}
-          onClick={() => {
-            openContextModal({
-              modal: 'freezeAccount',
-              title: 'Embargar Cuenta',
-              innerProps: { accountNumber: account.accountNumber, currency: account.currency },
-            });
-          }}
-        >
-          Embargar Cuenta
-        </Menu.Item>
+        {account.status === ACCOUNT_STATUS.BLOCKED ? (
+          <Menu.Item
+            leftSection={<IconGavel size={14} />}
+            color="green"
+            onClick={() =>
+              openContextModal({
+                modal: 'unfreezeAccount',
+                title: 'Desembargar Cuenta',
+                innerProps: { accountNumber: account.accountNumber },
+              })
+            }
+          >
+            Desembargar Cuenta
+          </Menu.Item>
+        ) : (
+          <Menu.Item
+            leftSection={<IconGavel size={14} />}
+            onClick={() => {
+              openContextModal({
+                modal: 'freezeAccount',
+                title: 'Embargar Cuenta',
+                innerProps: { accountNumber: account.accountNumber, currency: account.currency },
+              });
+            }}
+          >
+            Embargar Cuenta
+          </Menu.Item>
+        )}
         <Menu.Item
           leftSection={<IconX size={14} />}
           color="red"

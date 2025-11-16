@@ -1,8 +1,9 @@
 import z from 'zod';
+import { EMBARGO_TYPE } from '@/lib/constants/account.constants';
 
 export const freezeSchema = z
   .object({
-    type: z.enum(['total', 'partial']),
+    type: z.enum([EMBARGO_TYPE.TOTAL, EMBARGO_TYPE.PARTIAL]),
     amount: z
       .union([
         z.number().min(0.01, 'El monto debe ser mayor a 0'),
@@ -15,8 +16,10 @@ export const freezeSchema = z
   })
   .refine(
     (data) =>
-      data.type === 'total' ||
-      (data.type === 'partial' && typeof data.amount === 'number' && !isNaN(data.amount)),
+      data.type === EMBARGO_TYPE.TOTAL ||
+      (data.type === EMBARGO_TYPE.PARTIAL &&
+        typeof data.amount === 'number' &&
+        !isNaN(data.amount)),
     {
       message: 'El monto es requerido para embargo parcial',
       path: ['amount'],

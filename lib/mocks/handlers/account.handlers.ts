@@ -1,7 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { ACCOUNT_STATUS } from '@/lib/constants';
-import { ApiResponse } from '@/lib/types';
-import { Account } from '@/lib/types/account.types';
+import { ACCOUNT_STATUS, EMBARGO_TYPE } from '@/lib/constants';
+import { Account, ApiResponse, EmbargoType } from '@/lib/types';
 import { roundTwo } from '../../utils';
 import { ACCOUNTS_STORAGE_KEY } from '../data';
 
@@ -18,7 +17,6 @@ function setAccountsToStorage(accounts: Account[]): void {
 }
 
 export const accountHandlers = [
-  // PATCH /api/accounts/:accountNumber/inactivate - Inactivar cuenta
   http.patch('/api/accounts/:accountNumber/inactivate', async ({ params }) => {
     const { accountNumber } = params;
     const accounts = getAccountsFromStorage();
@@ -72,6 +70,8 @@ export const accountHandlers = [
       term: body.term,
       monthlyInterest: body.monthlyInterest,
       overdraftLimit: body.overdraftLimit,
+      embargoAmount: 0,
+      embargoType: undefined,
     };
     accounts.push(newAccount);
     setAccountsToStorage(accounts);
@@ -83,10 +83,9 @@ export const accountHandlers = [
     return HttpResponse.json(response, { status: 201 });
   }),
 
-  // POST /api/accounts/:accountNumber/freeze - Congelar/embargar cuenta
   http.post('/api/accounts/:accountNumber/freeze', async ({ params, request }) => {
     const { accountNumber } = params;
-    const body = (await request.json()) as { type: 'total' | 'partial'; amount?: number };
+    const body = (await request.json()) as { type: EmbargoType; amount?: number };
     const accounts = getAccountsFromStorage();
     const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
     if (accountIndex === -1) {
@@ -97,13 +96,17 @@ export const accountHandlers = [
       };
       return HttpResponse.json(response, { status: 404 });
     }
-    // Simular congelamiento: solo cambiamos el status a 'B' (bloqueada)
     accounts[accountIndex].status = ACCOUNT_STATUS.BLOCKED;
-    // Si es parcial, restar el monto del saldo disponible
-    if (body.type === 'partial' && typeof body.amount === 'number') {
-      accounts[accountIndex].availableBalance -= body.amount;
-    } else if (body.type === 'total') {
+    accounts[accountIndex].embargoType = body.type;
+    if (body.type === EMBARGO_TYPE.TOTAL) {
+      accounts[accountIndex].embargoAmount = accounts[accountIndex].availableBalance;
       accounts[accountIndex].availableBalance = 0;
+      accounts[accountIndex].currentBalance = 0;
+    } else if (body.type === EMBARGO_TYPE.PARTIAL && typeof body.amount === 'number') {
+      const faltaRetener = body.amount - accounts[accountIndex].availableBalance;
+      accounts[accountIndex].currentBalance -= faltaRetener;
+      accounts[accountIndex].availableBalance -= faltaRetener;
+      accounts[accountIndex].embargoAmount = body.amount;
     }
     setAccountsToStorage(accounts);
     const response: ApiResponse<{ accountNumber: string }> = {
@@ -156,8 +159,20 @@ export const accountHandlers = [
       };
       return HttpResponse.json(response, { status: 404 });
     }
-    accounts[accountIndex].currentBalance += body.amount;
-    accounts[accountIndex].availableBalance += body.amount;
+    const isBlocked = accounts[accountIndex].status === ACCOUNT_STATUS.BLOCKED;
+    const isTotalEmbargo = accounts[accountIndex].embargoType === EMBARGO_TYPE.TOTAL;
+
+    if (isBlocked && isTotalEmbargo) {
+      accounts[accountIndex].embargoAmount = accounts[accountIndex].embargoAmount
+        ? accounts[accountIndex].embargoAmount + body.amount
+        : body.amount;
+    }
+
+    if ((isBlocked && !isTotalEmbargo) || !isBlocked) {
+      accounts[accountIndex].currentBalance += body.amount;
+      accounts[accountIndex].availableBalance += body.amount;
+    }
+
     setAccountsToStorage(accounts);
     const response: ApiResponse<{ accountNumber: string }> = {
       success: true,
@@ -199,6 +214,38 @@ export const accountHandlers = [
     const response: ApiResponse<{ accountNumber: string }> = {
       success: true,
       message: 'Retiro realizado exitosamente',
+      data: { accountNumber: String(accountNumber) },
+    };
+    return HttpResponse.json(response);
+  }),
+  http.post('/api/accounts/:accountNumber/unfreeze', async ({ params }) => {
+    const { accountNumber } = params;
+    const accounts = getAccountsFromStorage();
+    const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
+    if (accountIndex === -1) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Cuenta no encontrada',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 404 });
+    }
+    if (accounts[accountIndex].status !== ACCOUNT_STATUS.BLOCKED) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'La cuenta no está embargada',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+    accounts[accountIndex].status = ACCOUNT_STATUS.ACTIVE;
+    accounts[accountIndex].embargoAmount = 0;
+    accounts[accountIndex].embargoType = undefined;
+    accounts[accountIndex].availableBalance = accounts[accountIndex].currentBalance;
+    setAccountsToStorage(accounts);
+    const response: ApiResponse<{ accountNumber: string }> = {
+      success: true,
+      message: 'Cuenta desembargada exitosamente',
       data: { accountNumber: String(accountNumber) },
     };
     return HttpResponse.json(response);

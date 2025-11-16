@@ -1,8 +1,9 @@
-import { ACCOUNT_STATUS, ACCOUNT_TYPE, CURRENCY } from '../constants/account.constants';
+import { ACCOUNT_STATUS, ACCOUNT_TYPE, CURRENCY, EMBARGO_TYPE } from '../constants';
 
 export type AccountType = (typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE];
 export type Currency = (typeof CURRENCY)[keyof typeof CURRENCY];
 export type AccountStatus = (typeof ACCOUNT_STATUS)[keyof typeof ACCOUNT_STATUS];
+export type EmbargoType = (typeof EMBARGO_TYPE)[keyof typeof EMBARGO_TYPE];
 
 export interface Account {
   accountType: AccountType;
@@ -21,6 +22,8 @@ export interface Account {
   term?: number;
   monthlyInterest?: number;
   overdraftLimit?: number;
+  embargoAmount?: number;
+  embargoType?: EmbargoType;
 }
 
 export interface OpenAccountData {
@@ -40,7 +43,7 @@ export interface CloseAccountData {
 
 export interface FreezeAccountData {
   accountNumber: string;
-  type: 'total' | 'partial';
+  type: EmbargoType;
   amount?: number;
 }
 
@@ -63,5 +66,13 @@ export interface WithdrawAccountData {
 }
 
 export interface WithdrawAccountResponse {
+  accountNumber: string;
+}
+
+export interface UnfreezeAccountData {
+  accountNumber: string;
+}
+
+export interface UnfreezeAccountResponse {
   accountNumber: string;
 }

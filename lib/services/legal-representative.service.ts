@@ -1,11 +1,16 @@
 import { rucRepresentanteAdapter } from '../adapters';
 import { RucRepresentanteApiResponse, RucRepresentanteData } from '../types';
 
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL_FACILIZA}/ruc/representante`;
+const API_TOKEN = process.env.NEXT_PUBLIC_TOKEN_FACILIZA;
+
 export async function fetchLegalRepresentatives(ruc: string): Promise<RucRepresentanteData[]> {
-  const response = await fetch('/api/ruc-representante', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ruc }),
+  const response = await fetch(`${API_URL}/${ruc}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${API_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
   });
   if (response.status !== 200) {
     throw new Error('Error consultando representante legal');

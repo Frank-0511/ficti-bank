@@ -76,3 +76,13 @@ export interface UnfreezeAccountData {
 export interface UnfreezeAccountResponse {
   accountNumber: string;
 }
+
+export interface TransferAccountData {
+  accountNumber: string;
+  destinationAccount: string;
+  amount: number;
+}
+
+export interface TransferAccountResponse {
+  accountNumber: string;
+}

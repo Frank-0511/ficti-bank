@@ -11,10 +11,10 @@ interface AccountsListProps {
 }
 
 export const AccountsList = ({ clientCode, loadingData }: AccountsListProps) => {
-  const { data: accounts, isLoading } = useAccounts(clientCode);
+  const { data: accounts, isLoading, isFetching } = useAccounts(clientCode);
   const { openCloseAccountModal } = useAccountModals();
 
-  if (isLoading || loadingData) {
+  if (isLoading || loadingData || isFetching) {
     return (
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="lg" className={styles.grid}>
         {Array.from({ length: 8 }).map((_, index) => (

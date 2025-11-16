@@ -14,15 +14,15 @@ import {
   InactivateAccountModal,
   OpenAccountModal,
   RegisterClientModal,
+  TransferAccountModal,
   UnfreezeAccountModal,
   WithdrawAccountModal,
 } from '@/features/dashboard';
 import { HomePage } from '@/features/home';
 import { withAuth } from '@/lib/hoc';
 import { cssVariablesResolver, theme } from '@/lib/theme';
-import { LoginModal, RouteProgressBar } from '@/shared/components';
+import { InactivityTracker, LoginModal, RouteProgressBar } from '@/shared/components';
 
-// Crear componentes protegidos
 const ProtectedDashboard = withAuth(DashboardPage);
 const ProtectedClientDetail = withAuth(ClientDetailPage);
 
@@ -76,6 +76,7 @@ export function App() {
               depositAccount: DepositAccountModal,
               withdrawAccount: WithdrawAccountModal,
               unfreezeAccount: UnfreezeAccountModal,
+              transferAccount: TransferAccountModal,
             }}
             modalProps={{
               centered: true,
@@ -90,6 +91,7 @@ export function App() {
               },
             }}
           >
+            <InactivityTracker />
             <RouteProgressBar />
             <Notifications />
             <Routes>

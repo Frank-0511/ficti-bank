@@ -2,6 +2,7 @@ import {
   IconDotsVertical,
   IconGavel,
   IconLock,
+  IconSwitchHorizontal,
   IconTransferIn,
   IconTransferOut,
   IconX,
@@ -64,7 +65,7 @@ export const AccountActionsMenu = ({
               Depositar
             </Menu.Item>
             <Menu.Item
-              leftSection={<IconTransferIn size={14} />}
+              leftSection={<IconSwitchHorizontal size={14} />}
               onClick={() => {
                 openContextModal({
                   modal: 'transferAccount',

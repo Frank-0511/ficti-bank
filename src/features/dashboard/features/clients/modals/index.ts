@@ -6,3 +6,5 @@ export * from './OpenAccountModal';
 export * from './RegisterClientModal';
 export * from './UnfreezeAccountModal';
 export * from './WithdrawAccountModal';
+
+export * from './TransferAccountModal';

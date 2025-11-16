@@ -1,8 +1,9 @@
 import { IconLogout } from '@tabler/icons-react';
-import { ActionIcon, Burger, Container, Group, Text, Title } from '@mantine/core';
+import { ActionIcon, Badge, Burger, Container, Group, Loader, Text, Title } from '@mantine/core';
 import { useLogout, useScrolled } from '@/lib/hooks';
 import { useAuthStore } from '@/lib/store';
 import { ColorSchemeToggle } from '@/shared/components';
+import { useExchangeRateToday } from '../../features/administration';
 import styles from './DashboardHeader.module.css';
 
 interface DashboardHeaderProps {
@@ -17,6 +18,9 @@ export const DashboardHeader = ({
   const { user } = useAuthStore();
   const handleLogout = useLogout();
   const isScrolled = useScrolled();
+  const { data: exchangeRateData, isLoading: isLoadingRate } = useExchangeRateToday();
+
+  const exchangeRate = exchangeRateData?.data;
 
   const getHeaderClasses = () => {
     const baseClass = styles.headerContainer;
@@ -37,6 +41,17 @@ export const DashboardHeader = ({
         </div>
 
         <Group gap="md" visibleFrom="sm" wrap="nowrap">
+          {isLoadingRate ? (
+            <Loader size="sm" />
+          ) : exchangeRate ? (
+            <Badge size="lg" variant="light" color="blue">
+              USD: S/. {exchangeRate.rate.toFixed(2)}
+            </Badge>
+          ) : (
+            <Badge size="lg" variant="light" color="red">
+              Sin tipo de cambio
+            </Badge>
+          )}
           <ColorSchemeToggle />
           <ActionIcon variant="subtle" size="lg" onClick={handleLogout} title="Cerrar sesión">
             <IconLogout size={20} />

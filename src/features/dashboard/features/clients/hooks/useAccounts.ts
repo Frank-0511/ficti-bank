@@ -7,9 +7,5 @@ export const useAccounts = (clientCode?: string) => {
     queryFn: () => accountService.getAll(clientCode),
     select: (response) => response.data,
     enabled: Boolean(clientCode),
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    staleTime: 1000 * 60 * 5,
   });
 };

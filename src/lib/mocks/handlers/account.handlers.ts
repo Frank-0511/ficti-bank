@@ -3,6 +3,7 @@ import { ACCOUNT_STATUS, EMBARGO_TYPE } from '@/lib/constants';
 import { Account, ApiResponse, EmbargoType } from '@/lib/types';
 import { roundTwo } from '../../utils';
 import { ACCOUNTS_STORAGE_KEY } from '../data';
+import { hasTodayExchangeRate } from './exchangeRate.handlers';
 
 function getAccountsFromStorage(): Account[] {
   const stored = globalThis.localStorage?.getItem(ACCOUNTS_STORAGE_KEY);
@@ -86,6 +87,17 @@ export const accountHandlers = [
   http.post('/api/accounts/:accountNumber/freeze', async ({ params, request }) => {
     const { accountNumber } = params;
     const body = (await request.json()) as { type: EmbargoType; amount?: number };
+
+    // Validar que exista tipo de cambio del día
+    if (!hasTodayExchangeRate()) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'No se puede realizar la operación. Falta registrar el tipo de cambio del día.',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+
     const accounts = getAccountsFromStorage();
     const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
     if (accountIndex === -1) {
@@ -106,7 +118,6 @@ export const accountHandlers = [
       accounts[accountIndex].currentBalance -= body.amount;
       accounts[accountIndex].availableBalance -= body.amount;
       accounts[accountIndex].embargoAmount = body.amount;
-      console.log('Partial freeze amount:', JSON.stringify(accounts[accountIndex]));
     }
     setAccountsToStorage(accounts);
     const response: ApiResponse<{ accountNumber: string }> = {
@@ -149,6 +160,17 @@ export const accountHandlers = [
   http.post('/api/accounts/:accountNumber/deposit', async ({ params, request }) => {
     const { accountNumber } = params;
     const body = (await request.json()) as { amount: number };
+
+    // Validar que exista tipo de cambio del día
+    if (!hasTodayExchangeRate()) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'No se puede realizar la operación. Falta registrar el tipo de cambio del día.',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+
     const accounts = getAccountsFromStorage();
     const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
     if (accountIndex === -1) {
@@ -184,6 +206,17 @@ export const accountHandlers = [
   http.post('/api/accounts/:accountNumber/withdraw', async ({ params, request }) => {
     const { accountNumber } = params;
     const body = (await request.json()) as { amount: number };
+
+    // Validar que exista tipo de cambio del día
+    if (!hasTodayExchangeRate()) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'No se puede realizar la operación. Falta registrar el tipo de cambio del día.',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+
     const accounts = getAccountsFromStorage();
     const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
     if (accountIndex === -1) {
@@ -248,6 +281,55 @@ export const accountHandlers = [
       success: true,
       message: 'Cuenta desembargada exitosamente',
       data: { accountNumber: String(accountNumber) },
+    };
+    return HttpResponse.json(response);
+  }),
+  http.post('/api/accounts/:accountNumber/transfer', async ({ params, request }) => {
+    const { accountNumber } = params;
+    const body = (await request.json()) as { destinationAccount: string; amount: number };
+
+    // Validar que exista tipo de cambio del día
+    if (!hasTodayExchangeRate()) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'No se puede realizar la operación. Falta registrar el tipo de cambio del día.',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+
+    const accounts = getAccountsFromStorage();
+    const fromIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
+    const toIndex = accounts.findIndex(
+      (acc: Account) => acc.accountNumber === body.destinationAccount
+    );
+    if (fromIndex === -1 || toIndex === -1) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Cuenta origen o destino no encontrada',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 404 });
+    }
+    if (accounts[fromIndex].availableBalance < body.amount) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Fondos insuficientes en la cuenta origen',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+    accounts[fromIndex].currentBalance = roundTwo(accounts[fromIndex].currentBalance - body.amount);
+    accounts[fromIndex].availableBalance = roundTwo(
+      accounts[fromIndex].availableBalance - body.amount
+    );
+    accounts[toIndex].currentBalance = roundTwo(accounts[toIndex].currentBalance + body.amount);
+    accounts[toIndex].availableBalance = roundTwo(accounts[toIndex].availableBalance + body.amount);
+    setAccountsToStorage(accounts);
+    const response: ApiResponse<{ accountNumber: string }> = {
+      success: true,
+      message: 'Transferencia realizada exitosamente',
+      data: { accountNumber: String(body.destinationAccount) },
     };
     return HttpResponse.json(response);
   }),

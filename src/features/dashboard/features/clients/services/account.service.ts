@@ -7,6 +7,8 @@ import {
   FreezeAccountData,
   FreezeAccountResponse,
   OpenAccountData,
+  TransferAccountData,
+  TransferAccountResponse,
   UnfreezeAccountResponse,
   WithdrawAccountData,
   WithdrawAccountResponse,
@@ -74,6 +76,18 @@ export const accountService = {
   unfreeze: async (accountNumber: string): Promise<ApiResponse<UnfreezeAccountResponse>> => {
     const { data: response } = await apiClient.post<ApiResponse<{ accountNumber: string }>>(
       `/accounts/${accountNumber}/unfreeze`
+    );
+    return response;
+  },
+  transfer: async (
+    transferData: TransferAccountData
+  ): Promise<ApiResponse<TransferAccountResponse>> => {
+    const { data: response } = await apiClient.post<ApiResponse<TransferAccountResponse>>(
+      `/accounts/${transferData.accountNumber}/transfer`,
+      {
+        destinationAccount: transferData.destinationAccount,
+        amount: transferData.amount,
+      }
     );
     return response;
   },

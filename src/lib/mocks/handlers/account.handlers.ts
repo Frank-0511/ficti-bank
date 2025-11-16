@@ -241,7 +241,8 @@ export const accountHandlers = [
     accounts[accountIndex].status = ACCOUNT_STATUS.ACTIVE;
     accounts[accountIndex].embargoAmount = 0;
     accounts[accountIndex].embargoType = undefined;
-    accounts[accountIndex].availableBalance = accounts[accountIndex].currentBalance;
+    accounts[accountIndex].availableBalance = 0;
+    accounts[accountIndex].currentBalance = 0;
     setAccountsToStorage(accounts);
     const response: ApiResponse<{ accountNumber: string }> = {
       success: true,

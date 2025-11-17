@@ -5,4 +5,5 @@ export * from './client.types';
 export * from './common.types';
 export * from './dni.types';
 export * from './exchangeRate.types';
+export * from './movement.type';
 export * from './ruc.types';

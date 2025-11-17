@@ -1,9 +1,22 @@
 import { http, HttpResponse } from 'msw';
 import { ACCOUNT_STATUS, EMBARGO_TYPE } from '@/lib/constants';
-import { Account, ApiResponse, EmbargoType } from '@/lib/types';
+import { Account, AccountMovement, ApiResponse, EmbargoType } from '@/lib/types';
 import { roundTwo } from '../../utils';
 import { ACCOUNTS_STORAGE_KEY } from '../data';
+import { MOVEMENTS_STORAGE_KEY } from '../data/movements.data';
 import { hasTodayExchangeRate } from './exchangeRate.handlers';
+
+function getMovementsFromStorage(): AccountMovement[] {
+  const stored = globalThis.localStorage?.getItem(MOVEMENTS_STORAGE_KEY);
+  if (stored) {
+    return JSON.parse(stored) as AccountMovement[];
+  }
+  return [];
+}
+
+export function setMovementsToStorage(movements: Record<string, AccountMovement[]>): void {
+  globalThis.localStorage?.setItem(MOVEMENTS_STORAGE_KEY, JSON.stringify(movements));
+}
 
 function getAccountsFromStorage(): Account[] {
   const stored = globalThis.localStorage?.getItem(ACCOUNTS_STORAGE_KEY);
@@ -18,6 +31,23 @@ function setAccountsToStorage(accounts: Account[]): void {
 }
 
 export const accountHandlers = [
+  // Endpoint mock para movimientos de cuenta
+  http.get('/api/accounts/:accountNumber/movements', ({ params, request }) => {
+    const { accountNumber } = params;
+    const url = new URL(request.url);
+    const limit = parseInt(url.searchParams.get('limit') || '20', 10);
+    const movements = getMovementsFromStorage();
+    const accountMovements = movements
+      .filter((mov) => mov.accountNumber === accountNumber)
+      .reverse()
+      .slice(0, limit);
+    const response: ApiResponse<AccountMovement[]> = {
+      success: true,
+      message: 'Movements fetched successfully',
+      data: accountMovements,
+    };
+    return HttpResponse.json(response);
+  }),
   http.patch('/api/accounts/:accountNumber/inactivate', async ({ params }) => {
     const { accountNumber } = params;
     const accounts = getAccountsFromStorage();

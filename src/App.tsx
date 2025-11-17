@@ -6,6 +6,7 @@ import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import {
+  AccountMovementsModal,
   ClientDetailPage,
   CloseAccountModal,
   DashboardPage,
@@ -77,6 +78,7 @@ export function App() {
               withdrawAccount: WithdrawAccountModal,
               unfreezeAccount: UnfreezeAccountModal,
               transferAccount: TransferAccountModal,
+              accountMovements: AccountMovementsModal,
             }}
             modalProps={{
               centered: true,

@@ -1,6 +1,7 @@
 import {
   IconDotsVertical,
   IconGavel,
+  IconListDetails,
   IconLock,
   IconSwitchHorizontal,
   IconTransferIn,
@@ -40,6 +41,21 @@ export const AccountActionsMenu = ({
         {(account.accountType === ACCOUNT_TYPE.SAVINGS ||
           account.accountType === ACCOUNT_TYPE.CHECKING) && (
           <>
+            <Menu.Item
+              leftSection={<IconListDetails size={14} />}
+              onClick={() => {
+                openContextModal({
+                  modal: 'accountMovements',
+                  title: 'Últimos Movimientos',
+                  innerProps: {
+                    accountNumber: account.accountNumber,
+                  },
+                  size: 'lg',
+                });
+              }}
+            >
+              Ver Movimientos
+            </Menu.Item>
             <Menu.Item
               leftSection={<IconLock size={14} />}
               onClick={() =>

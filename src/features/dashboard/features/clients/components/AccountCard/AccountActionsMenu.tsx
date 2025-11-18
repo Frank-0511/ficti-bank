@@ -15,12 +15,10 @@ import type { Account } from '@/lib/types';
 
 interface AccountActionsMenuProps {
   account: Account;
-  onClose: (accountNumber: string) => void;
 }
 
 export const AccountActionsMenu = ({
   account,
-  onClose,
   className,
 }: AccountActionsMenuProps & { className?: string }) => {
   return (
@@ -146,7 +144,20 @@ export const AccountActionsMenu = ({
         <Menu.Item
           leftSection={<IconX size={14} />}
           color="red"
-          onClick={() => onClose(account.accountNumber)}
+          onClick={() => {
+            openContextModal({
+              modal: 'closeAccount',
+              title: 'Cerrar Cuenta',
+              size: 'md',
+              centered: true,
+              innerProps: {
+                accountNumber: account.accountNumber,
+                clientCode: account.clientCode,
+                currency: account.currency,
+                currentBalance: account.currentBalance,
+              },
+            });
+          }}
           disabled={account.currentBalance !== 0}
         >
           Cerrar Cuenta

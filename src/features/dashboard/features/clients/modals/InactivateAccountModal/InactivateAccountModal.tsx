@@ -1,16 +1,14 @@
 import { IconAlertCircle } from '@tabler/icons-react';
 import { Alert, Button, Group, Stack, Text } from '@mantine/core';
 import { type ContextModalProps } from '@mantine/modals';
-import { useAccounts, useInactivateAccount } from '../../hooks';
+import { useInactivateAccount } from '../../hooks';
 
 export const InactivateAccountModal: React.FC<ContextModalProps<{ accountNumber: string }>> = ({
   id,
   context,
   innerProps,
 }) => {
-  const { data: accounts } = useAccounts();
   const inactivateAccountMutation = useInactivateAccount();
-  const account = accounts?.find((acc) => acc.accountNumber === innerProps.accountNumber);
 
   const handleConfirmInactivate = () => {
     inactivateAccountMutation.mutate(innerProps.accountNumber, {
@@ -20,14 +18,10 @@ export const InactivateAccountModal: React.FC<ContextModalProps<{ accountNumber:
     });
   };
 
-  if (!account) {
-    return null;
-  }
-
   return (
     <Stack gap="md">
       <Text size="sm">
-        ¿Estás seguro que deseas inactivar la cuenta <strong>{account.accountNumber}</strong>?
+        ¿Estás seguro que deseas inactivar la cuenta <strong>{innerProps.accountNumber}</strong>?
       </Text>
       <Alert icon={<IconAlertCircle size={20} />} title="Advertencia" color="yellow">
         <Text size="sm">

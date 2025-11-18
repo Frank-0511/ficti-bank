@@ -13,10 +13,9 @@ import classes from './AccountCard.module.css';
 
 interface AccountCardProps {
   account: Account;
-  onClose: (accountNumber: string) => void;
 }
 
-export const AccountCard = ({ account, onClose }: AccountCardProps) => {
+export const AccountCard = ({ account }: AccountCardProps) => {
   const getStatusColor = (status: Account['status']) => {
     switch (status) {
       case ACCOUNT_STATUS.ACTIVE:
@@ -45,7 +44,7 @@ export const AccountCard = ({ account, onClose }: AccountCardProps) => {
               {ACCOUNT_TYPE_LABELS[account.accountType]}
             </Text>
             <div style={{ flexShrink: 0 }}>
-              <AccountActionsMenu account={account} onClose={onClose} />
+              <AccountActionsMenu account={account} />
             </div>
           </Group>
         </Card.Section>

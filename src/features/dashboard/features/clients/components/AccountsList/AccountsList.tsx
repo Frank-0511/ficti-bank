@@ -1,6 +1,6 @@
 import { IconInfoCircle } from '@tabler/icons-react';
 import { Alert, Center, SimpleGrid, Text } from '@mantine/core';
-import { useAccountModals, useAccounts } from '../../hooks';
+import { useAccounts } from '../../hooks';
 import { AccountCard } from '../AccountCard';
 import { AccountCardSkeleton } from '../AccountCardSkeleton';
 import styles from './AccountsList.module.css';
@@ -12,7 +12,6 @@ interface AccountsListProps {
 
 export const AccountsList = ({ clientCode, loadingData }: AccountsListProps) => {
   const { data: accounts, isLoading, isFetching } = useAccounts(clientCode);
-  const { openCloseAccountModal } = useAccountModals();
 
   if (isLoading || loadingData || isFetching) {
     return (
@@ -45,11 +44,7 @@ export const AccountsList = ({ clientCode, loadingData }: AccountsListProps) => 
   return (
     <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="lg" className={styles.grid}>
       {accounts.map((account) => (
-        <AccountCard
-          key={account.accountNumber}
-          account={account}
-          onClose={openCloseAccountModal}
-        />
+        <AccountCard key={account.accountNumber} account={account} />
       ))}
     </SimpleGrid>
   );

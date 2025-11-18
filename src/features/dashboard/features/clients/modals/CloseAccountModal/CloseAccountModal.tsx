@@ -2,16 +2,18 @@ import { IconAlertCircle } from '@tabler/icons-react';
 import { Alert, Button, Group, Stack, Text } from '@mantine/core';
 import { type ContextModalProps } from '@mantine/modals';
 import { CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
-import { useAccounts, useCloseAccount } from '../../hooks';
+import { Currency } from '@/lib/types';
+import { useCloseAccount } from '../../hooks';
 
-export const CloseAccountModal: React.FC<ContextModalProps<{ accountNumber: string }>> = ({
-  id,
-  context,
-  innerProps,
-}) => {
-  const { data: accounts } = useAccounts();
+export const CloseAccountModal: React.FC<
+  ContextModalProps<{
+    accountNumber: string;
+    clientCode: string;
+    currency: Currency;
+    currentBalance: number;
+  }>
+> = ({ id, context, innerProps }) => {
   const closeAccountMutation = useCloseAccount();
-  const account = accounts?.find((acc) => acc.accountNumber === innerProps.accountNumber);
 
   const handleConfirmClose = () => {
     closeAccountMutation.mutate(innerProps.accountNumber, {
@@ -21,16 +23,12 @@ export const CloseAccountModal: React.FC<ContextModalProps<{ accountNumber: stri
     });
   };
 
-  if (!account) {
-    return null;
-  }
-
-  const hasBalance = account.currentBalance !== 0;
+  const hasBalance = innerProps.currentBalance !== 0;
 
   return (
     <Stack gap="md">
       <Text size="sm">
-        ¿Estás seguro que deseas cerrar la cuenta <strong>{account.accountNumber}</strong>?
+        ¿Estás seguro que deseas cerrar la cuenta <strong>{innerProps.accountNumber}</strong>?
       </Text>
 
       {hasBalance && (
@@ -38,8 +36,8 @@ export const CloseAccountModal: React.FC<ContextModalProps<{ accountNumber: stri
           <Text size="sm">
             Esta cuenta tiene un saldo de{' '}
             <strong>
-              {CURRENCY_SYMBOLS[account.currency]}
-              {account.currentBalance.toFixed(2)}
+              {CURRENCY_SYMBOLS[innerProps.currency]}
+              {innerProps.currentBalance.toFixed(2)}
             </strong>
             . Para cerrar la cuenta, el saldo debe ser S/ 0.00.
           </Text>

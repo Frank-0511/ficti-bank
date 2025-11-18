@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AppShell, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { DashboardHeader, DashboardNavbar } from '../components';
-import { ExchangeRateSection } from '../features/administration';
+import { DailySummarySection, ExchangeRateSection, UsersSection } from '../features/administration';
 import { ClientsSection } from '../features/clients';
 import styles from './Dashboard.module.css';
 
@@ -35,17 +35,9 @@ export const DashboardPage: React.FC = () => {
       case 'exchange-rate':
         return <ExchangeRateSection />;
       case 'daily-summary':
-        return (
-          <Container size="xl" py="xl">
-            Resumen del Día (Próximamente)
-          </Container>
-        );
+        return <DailySummarySection />;
       case 'users':
-        return (
-          <Container size="xl" py="xl">
-            Usuarios (Próximamente)
-          </Container>
-        );
+        return <UsersSection />;
       default:
         return <ClientsSection />;
     }

@@ -17,13 +17,52 @@ export const authHandlers = [
       const users = getUsers();
       const user = users.find((u) => u.email === credentials.email);
 
+      // --- Bloqueo por intentos fallidos ---
+      const failKey = `LOGIN_FAIL_${credentials.email}`;
+      const blockKey = `LOGIN_BLOCK_${credentials.email}`;
+      const now = Date.now();
+      const blockedUntil = localStorage.getItem(blockKey);
+      if (blockedUntil && now < Number(blockedUntil)) {
+        const seconds = Math.ceil((Number(blockedUntil) - now) / 1000);
+        return HttpResponse.json(
+          { message: `Usuario bloqueado. Intente en ${seconds} segundos.` },
+          { status: 429 }
+        );
+      }
+
       if (!user) {
+        // Sumar intento fallido
+        const fails = Number(localStorage.getItem(failKey) || '0') + 1;
+        localStorage.setItem(failKey, String(fails));
+        if (fails >= 3) {
+          localStorage.setItem(blockKey, String(now + 30_000));
+          localStorage.setItem(failKey, '0');
+          return HttpResponse.json(
+            { message: 'Usuario bloqueado por 30 segundos tras 3 intentos fallidos.' },
+            { status: 429 }
+          );
+        }
         return HttpResponse.json({ message: 'Usuario no encontrado' }, { status: 404 });
       }
 
       if (user.password !== credentials.password) {
+        // Sumar intento fallido
+        const fails = Number(localStorage.getItem(failKey) || '0') + 1;
+        localStorage.setItem(failKey, String(fails));
+        if (fails >= 3) {
+          localStorage.setItem(blockKey, String(now + 30_000));
+          localStorage.setItem(failKey, '0');
+          return HttpResponse.json(
+            { message: 'Usuario bloqueado por 30 segundos tras 3 intentos fallidos.' },
+            { status: 429 }
+          );
+        }
         return HttpResponse.json({ message: 'Contraseña incorrecta' }, { status: 401 });
       }
+
+      // Si login exitoso, limpiar contadores
+      localStorage.removeItem(failKey);
+      localStorage.removeItem(blockKey);
 
       if (user.status !== ENTITY_STATUS.ACTIVE) {
         return HttpResponse.json(

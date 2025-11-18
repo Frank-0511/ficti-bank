@@ -1,7 +1,15 @@
-import { ACCOUNTS_STORAGE_KEY, DEFAULT_ACCOUNTS } from './data/accounts.data';
-import { CLIENTS_STORAGE_KEY, DEFAULT_CLIENTS } from './data/clients.data';
-import { DEFAULT_MOVEMENTS, MOVEMENTS_STORAGE_KEY } from './data/movements.data';
-import { DEFAULT_USERS, USERS_STORAGE_KEY } from './data/users.data';
+import {
+  ACCOUNTS_STORAGE_KEY,
+  CLIENTS_STORAGE_KEY,
+  DEFAULT_ACCOUNTS,
+  DEFAULT_CLIENTS,
+  DEFAULT_EXCHANGE_RATES,
+  DEFAULT_MOVEMENTS,
+  DEFAULT_USERS,
+  EXCHANGE_RATES_STORAGE_KEY,
+  MOVEMENTS_STORAGE_KEY,
+  USERS_STORAGE_KEY,
+} from './data';
 
 export const initializeMockData = () => {
   if (!localStorage.getItem(USERS_STORAGE_KEY)) {
@@ -18,5 +26,9 @@ export const initializeMockData = () => {
 
   if (!localStorage.getItem(MOVEMENTS_STORAGE_KEY)) {
     localStorage.setItem(MOVEMENTS_STORAGE_KEY, JSON.stringify(DEFAULT_MOVEMENTS));
+  }
+
+  if (!localStorage.getItem(EXCHANGE_RATES_STORAGE_KEY)) {
+    localStorage.setItem(EXCHANGE_RATES_STORAGE_KEY, JSON.stringify(DEFAULT_EXCHANGE_RATES));
   }
 };

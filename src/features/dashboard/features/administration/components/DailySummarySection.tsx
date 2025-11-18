@@ -1,5 +1,5 @@
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
-import { Skeleton, Stack, Table, Title } from '@mantine/core';
+import { Container, Skeleton, Table, Title } from '@mantine/core';
 import { MOVEMENT_TYPE_LABELS } from '@/lib/constants';
 import { AccountMovement, MovementType } from '@/lib/types';
 import { useDailyMovements } from '../hooks';
@@ -48,7 +48,7 @@ export function DailySummarySection() {
 
   if (isLoading || isFetching) {
     return (
-      <Stack gap="xl">
+      <Container size="xl" py="xl">
         <Title order={2} mb="md">
           Resumen de Operaciones del Día
         </Title>
@@ -74,12 +74,12 @@ export function DailySummarySection() {
             ))}
           </Table.Tbody>
         </Table>
-      </Stack>
+      </Container>
     );
   }
 
   return (
-    <Stack gap="xl">
+    <Container size="xl" py="xl">
       <Title order={2} mb="md">
         Resumen de Operaciones del Día
       </Title>
@@ -90,6 +90,6 @@ export function DailySummarySection() {
         enableSorting
         enablePagination
       />
-    </Stack>
+    </Container>
   );
 }

@@ -1,7 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { ApiResponse, ExchangeRate } from '@/lib/types';
-
-const EXCHANGE_RATES_STORAGE_KEY = 'ficti-bank-exchange-rates';
+import { EXCHANGE_RATES_STORAGE_KEY } from '../data';
 
 export function getExchangeRatesFromStorage(): ExchangeRate[] {
   const stored = globalThis.localStorage?.getItem(EXCHANGE_RATES_STORAGE_KEY);

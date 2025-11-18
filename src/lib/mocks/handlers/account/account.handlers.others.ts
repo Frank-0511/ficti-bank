@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { ACCOUNT_STATUS, EMBARGO_TYPE, MOVEMENT_TYPE } from '@/lib/constants';
+import { ACCOUNT_STATUS, ACCOUNT_TYPE, EMBARGO_TYPE, MOVEMENT_TYPE } from '@/lib/constants';
 import { Account, ApiResponse, EmbargoType } from '@/lib/types';
 import { roundTwo } from '../../../utils';
 import { hasTodayExchangeRate } from '../exchangeRate.handlers';
@@ -193,6 +193,131 @@ export const otherHandlers = [
       success: true,
       message: 'Transferencia realizada exitosamente',
       data: { accountNumber: String(body.destinationAccount) },
+    };
+    return HttpResponse.json(response);
+  }),
+  // Renovar cuenta a plazo fijo
+  http.post('/api/accounts/:accountNumber/renew', async ({ params, request }) => {
+    const { accountNumber } = params;
+    const body = (await request.json()) as { term: number; monthlyInterest: number };
+
+    const accounts = getAccountsFromStorage();
+    const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
+
+    if (accountIndex === -1) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Cuenta no encontrada',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 404 });
+    }
+
+    const account = accounts[accountIndex];
+
+    if (account.accountType !== ACCOUNT_TYPE.FIXED_TERM) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Solo se pueden renovar cuentas a plazo fijo',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+
+    // Actualizar el plazo, interés y fecha de apertura
+    const newOpeningDate = new Date().toISOString();
+    accounts[accountIndex].term = body.term;
+    accounts[accountIndex].monthlyInterest = body.monthlyInterest;
+    accounts[accountIndex].openingDate = newOpeningDate;
+
+    setAccountsToStorage(accounts);
+
+    const response: ApiResponse<{
+      accountNumber: string;
+      newTerm: number;
+      newOpeningDate: string;
+    }> = {
+      success: true,
+      message: 'Cuenta a plazo fijo renovada exitosamente',
+      data: {
+        accountNumber: String(accountNumber),
+        newTerm: body.term,
+        newOpeningDate,
+      },
+    };
+    return HttpResponse.json(response);
+  }),
+  // Cancelar cuenta a plazo fijo (con cálculo de intereses)
+  http.post('/api/accounts/:accountNumber/cancel', async ({ params }) => {
+    const { accountNumber } = params;
+
+    const accounts = getAccountsFromStorage();
+    const accountIndex = accounts.findIndex((acc: Account) => acc.accountNumber === accountNumber);
+
+    if (accountIndex === -1) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Cuenta no encontrada',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 404 });
+    }
+
+    const account = accounts[accountIndex];
+
+    if (account.accountType !== ACCOUNT_TYPE.FIXED_TERM) {
+      const response: ApiResponse<null> = {
+        success: false,
+        message: 'Solo se pueden cancelar cuentas a plazo fijo',
+        data: null,
+      };
+      return HttpResponse.json(response, { status: 400 });
+    }
+
+    // Calcular interés generado
+    const openingDate = new Date(account.openingDate);
+    const currentDate = new Date();
+    const monthsElapsed = Math.floor(
+      (currentDate.getTime() - openingDate.getTime()) / (1000 * 60 * 60 * 24 * 30)
+    );
+
+    const monthlyInterestRate = (account.monthlyInterest || 0) / 100;
+    const accruedInterest = roundTwo(account.initialBalance * monthlyInterestRate * monthsElapsed);
+    const finalBalance = roundTwo(account.currentBalance + accruedInterest);
+
+    // Registrar movimiento de intereses si hay interés generado
+    if (accruedInterest > 0) {
+      addMovement(
+        String(accountNumber),
+        MOVEMENT_TYPE.DEPOSITO,
+        accruedInterest,
+        finalBalance,
+        `Interés generado por ${monthsElapsed} meses`
+      );
+    }
+
+    // Cancelar la cuenta (cambiar estado a CANCELLED)
+    accounts[accountIndex].status = ACCOUNT_STATUS.CANCELLED;
+    accounts[accountIndex].closingDate = currentDate.toISOString();
+    accounts[accountIndex].currentBalance = finalBalance;
+    accounts[accountIndex].availableBalance = finalBalance;
+
+    setAccountsToStorage(accounts);
+
+    const response: ApiResponse<{
+      accountNumber: string;
+      finalBalance: number;
+      accruedInterest: number;
+      monthsElapsed: number;
+    }> = {
+      success: true,
+      message: 'Cuenta a plazo fijo cancelada exitosamente',
+      data: {
+        accountNumber: String(accountNumber),
+        finalBalance,
+        accruedInterest,
+        monthsElapsed,
+      },
     };
     return HttpResponse.json(response);
   }),

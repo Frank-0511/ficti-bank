@@ -3,6 +3,7 @@ import {
   IconGavel,
   IconListDetails,
   IconLock,
+  IconRefresh,
   IconSwitchHorizontal,
   IconTransferIn,
   IconTransferOut,
@@ -120,6 +121,49 @@ export const AccountActionsMenu = ({
                 </Menu.Item>
               </>
             )}
+            {account.accountType === ACCOUNT_TYPE.FIXED_TERM && (
+              <>
+                <Menu.Item
+                  leftSection={<IconRefresh size={14} />}
+                  color="blue"
+                  onClick={() =>
+                    openContextModal({
+                      modal: 'renewFixedTerm',
+                      title: 'Renovar Cuenta a Plazo',
+                      innerProps: {
+                        accountNumber: account.accountNumber,
+                        currentTerm: account.term || 12,
+                        currentInterest: account.monthlyInterest || 0,
+                      },
+                    })
+                  }
+                >
+                  Renovar
+                </Menu.Item>
+                <Menu.Item
+                  leftSection={<IconX size={14} />}
+                  color="orange"
+                  onClick={() =>
+                    openContextModal({
+                      modal: 'closeAccount',
+                      title: 'Cancelar Cuenta a Plazo',
+                      innerProps: {
+                        accountNumber: account.accountNumber,
+                        clientCode: account.clientCode,
+                        currency: account.currency,
+                        currentBalance: account.currentBalance,
+                        accountType: account.accountType,
+                        initialBalance: account.initialBalance,
+                        openingDate: account.openingDate,
+                        monthlyInterest: account.monthlyInterest,
+                      },
+                    })
+                  }
+                >
+                  Cancelar con Intereses
+                </Menu.Item>
+              </>
+            )}
             {account.status === ACCOUNT_STATUS.BLOCKED ? (
               <Menu.Item
                 leftSection={<IconGavel size={14} />}
@@ -153,27 +197,29 @@ export const AccountActionsMenu = ({
             )}
           </>
         )}
-        <Menu.Item
-          leftSection={<IconX size={14} />}
-          color="red"
-          onClick={() => {
-            openContextModal({
-              modal: 'closeAccount',
-              title: 'Cerrar Cuenta',
-              size: 'md',
-              centered: true,
-              innerProps: {
-                accountNumber: account.accountNumber,
-                clientCode: account.clientCode,
-                currency: account.currency,
-                currentBalance: account.currentBalance,
-              },
-            });
-          }}
-          disabled={account.currentBalance !== 0}
-        >
-          Cerrar Cuenta
-        </Menu.Item>
+        {account.accountType !== ACCOUNT_TYPE.FIXED_TERM && (
+          <Menu.Item
+            leftSection={<IconX size={14} />}
+            color="red"
+            onClick={() => {
+              openContextModal({
+                modal: 'closeAccount',
+                title: 'Cerrar Cuenta',
+                size: 'md',
+                centered: true,
+                innerProps: {
+                  accountNumber: account.accountNumber,
+                  clientCode: account.clientCode,
+                  currency: account.currency,
+                  currentBalance: account.currentBalance,
+                },
+              });
+            }}
+            disabled={account.currentBalance !== 0}
+          >
+            Cerrar Cuenta
+          </Menu.Item>
+        )}
       </Menu.Dropdown>
     </Menu>
   );

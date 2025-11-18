@@ -16,6 +16,7 @@ import {
   InactivateAccountModal,
   OpenAccountModal,
   RegisterClientModal,
+  RenewFixedTermModal,
   TransferAccountModal,
   UnfreezeAccountModal,
   WithdrawAccountModal,
@@ -80,6 +81,7 @@ export function App() {
               unfreezeAccount: UnfreezeAccountModal,
               transferAccount: TransferAccountModal,
               accountMovements: AccountMovementsModal,
+              renewFixedTerm: RenewFixedTermModal,
               editUser: EditUserModal,
             }}
             modalProps={{

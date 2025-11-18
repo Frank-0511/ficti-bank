@@ -1,7 +1,16 @@
 import { useMemo } from 'react';
 import { IconEdit } from '@tabler/icons-react';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
-import { ActionIcon, Badge, Group, Skeleton, Stack, Table, Title, Tooltip } from '@mantine/core';
+import {
+  ActionIcon,
+  Badge,
+  Container,
+  Group,
+  Skeleton,
+  Table,
+  Title,
+  Tooltip,
+} from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { ENTITY_STATUS, USER_ROLE_LABELS } from '@/lib/constants';
 import type { User } from '@/lib/types';
@@ -99,7 +108,7 @@ export function UsersSection() {
 
   if (isLoading) {
     return (
-      <Stack gap="xl">
+      <Container size="xl" py="xl">
         <Title order={2} mb="md">
           Gestión de Usuarios
         </Title>
@@ -127,12 +136,12 @@ export function UsersSection() {
             ))}
           </Table.Tbody>
         </Table>
-      </Stack>
+      </Container>
     );
   }
 
   return (
-    <Stack gap="xl">
+    <Container size="xl" py="xl">
       <Title order={2} mb="md">
         Gestión de Usuarios
       </Title>
@@ -146,6 +155,6 @@ export function UsersSection() {
           pagination: { pageSize: 10, pageIndex: 0 },
         }}
       />
-    </Stack>
+    </Container>
   );
 }

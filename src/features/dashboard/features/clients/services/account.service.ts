@@ -2,11 +2,14 @@ import { apiClient } from '@/lib/api/client';
 import {
   Account,
   ApiResponse,
+  CancelFixedTermResponse,
   DepositAccountData,
   DepositAccountResponse,
   FreezeAccountData,
   FreezeAccountResponse,
   OpenAccountData,
+  RenewFixedTermData,
+  RenewFixedTermResponse,
   TransferAccountData,
   TransferAccountResponse,
   UnfreezeAccountResponse,
@@ -91,6 +94,24 @@ export const accountService = {
         destinationAccount: transferData.destinationAccount,
         amount: transferData.amount,
       }
+    );
+    return response;
+  },
+  renewFixedTerm: async (
+    renewData: RenewFixedTermData
+  ): Promise<ApiResponse<RenewFixedTermResponse>> => {
+    const { data: response } = await apiClient.post<ApiResponse<RenewFixedTermResponse>>(
+      `/accounts/${renewData.accountNumber}/renew`,
+      {
+        term: renewData.term,
+        monthlyInterest: renewData.monthlyInterest,
+      }
+    );
+    return response;
+  },
+  cancelFixedTerm: async (accountNumber: string): Promise<ApiResponse<CancelFixedTermResponse>> => {
+    const { data: response } = await apiClient.post<ApiResponse<CancelFixedTermResponse>>(
+      `/accounts/${accountNumber}/cancel`
     );
     return response;
   },

@@ -1,13 +1,15 @@
-import { Stack, Title } from '@mantine/core';
+import { Container, Title } from '@mantine/core';
 import { ExchangeRateForm } from './ExchangeRateForm';
 import { ExchangeRateHistory } from './ExchangeRateHistory';
 
 export function ExchangeRateSection() {
   return (
-    <Stack gap="xl">
-      <Title order={1}>Tipo de Cambio</Title>
+    <Container size="xl" py="xl">
+      <Title order={1} mb="md">
+        Tipo de Cambio
+      </Title>
       <ExchangeRateForm />
       <ExchangeRateHistory />
-    </Stack>
+    </Container>
   );
 }

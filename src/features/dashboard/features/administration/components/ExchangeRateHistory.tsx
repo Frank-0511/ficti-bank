@@ -8,7 +8,7 @@ export function ExchangeRateHistory() {
 
   if (isLoading) {
     return (
-      <Paper p="md" withBorder>
+      <Paper p="md" withBorder mt="md">
         <Text>Cargando historial...</Text>
       </Paper>
     );
@@ -16,14 +16,14 @@ export function ExchangeRateHistory() {
 
   if (rates.length === 0) {
     return (
-      <Paper p="md" withBorder>
+      <Paper p="md" withBorder mt="md">
         <Text c="dimmed">No hay historial de tipos de cambio</Text>
       </Paper>
     );
   }
 
   return (
-    <Paper p="md" withBorder>
+    <Paper p="md" withBorder mt="md">
       <Stack gap="md">
         <Text fw={600} size="lg">
           Historial de Tipos de Cambio
@@ -42,18 +42,23 @@ export function ExchangeRateHistory() {
               {rates.map((rate) => {
                 const isToday = rate.date === new Date().toISOString().split('T')[0];
                 return (
-                  <Table.Tr key={rate.id}>
+                  <Table.Tr key={rate.id} bg="transparent">
                     <Table.Td>{new Date(rate.date).toLocaleDateString('es-PE')}</Table.Td>
                     <Table.Td>S/. {rate.rate.toFixed(2)}</Table.Td>
                     <Table.Td>
-                      {isToday && (
-                        <Badge size="sm" color="green">
-                          Hoy
-                        </Badge>
-                      )}
-                      {rate.updatedAt && (
-                        <Badge size="sm" color="blue" ml={isToday ? 'xs' : 0}>
-                          Actualizado
+                      {isToday ? (
+                        rate.updatedAt ? (
+                          <Badge size="sm" color="blue" ml={isToday ? 'xs' : 0}>
+                            Actualizado
+                          </Badge>
+                        ) : (
+                          <Badge size="sm" color="green">
+                            Hoy
+                          </Badge>
+                        )
+                      ) : (
+                        <Badge size="sm" color="gray">
+                          Histórico
                         </Badge>
                       )}
                     </Table.Td>

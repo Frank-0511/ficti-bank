@@ -87,3 +87,26 @@ export interface TransferAccountData {
 export interface TransferAccountResponse {
   accountNumber: string;
 }
+
+export interface RenewFixedTermData {
+  accountNumber: string;
+  term: number;
+  monthlyInterest: number;
+}
+
+export interface RenewFixedTermResponse {
+  accountNumber: string;
+  newTerm: number;
+  newOpeningDate: string;
+}
+
+export interface CancelFixedTermData {
+  accountNumber: string;
+}
+
+export interface CancelFixedTermResponse {
+  accountNumber: string;
+  finalBalance: number;
+  accruedInterest: number;
+  monthsElapsed: number;
+}

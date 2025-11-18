@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { modals } from '@mantine/modals';
 import { useAuthStore } from '@/lib/store';
 import { useLogout } from './useLogout';
 
@@ -19,6 +20,7 @@ export const useInactivityLogout = () => {
     }
 
     timeoutIdRef.current = setTimeout(() => {
+      modals.closeAll();
       logout();
     }, sessionTimeout);
   };

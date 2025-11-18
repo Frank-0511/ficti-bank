@@ -1,8 +1,8 @@
 import { http, HttpResponse } from 'msw';
-import { ACCOUNT_STATUS, EMBARGO_TYPE } from '@/lib/constants';
+import { ACCOUNT_STATUS, EMBARGO_TYPE, MOVEMENT_TYPE } from '@/lib/constants';
 import { Account, ApiResponse } from '@/lib/types';
 import { hasTodayExchangeRate } from '../exchangeRate.handlers';
-import { getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
+import { addMovement, getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
 
 export const depositHandler = http.post(
   '/api/accounts/:accountNumber/deposit',
@@ -104,6 +104,16 @@ export const depositHandler = http.post(
     }
 
     setAccountsToStorage(accounts);
+
+    // Registrar movimiento
+    addMovement(
+      String(accountNumber),
+      MOVEMENT_TYPE.DEPOSITO,
+      body.amount,
+      accounts[accountIndex].currentBalance,
+      'Depósito en cuenta'
+    );
+
     const response: ApiResponse<{ accountNumber: string }> = {
       success: true,
       message: 'Depósito realizado exitosamente',

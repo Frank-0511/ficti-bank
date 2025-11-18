@@ -21,6 +21,8 @@ export const AccountActionsMenu = ({
   account,
   className,
 }: AccountActionsMenuProps & { className?: string }) => {
+  // Si la cuenta está inactiva, solo mostrar Ver Movimientos y Cerrar Cuenta
+  const isInactive = account.status === ACCOUNT_STATUS.INACTIVE;
   return (
     <Menu shadow="md" width={200} position="bottom-end">
       <Menu.Target>
@@ -36,110 +38,120 @@ export const AccountActionsMenu = ({
         </Button>
       </Menu.Target>
       <Menu.Dropdown>
-        {(account.accountType === ACCOUNT_TYPE.SAVINGS ||
-          account.accountType === ACCOUNT_TYPE.CHECKING) && (
+        <Menu.Item
+          leftSection={<IconListDetails size={14} />}
+          onClick={() => {
+            openContextModal({
+              modal: 'accountMovements',
+              title: 'Últimos Movimientos',
+              innerProps: {
+                accountNumber: account.accountNumber,
+              },
+              size: 'xl',
+            });
+          }}
+        >
+          Ver Movimientos
+        </Menu.Item>
+        {!isInactive && (
           <>
-            <Menu.Item
-              leftSection={<IconListDetails size={14} />}
-              onClick={() => {
-                openContextModal({
-                  modal: 'accountMovements',
-                  title: 'Últimos Movimientos',
-                  innerProps: {
-                    accountNumber: account.accountNumber,
-                  },
-                  size: 'lg',
-                });
-              }}
-            >
-              Ver Movimientos
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconLock size={14} />}
-              onClick={() =>
-                openContextModal({
-                  modal: 'inactivateAccount',
-                  title: 'Inactivar Cuenta',
-                  innerProps: { accountNumber: account.accountNumber },
-                })
-              }
-            >
-              Inactivar Cuenta
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconTransferIn size={14} />}
-              onClick={() => {
-                openContextModal({
-                  modal: 'depositAccount',
-                  title: 'Depositar',
-                  innerProps: { accountNumber: account.accountNumber, currency: account.currency },
-                });
-              }}
-            >
-              Depositar
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconSwitchHorizontal size={14} />}
-              onClick={() => {
-                openContextModal({
-                  modal: 'transferAccount',
-                  title: 'Transferencia',
-                  innerProps: {
-                    accountNumber: account.accountNumber,
-                    currency: account.currency,
-                  },
-                });
-              }}
-            >
-              Transferencia
-            </Menu.Item>
-            <Menu.Item
-              leftSection={<IconTransferOut size={14} />}
-              onClick={() =>
-                openContextModal({
-                  modal: 'withdrawAccount',
-                  title: 'Retiro',
-                  innerProps: {
-                    accountNumber: account.accountNumber,
-                    currency: account.currency,
-                    accountType: account.accountType,
-                    availableBalance: account.availableBalance,
-                    overdraftLimit: account.overdraftLimit,
-                  },
-                })
-              }
-            >
-              Retiro
-            </Menu.Item>
+            {(account.accountType === ACCOUNT_TYPE.SAVINGS ||
+              account.accountType === ACCOUNT_TYPE.CHECKING) && (
+              <>
+                <Menu.Item
+                  leftSection={<IconLock size={14} />}
+                  onClick={() =>
+                    openContextModal({
+                      modal: 'inactivateAccount',
+                      title: 'Inactivar Cuenta',
+                      innerProps: { accountNumber: account.accountNumber },
+                    })
+                  }
+                >
+                  Inactivar Cuenta
+                </Menu.Item>
+                <Menu.Item
+                  leftSection={<IconTransferIn size={14} />}
+                  onClick={() => {
+                    openContextModal({
+                      modal: 'depositAccount',
+                      title: 'Depositar',
+                      innerProps: {
+                        accountNumber: account.accountNumber,
+                        currency: account.currency,
+                      },
+                    });
+                  }}
+                >
+                  Depositar
+                </Menu.Item>
+                <Menu.Item
+                  leftSection={<IconSwitchHorizontal size={14} />}
+                  onClick={() => {
+                    openContextModal({
+                      modal: 'transferAccount',
+                      title: 'Transferencia',
+                      innerProps: {
+                        accountNumber: account.accountNumber,
+                        currency: account.currency,
+                      },
+                    });
+                  }}
+                >
+                  Transferencia
+                </Menu.Item>
+                <Menu.Item
+                  leftSection={<IconTransferOut size={14} />}
+                  onClick={() =>
+                    openContextModal({
+                      modal: 'withdrawAccount',
+                      title: 'Retiro',
+                      innerProps: {
+                        accountNumber: account.accountNumber,
+                        currency: account.currency,
+                        accountType: account.accountType,
+                        availableBalance: account.availableBalance,
+                        overdraftLimit: account.overdraftLimit,
+                      },
+                    })
+                  }
+                >
+                  Retiro
+                </Menu.Item>
+              </>
+            )}
+            {account.status === ACCOUNT_STATUS.BLOCKED ? (
+              <Menu.Item
+                leftSection={<IconGavel size={14} />}
+                color="green"
+                onClick={() =>
+                  openContextModal({
+                    modal: 'unfreezeAccount',
+                    title: 'Desembargar Cuenta',
+                    innerProps: { accountNumber: account.accountNumber },
+                  })
+                }
+              >
+                Desembargar Cuenta
+              </Menu.Item>
+            ) : (
+              <Menu.Item
+                leftSection={<IconGavel size={14} />}
+                onClick={() => {
+                  openContextModal({
+                    modal: 'freezeAccount',
+                    title: 'Embargar Cuenta',
+                    innerProps: {
+                      accountNumber: account.accountNumber,
+                      currency: account.currency,
+                    },
+                  });
+                }}
+              >
+                Embargar Cuenta
+              </Menu.Item>
+            )}
           </>
-        )}
-        {account.status === ACCOUNT_STATUS.BLOCKED ? (
-          <Menu.Item
-            leftSection={<IconGavel size={14} />}
-            color="green"
-            onClick={() =>
-              openContextModal({
-                modal: 'unfreezeAccount',
-                title: 'Desembargar Cuenta',
-                innerProps: { accountNumber: account.accountNumber },
-              })
-            }
-          >
-            Desembargar Cuenta
-          </Menu.Item>
-        ) : (
-          <Menu.Item
-            leftSection={<IconGavel size={14} />}
-            onClick={() => {
-              openContextModal({
-                modal: 'freezeAccount',
-                title: 'Embargar Cuenta',
-                innerProps: { accountNumber: account.accountNumber, currency: account.currency },
-              });
-            }}
-          >
-            Embargar Cuenta
-          </Menu.Item>
         )}
         <Menu.Item
           leftSection={<IconX size={14} />}

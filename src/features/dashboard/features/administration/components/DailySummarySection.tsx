@@ -1,6 +1,7 @@
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 import { Skeleton, Stack, Table, Title } from '@mantine/core';
-import { AccountMovement } from '@/lib/types';
+import { MOVEMENT_TYPE_LABELS } from '@/lib/constants';
+import { AccountMovement, MovementType } from '@/lib/types';
 import { useDailyMovements } from '../hooks';
 
 export function DailySummarySection() {
@@ -21,6 +22,10 @@ export function DailySummarySection() {
     {
       accessorKey: 'type',
       header: 'Tipo',
+      Cell: ({ cell }) => {
+        const value = cell.getValue<MovementType>();
+        return MOVEMENT_TYPE_LABELS[value] || value;
+      },
     },
     {
       accessorKey: 'amount',

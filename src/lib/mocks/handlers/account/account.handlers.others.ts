@@ -1,9 +1,9 @@
 import { http, HttpResponse } from 'msw';
-import { ACCOUNT_STATUS, EMBARGO_TYPE } from '@/lib/constants';
+import { ACCOUNT_STATUS, EMBARGO_TYPE, MOVEMENT_TYPE } from '@/lib/constants';
 import { Account, ApiResponse, EmbargoType } from '@/lib/types';
 import { roundTwo } from '../../../utils';
 import { hasTodayExchangeRate } from '../exchangeRate.handlers';
-import { getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
+import { addMovement, getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
 
 export const otherHandlers = [
   http.post('/api/accounts/:accountNumber/freeze', async ({ params, request }) => {
@@ -83,6 +83,16 @@ export const otherHandlers = [
       accounts[accountIndex].availableBalance - body.amount
     );
     setAccountsToStorage(accounts);
+
+    // Registrar movimiento
+    addMovement(
+      String(accountNumber),
+      MOVEMENT_TYPE.RETIRO,
+      body.amount,
+      accounts[accountIndex].currentBalance,
+      'Retiro de cuenta'
+    );
+
     const response: ApiResponse<{ accountNumber: string }> = {
       success: true,
       message: 'Retiro realizado exitosamente',
@@ -162,6 +172,23 @@ export const otherHandlers = [
     accounts[toIndex].currentBalance = roundTwo(accounts[toIndex].currentBalance + body.amount);
     accounts[toIndex].availableBalance = roundTwo(accounts[toIndex].availableBalance + body.amount);
     setAccountsToStorage(accounts);
+
+    // Registrar movimientos para ambas cuentas
+    addMovement(
+      String(accountNumber),
+      MOVEMENT_TYPE.TRANSFERENCIA_ENVIADA,
+      body.amount,
+      accounts[fromIndex].currentBalance,
+      `Transferencia a cuenta ${body.destinationAccount}`
+    );
+    addMovement(
+      body.destinationAccount,
+      MOVEMENT_TYPE.TRANSFERENCIA_RECIBIDA,
+      body.amount,
+      accounts[toIndex].currentBalance,
+      `Transferencia desde cuenta ${accountNumber}`
+    );
+
     const response: ApiResponse<{ accountNumber: string }> = {
       success: true,
       message: 'Transferencia realizada exitosamente',

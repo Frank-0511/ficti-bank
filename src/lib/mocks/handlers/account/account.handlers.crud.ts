@@ -1,7 +1,11 @@
 import { http, HttpResponse } from 'msw';
 import { ACCOUNT_STATUS } from '@/lib/constants';
-import { Account, ApiResponse } from '@/lib/types';
-import { getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
+import { Account, AccountMovement, ApiResponse } from '@/lib/types';
+import {
+  getAccountsFromStorage,
+  getMovementsFromStorage,
+  setAccountsToStorage,
+} from './storage.utils';
 
 export const crudHandlers = [
   http.get('/api/accounts', ({ request }) => {
@@ -15,6 +19,22 @@ export const crudHandlers = [
       success: true,
       message: 'Cuentas obtenidas exitosamente',
       data: accounts,
+    };
+    return HttpResponse.json(response);
+  }),
+  http.get('/api/accounts/:accountNumber/movements', ({ params, request }) => {
+    const { accountNumber } = params;
+    const url = new URL(request.url);
+    const limit = parseInt(url.searchParams.get('limit') || '20', 10);
+    const movements = getMovementsFromStorage();
+    const accountMovements = movements
+      .filter((mov) => mov.accountNumber === accountNumber)
+      .reverse()
+      .slice(0, limit);
+    const response: ApiResponse<AccountMovement[]> = {
+      success: true,
+      message: 'Movimientos obtenidos exitosamente',
+      data: accountMovements,
     };
     return HttpResponse.json(response);
   }),

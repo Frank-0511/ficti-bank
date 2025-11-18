@@ -3,17 +3,17 @@ import type { ApiResponse, User } from '@/lib/types';
 
 export const usersService = {
   fetchUsers: async (): Promise<User[]> => {
-    const response = await apiClient.get<ApiResponse<User[]>>('/api/users');
+    const response = await apiClient.get<ApiResponse<User[]>>('/users');
     return response.data.data || [];
   },
 
   updateUser: async (id: string, updates: Partial<User>): Promise<User> => {
-    const response = await apiClient.patch<ApiResponse<User>>(`/api/users/${id}`, updates);
+    const response = await apiClient.patch<ApiResponse<User>>(`/users/${id}`, updates);
     return response.data.data!;
   },
 
   deleteUser: async (id: string): Promise<User> => {
-    const response = await apiClient.delete<ApiResponse<User>>(`/api/users/${id}`);
+    const response = await apiClient.delete<ApiResponse<User>>(`/users/${id}`);
     return response.data.data!;
   },
 };

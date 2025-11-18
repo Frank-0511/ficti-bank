@@ -7,13 +7,13 @@ import { exchangeRateHandlers } from './exchangeRate.handlers';
 import { usersHandlers } from './users.handlers';
 
 export const handlers = [
-  http.all('*', async () => {
-    await delay(500);
-  }),
   ...authHandlers,
   ...accountHandlers,
   ...clientHandlers,
   ...exchangeRateHandlers,
   ...dailyMovementsHandlers,
   ...usersHandlers,
+  http.all('*', async () => {
+    await delay(500);
+  }),
 ];

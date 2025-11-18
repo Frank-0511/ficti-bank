@@ -1,25 +1,32 @@
 import { http, HttpResponse } from 'msw';
 import type { User } from '../../types';
-import { DEFAULT_USERS, USERS_STORAGE_KEY } from '../data/users.data';
+import { DEFAULT_USERS, USERS_STORAGE_KEY, UserWithPassword } from '../data/users.data';
 
 // Helper para obtener usuarios del localStorage
-const getUsers = (): User[] => {
+const getUsers = (): UserWithPassword[] => {
   const stored = localStorage.getItem(USERS_STORAGE_KEY);
   return stored ? JSON.parse(stored) : DEFAULT_USERS;
 };
 
 // Helper para guardar usuarios en localStorage
-const saveUsers = (users: User[]): void => {
+const saveUsers = (users: UserWithPassword[]): void => {
   localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+};
+
+// Helper para remover password de usuarios
+const sanitizeUser = (user: UserWithPassword): User => {
+  const { password, ...userWithoutPassword } = user;
+  return userWithoutPassword;
 };
 
 export const usersHandlers = [
   // GET /api/users - Obtener todos los usuarios
   http.get('/api/users', () => {
     const users = getUsers();
+    const sanitizedUsers = users.map(sanitizeUser);
     return HttpResponse.json({
       success: true,
-      data: users,
+      data: sanitizedUsers,
       message: 'Usuarios obtenidos exitosamente',
     });
   }),
@@ -49,7 +56,7 @@ export const usersHandlers = [
 
     return HttpResponse.json({
       success: true,
-      data: users[userIndex],
+      data: sanitizeUser(users[userIndex]),
       message: 'Usuario actualizado exitosamente',
     });
   }),
@@ -78,7 +85,7 @@ export const usersHandlers = [
 
     return HttpResponse.json({
       success: true,
-      data: users[userIndex],
+      data: sanitizeUser(users[userIndex]),
       message: 'Usuario desactivado exitosamente',
     });
   }),

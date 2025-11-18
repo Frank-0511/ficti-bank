@@ -54,6 +54,7 @@ export interface FreezeAccountResponse {
 export interface DepositAccountData {
   accountNumber: string;
   amount: number;
+  authKey?: string;
 }
 
 export interface DepositAccountResponse {

@@ -1,5 +1,5 @@
 import { zod4Resolver } from 'mantine-form-zod-resolver';
-import { Button, Group, NumberInput, Stack, Text } from '@mantine/core';
+import { Button, Group, NumberInput, Stack, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { ContextModalProps } from '@mantine/modals';
 import { CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
@@ -17,7 +17,7 @@ export const DepositAccountModal = ({
   innerProps,
 }: ContextModalProps<DepositAccountModalProps>) => {
   const form = useForm<DepositFormValues>({
-    initialValues: { amount: undefined },
+    initialValues: { amount: 0, authKey: '' },
     validate: zod4Resolver(depositSchema),
   });
 
@@ -27,7 +27,8 @@ export const DepositAccountModal = ({
     depositAccountMutation.mutate(
       {
         accountNumber: innerProps.accountNumber,
-        amount: values.amount as number,
+        amount: values.amount,
+        authKey: values.authKey,
       },
       {
         onSuccess: () => context.closeModal(id),
@@ -52,6 +53,15 @@ export const DepositAccountModal = ({
           leftSection={CURRENCY_SYMBOLS[innerProps.currency] || ''}
           {...form.getInputProps('amount')}
         />
+
+        {form.values.amount > 2000 && (
+          <TextInput
+            label="Clave de autorización"
+            placeholder="Ingrese la clave de autorización"
+            type="password"
+            {...form.getInputProps('authKey')}
+          />
+        )}
         <Group justify="flex-end" mt="md">
           <Button
             variant="default"

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
+import { IconEdit } from '@tabler/icons-react';
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 import { ActionIcon, Badge, Group, Skeleton, Stack, Table, Title, Tooltip } from '@mantine/core';
 import { modals } from '@mantine/modals';
@@ -8,20 +8,22 @@ import type { User } from '@/lib/types';
 import { useUsers } from '../hooks/useUsers';
 
 export function UsersSection() {
-  const { users, isLoading, deleteUser, isDeleting } = useUsers();
+  const { users, isLoading, updateUser } = useUsers();
 
   const handleEdit = (user: User) => {
-    modals.openConfirmModal({
+    modals.openContextModal({
+      modal: 'editUser',
       title: 'Editar Usuario',
-      children: `¿Deseas editar el usuario ${user.name}?`,
-      labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
-      onConfirm: () => {
-        // TODO: Implementar modal de edición completo
+      innerProps: {
+        user,
+        onSubmit: (id: string, updates: Partial<User>) => {
+          updateUser({ id, updates });
+        },
       },
     });
   };
 
-  const handleDelete = (user: User) => {
+  /*   const handleDelete = (user: User) => {
     modals.openConfirmModal({
       title: 'Desactivar Usuario',
       children: `¿Estás seguro de desactivar al usuario ${user.name}? Esta acción cambiará su estado a Inactivo.`,
@@ -31,14 +33,10 @@ export function UsersSection() {
         deleteUser(user.id);
       },
     });
-  };
+  }; */
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
-      {
-        accessorKey: 'code',
-        header: 'Código',
-      },
       {
         accessorKey: 'name',
         header: 'Nombre',
@@ -82,7 +80,7 @@ export function UsersSection() {
                 <IconEdit size={18} />
               </ActionIcon>
             </Tooltip>
-            <Tooltip label="Desactivar usuario">
+            {/* <Tooltip label="Desactivar usuario">
               <ActionIcon
                 variant="light"
                 color="red"
@@ -91,12 +89,12 @@ export function UsersSection() {
               >
                 <IconTrash size={18} />
               </ActionIcon>
-            </Tooltip>
+            </Tooltip> */}
           </Group>
         ),
       },
     ],
-    [isDeleting]
+    []
   );
 
   if (isLoading) {

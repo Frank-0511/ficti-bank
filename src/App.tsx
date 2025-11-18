@@ -11,6 +11,7 @@ import {
   CloseAccountModal,
   DashboardPage,
   DepositAccountModal,
+  EditUserModal,
   FreezeAccountModal,
   InactivateAccountModal,
   OpenAccountModal,
@@ -79,6 +80,7 @@ export function App() {
               unfreezeAccount: UnfreezeAccountModal,
               transferAccount: TransferAccountModal,
               accountMovements: AccountMovementsModal,
+              editUser: EditUserModal,
             }}
             modalProps={{
               centered: true,

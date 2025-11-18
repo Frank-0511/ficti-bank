@@ -58,7 +58,10 @@ export const accountService = {
   ): Promise<ApiResponse<DepositAccountResponse>> => {
     const { data: response } = await apiClient.post<ApiResponse<DepositAccountResponse>>(
       `/accounts/${depositData.accountNumber}/deposit`,
-      { amount: depositData.amount }
+      {
+        amount: depositData.amount,
+        authKey: depositData.authKey,
+      }
     );
 
     return response;

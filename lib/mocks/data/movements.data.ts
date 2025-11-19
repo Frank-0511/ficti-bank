@@ -1,5 +1,5 @@
-import { MOVEMENT_TYPE } from '../../constants';
-import { AccountMovement } from '../../types';
+import { MOVEMENT_TYPE } from '@/lib/constants';
+import { AccountMovement } from '@/lib/types';
 
 export const MOVEMENTS_STORAGE_KEY = 'T_MOVEMENTS';
 

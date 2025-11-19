@@ -69,3 +69,5 @@ export function ClientDetailPage() {
     </AppShell>
   );
 }
+
+export default ClientDetailPage;

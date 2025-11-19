@@ -1,5 +1,5 @@
-import { ENTITY_STATUS, USER_ROLE } from '../../constants';
-import type { User } from '../../types';
+import { ENTITY_STATUS, USER_ROLE } from '@/lib/constants';
+import type { User } from '@/lib/types';
 
 export const USERS_STORAGE_KEY = 'T_Usuario';
 

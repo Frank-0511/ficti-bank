@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Group, Loader, Pagination, Table, Text } from '@mantine/core';
 import { CURRENCY, MOVEMENT_TYPE_LABELS } from '@/lib/constants';
-import { DEFAULT_ACCOUNTS } from '@/lib/mocks/data/accounts.data';
+import { Currency } from '@/lib/types';
 import { getAccountMovements } from '../../services/accountMovements.service';
 
 interface AccountMovementsModalProps {
@@ -10,6 +10,7 @@ interface AccountMovementsModalProps {
   id: string;
   innerProps: {
     accountNumber: string;
+    currency: Currency;
   };
 }
 
@@ -22,9 +23,7 @@ export function AccountMovementsModal({ innerProps }: AccountMovementsModalProps
     queryFn: () => getAccountMovements(accountNumber),
   });
 
-  // Buscar la cuenta para obtener la moneda
-  const account = DEFAULT_ACCOUNTS.find((acc) => acc.accountNumber === accountNumber);
-  const currency = account?.currency === CURRENCY.DOLLARS ? 'USD' : 'PEN';
+  const currency = innerProps.currency === CURRENCY.DOLLARS ? 'USD' : 'PEN';
 
   const total = Array.isArray(data) ? data.length : 0;
   const totalPages = Math.ceil(total / pageSize);

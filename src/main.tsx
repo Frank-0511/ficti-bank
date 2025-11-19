@@ -10,7 +10,7 @@ import { App } from './App';
 
 async function enableMocking() {
   if (import.meta.env.DEV) {
-    const { initMSW } = await import('@/lib/mocks/browser');
+    const { initMSW } = await import('../lib/mocks/browser');
     await initMSW();
   }
 }

@@ -7,7 +7,7 @@ import {
   MOVEMENT_TYPE,
 } from '@/lib/constants';
 import { Account, ApiResponse, EmbargoType } from '@/lib/types';
-import { roundTwo } from '../../../utils';
+import { roundTwo } from '@/lib/utils';
 import { getTodayExchangeRate, hasTodayExchangeRate } from '../exchangeRate.handlers';
 import { addMovement, getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
 

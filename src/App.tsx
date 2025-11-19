@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -7,9 +7,7 @@ import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import {
   AccountMovementsModal,
-  ClientDetailPage,
   CloseAccountModal,
-  DashboardPage,
   DepositAccountModal,
   EditUserModal,
   FreezeAccountModal,
@@ -25,6 +23,12 @@ import { HomePage } from '@/features/home';
 import { withAuth } from '@/lib/hoc';
 import { cssVariablesResolver, theme } from '@/lib/theme';
 import { InactivityTracker, LoginModal, RouteProgressBar } from '@/shared/components';
+
+// Lazy load de páginas pesadas
+const DashboardPage = lazy(() => import('@/features/dashboard/pages/Dashboard.page'));
+const ClientDetailPage = lazy(
+  () => import('@/features/dashboard/features/clients/pages/ClientDetailPage')
+);
 
 const ProtectedDashboard = withAuth(DashboardPage);
 const ProtectedClientDetail = withAuth(ClientDetailPage);
@@ -100,12 +104,16 @@ export function App() {
             <InactivityTracker />
             <RouteProgressBar />
             <Notifications />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/dashboard" element={<ProtectedDashboard />} />
-              <Route path="/dashboard/clients/:id" element={<ProtectedClientDetail />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <Suspense
+              fallback={<div style={{ padding: 40, textAlign: 'center' }}>Cargando...</div>}
+            >
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/dashboard" element={<ProtectedDashboard />} />
+                <Route path="/dashboard/clients/:id" element={<ProtectedClientDetail />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
           </ModalsProvider>
         </MantineProvider>
         <ReactQueryDevtools initialIsOpen={false} />

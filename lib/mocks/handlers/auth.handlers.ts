@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { ENTITY_STATUS } from '../../constants';
-import { LoginCredentials, LoginResponse } from '../../types';
+import { ENTITY_STATUS } from '@/lib/constants';
+import { LoginCredentials, LoginResponse } from '@/lib/types';
 import { USERS_STORAGE_KEY, UserWithPassword } from '../data/users.data';
 
 const getUsers = (): UserWithPassword[] => {

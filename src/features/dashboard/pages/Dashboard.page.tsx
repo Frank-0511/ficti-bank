@@ -69,3 +69,5 @@ export const DashboardPage: React.FC = () => {
     </AppShell>
   );
 };
+
+export default DashboardPage;

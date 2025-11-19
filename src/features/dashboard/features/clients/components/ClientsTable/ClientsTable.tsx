@@ -29,6 +29,7 @@ export const ClientsTable = ({ clients }: ClientsTableProps) => {
       density: 'xs',
       pagination: { pageSize: 10, pageIndex: 0 },
       columnPinning: { left: ['code', 'name'], right: ['mrt-row-actions'] },
+      columnVisibility: { code: false },
     },
     mantineTableContainerProps: {
       style: { maxHeight: 600 },
@@ -42,12 +43,6 @@ export const ClientsTable = ({ clients }: ClientsTableProps) => {
         client={row.original}
         onView={(client) => {
           navigate(`/dashboard/clients/${client.id}`);
-        }}
-        onEdit={(_client) => {
-          // TODO: Implementar edición de cliente
-        }}
-        onDeactivate={(_client) => {
-          // TODO: Implementar desactivación
         }}
       />
     ),

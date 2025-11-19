@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Group, Loader, Pagination, Table, Text } from '@mantine/core';
-import { MOVEMENT_TYPE_LABELS } from '@/lib/constants';
+import { CURRENCY, MOVEMENT_TYPE_LABELS } from '@/lib/constants';
+import { DEFAULT_ACCOUNTS } from '@/lib/mocks/data/accounts.data';
 import { getAccountMovements } from '../../services/accountMovements.service';
 
 interface AccountMovementsModalProps {
@@ -20,6 +21,10 @@ export function AccountMovementsModal({ innerProps }: AccountMovementsModalProps
     queryKey: ['accountMovements', accountNumber],
     queryFn: () => getAccountMovements(accountNumber),
   });
+
+  // Buscar la cuenta para obtener la moneda
+  const account = DEFAULT_ACCOUNTS.find((acc) => acc.accountNumber === accountNumber);
+  const currency = account?.currency === CURRENCY.DOLLARS ? 'USD' : 'PEN';
 
   const total = Array.isArray(data) ? data.length : 0;
   const totalPages = Math.ceil(total / pageSize);
@@ -51,10 +56,16 @@ export function AccountMovementsModal({ innerProps }: AccountMovementsModalProps
                   <Table.Td>{new Date(mov.date).toLocaleString()}</Table.Td>
                   <Table.Td>{MOVEMENT_TYPE_LABELS[mov.type] || mov.type}</Table.Td>
                   <Table.Td>
-                    {mov.amount.toLocaleString('es-PE', { style: 'currency', currency: 'PEN' })}
+                    {mov.amount.toLocaleString(currency === 'USD' ? 'en-US' : 'es-PE', {
+                      style: 'currency',
+                      currency,
+                    })}
                   </Table.Td>
                   <Table.Td>
-                    {mov.balance.toLocaleString('es-PE', { style: 'currency', currency: 'PEN' })}
+                    {mov.balance.toLocaleString(currency === 'USD' ? 'en-US' : 'es-PE', {
+                      style: 'currency',
+                      currency,
+                    })}
                   </Table.Td>
                   {/* <Table.Td>{mov.description || '-'}</Table.Td> */}
                 </Table.Tr>

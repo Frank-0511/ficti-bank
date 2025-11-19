@@ -1,8 +1,14 @@
 import { http, HttpResponse } from 'msw';
-import { ACCOUNT_STATUS, ACCOUNT_TYPE, EMBARGO_TYPE, MOVEMENT_TYPE } from '@/lib/constants';
+import {
+  ACCOUNT_STATUS,
+  ACCOUNT_TYPE,
+  CURRENCY,
+  EMBARGO_TYPE,
+  MOVEMENT_TYPE,
+} from '@/lib/constants';
 import { Account, ApiResponse, EmbargoType } from '@/lib/types';
 import { roundTwo } from '../../../utils';
-import { hasTodayExchangeRate } from '../exchangeRate.handlers';
+import { getTodayExchangeRate, hasTodayExchangeRate } from '../exchangeRate.handlers';
 import { addMovement, getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
 
 export const otherHandlers = [
@@ -157,7 +163,40 @@ export const otherHandlers = [
       };
       return HttpResponse.json(response, { status: 404 });
     }
-    if (accounts[fromIndex].availableBalance < body.amount) {
+    const fromAcc = accounts[fromIndex];
+    const toAcc = accounts[toIndex];
+    let amountToDebit = body.amount;
+    let amountToCredit = body.amount;
+    let descriptionFrom = `Transferencia a cuenta ${body.destinationAccount}`;
+    let descriptionTo = `Transferencia desde cuenta ${accountNumber}`;
+
+    // Si las monedas son diferentes, usar tipo de cambio del día
+    if (fromAcc.currency !== toAcc.currency) {
+      const exchangeRate = getTodayExchangeRate();
+      if (!exchangeRate) {
+        const response: ApiResponse<null> = {
+          success: false,
+          message: 'No se pudo obtener el tipo de cambio del día.',
+          data: null,
+        };
+        return HttpResponse.json(response, { status: 400 });
+      }
+      if (fromAcc.currency === CURRENCY.SOLES && toAcc.currency === CURRENCY.DOLLARS) {
+        // De soles a dólares
+        amountToDebit = body.amount;
+        amountToCredit = roundTwo(body.amount / exchangeRate.venta);
+        descriptionFrom += ` (S/ ${body.amount} a $ ${amountToCredit} al cambio S/ ${exchangeRate.venta})`;
+        descriptionTo += ` (S/ ${body.amount} a $ ${amountToCredit} al cambio S/ ${exchangeRate.venta})`;
+      } else if (fromAcc.currency === CURRENCY.DOLLARS && toAcc.currency === CURRENCY.SOLES) {
+        // De dólares a soles
+        amountToDebit = body.amount;
+        amountToCredit = roundTwo(body.amount * exchangeRate.compra);
+        descriptionFrom += ` ($ ${body.amount} a S/ ${amountToCredit} al cambio S/ ${exchangeRate.compra})`;
+        descriptionTo += ` ($ ${body.amount} a S/ ${amountToCredit} al cambio S/ ${exchangeRate.compra})`;
+      }
+    }
+
+    if (fromAcc.availableBalance < amountToDebit) {
       const response: ApiResponse<null> = {
         success: false,
         message: 'Fondos insuficientes en la cuenta origen',
@@ -165,28 +204,33 @@ export const otherHandlers = [
       };
       return HttpResponse.json(response, { status: 400 });
     }
-    accounts[fromIndex].currentBalance = roundTwo(accounts[fromIndex].currentBalance - body.amount);
-    accounts[fromIndex].availableBalance = roundTwo(
-      accounts[fromIndex].availableBalance - body.amount
+
+    accounts[fromIndex].currentBalance = roundTwo(
+      accounts[fromIndex].currentBalance - amountToDebit
     );
-    accounts[toIndex].currentBalance = roundTwo(accounts[toIndex].currentBalance + body.amount);
-    accounts[toIndex].availableBalance = roundTwo(accounts[toIndex].availableBalance + body.amount);
+    accounts[fromIndex].availableBalance = roundTwo(
+      accounts[fromIndex].availableBalance - amountToDebit
+    );
+    accounts[toIndex].currentBalance = roundTwo(accounts[toIndex].currentBalance + amountToCredit);
+    accounts[toIndex].availableBalance = roundTwo(
+      accounts[toIndex].availableBalance + amountToCredit
+    );
     setAccountsToStorage(accounts);
 
     // Registrar movimientos para ambas cuentas
     addMovement(
       String(accountNumber),
       MOVEMENT_TYPE.TRANSFERENCIA_ENVIADA,
-      body.amount,
+      amountToDebit,
       accounts[fromIndex].currentBalance,
-      `Transferencia a cuenta ${body.destinationAccount}`
+      descriptionFrom
     );
     addMovement(
       body.destinationAccount,
       MOVEMENT_TYPE.TRANSFERENCIA_RECIBIDA,
-      body.amount,
+      amountToCredit,
       accounts[toIndex].currentBalance,
-      `Transferencia desde cuenta ${accountNumber}`
+      descriptionTo
     );
 
     const response: ApiResponse<{ accountNumber: string }> = {

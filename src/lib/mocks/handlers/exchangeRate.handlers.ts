@@ -2,6 +2,23 @@ import { http, HttpResponse } from 'msw';
 import { ApiResponse, ExchangeRate } from '@/lib/types';
 import { EXCHANGE_RATES_STORAGE_KEY } from '../data';
 
+// Devuelve el tipo de cambio de hoy en formato { compra, venta }
+export function getTodayExchangeRate(): { compra: number; venta: number } | null {
+  const rates = getExchangeRatesFromStorage();
+  const today = getTodayDate();
+  // Para compatibilidad, si solo hay un campo 'rate', usarlo como ambos
+  const todayRate = rates.find((rate) => rate.date === today);
+  if (!todayRate) {
+    return null;
+  }
+  // Si el objeto tiene compra/venta, devolverlos, si no, usar 'rate' para ambos
+  if ('compra' in todayRate && 'venta' in todayRate) {
+    // @ts-ignore
+    return { compra: todayRate.compra, venta: todayRate.venta };
+  }
+  return { compra: todayRate.rate, venta: todayRate.rate };
+}
+
 export function getExchangeRatesFromStorage(): ExchangeRate[] {
   const stored = globalThis.localStorage?.getItem(EXCHANGE_RATES_STORAGE_KEY);
   if (stored) {

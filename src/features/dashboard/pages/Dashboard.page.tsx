@@ -6,7 +6,7 @@ import { DailySummarySection, ExchangeRateSection, UsersSection } from '../featu
 import { ClientsSection } from '../features/clients';
 import styles from './Dashboard.module.css';
 
-export const DashboardPage: React.FC = () => {
+const DashboardPage: React.FC = () => {
   const [mobileNavOpened, { toggle: toggleMobileNav }] = useDisclosure();
   const [activeSection, setActiveSection] = useState('clients');
 
@@ -69,5 +69,4 @@ export const DashboardPage: React.FC = () => {
     </AppShell>
   );
 };
-
 export default DashboardPage;

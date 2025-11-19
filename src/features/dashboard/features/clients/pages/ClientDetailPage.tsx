@@ -9,7 +9,7 @@ import { ClientDetailHeader } from '../components/ClientDetailHeader';
 import { ClientDetailNavbar } from '../components/ClientDetailNavbar';
 import { clientService } from '../services/client.service';
 
-export function ClientDetailPage() {
+function ClientDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [client, setClient] = useState<Client | null>(null);
@@ -69,5 +69,4 @@ export function ClientDetailPage() {
     </AppShell>
   );
 }
-
 export default ClientDetailPage;

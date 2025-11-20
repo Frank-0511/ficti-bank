@@ -23,24 +23,46 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: [
-      'axios',
-      'msw',
-      '@mantine/core',
-      '@mantine/hooks',
-      '@mantine/form',
-      '@mantine/dates',
-      '@mantine/notifications',
-      '@mantine/modals',
-      '@tabler/icons-react',
-      '@tanstack/react-query',
-      'mantine-react-table',
-      'dayjs',
-      'zod',
-      'zustand',
-    ],
+    include: ['axios', 'msw', 'dayjs', 'zod', 'zustand'],
   },
   server: {
     port: 3000,
+  },
+  build: {
+    // ⚡ Minificación super rápida y eficiente
+    minify: 'esbuild',
+    // ⚡ Más rápido parsing para navegadores modernos
+    target: 'esnext',
+    // 📦 Elimina mapas de fuente en producción
+    sourcemap: false,
+    // 📁 Salida optimizada
+    outDir: 'dist',
+    // ✂️ Activa el CSS extractor moderno
+    cssMinify: 'lightningcss',
+    // 📦 Code splitting manual p/ Mantine + MRT + React Query
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          mantine: [
+            '@mantine/core',
+            '@mantine/hooks',
+            '@mantine/dates',
+            '@mantine/notifications',
+            '@mantine/modals',
+          ],
+          mrt: ['mantine-react-table'],
+          query: ['@tanstack/react-query'],
+        },
+      },
+    },
+    // ⚙️ Cache-friendliness
+    assetsInlineLimit: 0, // nada embed como base64
+  },
+  css: {
+    transformer: 'lightningcss',
+    lightningcss: {
+      cssModules: true,
+    },
   },
 });

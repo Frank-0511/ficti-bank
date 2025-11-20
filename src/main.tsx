@@ -16,13 +16,9 @@ async function enableMocking() {
 }
 
 Promise.race([enableMocking(), new Promise((resolve) => setTimeout(() => resolve('timeout'), 500))])
-  .then((result) => {
-    if (result === 'timeout') {
-      console.warn('Mocking initialization timed out, rendering app anyway...');
-    }
+  .then(() => {
     ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
   })
-  .catch((err) => {
-    console.error('Failed to enable mocking:', err);
+  .catch(() => {
     ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
   });

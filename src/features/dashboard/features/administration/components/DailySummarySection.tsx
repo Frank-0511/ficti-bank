@@ -93,3 +93,5 @@ export function DailySummarySection() {
     </Container>
   );
 }
+
+export default DailySummarySection;

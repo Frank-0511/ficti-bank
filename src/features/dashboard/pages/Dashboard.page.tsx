@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { lazy, useState } from 'react';
 import { DashboardHeader } from '@dashboard/components/DashboardHeader/DashboardHeader';
 import { DashboardNavbar } from '@dashboard/components/DashboardNavbar/DashboardNavbar';
-import { DailySummarySection } from '@dashboard/features/administration/components/DailySummarySection';
 import { ExchangeRateSection } from '@dashboard/features/administration/components/ExchangeRateSection';
 import { UsersSection } from '@dashboard/features/administration/components/UsersSection';
 import { ClientsSection } from '@dashboard/features/clients/components/ClientsSection/ClientsSection';
 import { AppShell, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import styles from './Dashboard.module.css';
+
+const DailySummarySection = lazy(
+  () => import('../features/administration/components/DailySummarySection')
+);
 
 const DashboardPage: React.FC = () => {
   const [mobileNavOpened, { toggle: toggleMobileNav }] = useDisclosure();

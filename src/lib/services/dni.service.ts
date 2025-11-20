@@ -1,4 +1,4 @@
-import { dniAdapter } from '../adapters';
+import { dniAdapter } from '../adapters/dni.adapter';
 
 const API_URL = `${import.meta.env.VITE_API_URL_FACILIZA}/dni/info`;
 const API_TOKEN = import.meta.env.VITE_TOKEN_FACILIZA;

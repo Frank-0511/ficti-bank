@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
-import { ApiResponseError, DepositAccountData } from '@/lib/types';
-import { accountService } from '../services';
+import { DepositAccountData } from '@/lib/types/account.types';
+import { ApiResponseError } from '@/lib/types/api.types';
+import { accountService } from '../services/account.service';
 
 export const useDepositAccount = () => {
   const queryClient = useQueryClient();

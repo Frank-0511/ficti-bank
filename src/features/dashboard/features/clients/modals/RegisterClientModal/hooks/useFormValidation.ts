@@ -1,13 +1,11 @@
 import { UseFormReturnType } from '@mantine/form';
-import { PERSON_TYPE } from '@/lib/constants';
-import {
-  type ContactInfoFormData,
-  type JuridicalPersonFormData,
-  type NaturalPersonFormData,
-  type PersonType,
-  type PersonTypeFormData,
-  type SecurityInfoFormData,
-} from '../schemas';
+import { PERSON_TYPE } from '../../../../../../../lib/constants/person.constants';
+import { ContactInfoFormData } from '../schemas/forms/contact-info.schema';
+import { JuridicalPersonFormData } from '../schemas/forms/juridical-person.schema';
+import { NaturalPersonFormData } from '../schemas/forms/natural-person.schema';
+import { PersonTypeFormData } from '../schemas/forms/person-type.schema';
+import { SecurityInfoFormData } from '../schemas/forms/security-info.schema';
+import { PersonType } from '../types';
 import { type Step } from './useStepNavigation';
 
 interface FormValidationParams {

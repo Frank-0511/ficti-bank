@@ -1,8 +1,8 @@
 import { IconBuilding, IconUser } from '@tabler/icons-react';
 import { Group, Radio, Stack, Text, UnstyledButton } from '@mantine/core';
 import { PERSON_TYPE, PERSON_TYPE_LABELS } from '@/lib/constants/person.constants';
-import { useRegistrationContext } from '../context';
-import { type PersonTypeFormData } from '../schemas';
+import { useRegistrationContext } from '../context/RegistrationContext';
+import { type PersonTypeFormData } from '../schemas/forms/person-type.schema';
 
 export const PersonTypeSelector: React.FC = () => {
   const { personTypeForm } = useRegistrationContext();

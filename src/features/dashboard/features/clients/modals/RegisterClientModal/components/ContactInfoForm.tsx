@@ -1,8 +1,8 @@
 import { IconAt, IconMapPin, IconPhone } from '@tabler/icons-react';
 import { Grid, Select, Stack, Text, TextInput } from '@mantine/core';
-import { useAutoFocus } from '@/lib/hooks';
+import { useAutoFocus } from '@/lib/hooks/utils/useAutoFocus';
 import { DEPARTAMENTOS, DISTRITOS, PROVINCIAS } from '../constants';
-import { useRegistrationContext } from '../context';
+import { useRegistrationContext } from '../context/RegistrationContext';
 
 export const ContactInfoForm: React.FC = () => {
   const { contactInfoForm } = useRegistrationContext();

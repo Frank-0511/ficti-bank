@@ -1,6 +1,6 @@
 import { Group, Progress, Text } from '@mantine/core';
-import { useRegistrationContext } from '../context';
-import { STEPS } from '../hooks';
+import { useRegistrationContext } from '../context/RegistrationContext';
+import { STEPS } from '../hooks/useStepNavigation';
 
 export const RegistrationProgress: React.FC = () => {
   const { currentStep, progress, getStepIndex } = useRegistrationContext();

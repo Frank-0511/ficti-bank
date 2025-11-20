@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PERSON_TYPE } from '@/lib/constants';
+import { PERSON_TYPE } from '@/lib/constants/person.constants';
 import { ERROR_MESSAGES } from '../../constants';
 
 export const personTypeSchema = z.object({

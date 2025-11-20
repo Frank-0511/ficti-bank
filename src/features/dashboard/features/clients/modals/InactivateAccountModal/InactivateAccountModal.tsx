@@ -1,7 +1,7 @@
 import { IconAlertCircle } from '@tabler/icons-react';
 import { Alert, Button, Group, Stack, Text } from '@mantine/core';
 import { type ContextModalProps } from '@mantine/modals';
-import { useInactivateAccount } from '../../hooks';
+import { useInactivateAccount } from '../../hooks/useInactivateAccount';
 
 export const InactivateAccountModal: React.FC<ContextModalProps<{ accountNumber: string }>> = ({
   id,

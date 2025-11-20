@@ -1,5 +1,5 @@
 import { createContext, useContext, type ReactNode } from 'react';
-import { useRegistration, type UseRegistrationReturn } from '../hooks';
+import { useRegistration, UseRegistrationReturn } from '../hooks/useRegistration';
 
 const RegistrationContext = createContext<UseRegistrationReturn | undefined>(undefined);
 

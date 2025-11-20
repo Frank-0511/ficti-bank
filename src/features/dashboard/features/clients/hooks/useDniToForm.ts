@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { fetchDniData } from '@/lib/services/dni.service';
 import { DniData } from '@/lib/types/dni.types';
-import { useRegistrationContext } from '../modals/RegisterClientModal/context';
+import { useRegistrationContext } from '../modals/RegisterClientModal/context/RegistrationContext';
 
 export function useDniToForm() {
   const { naturalPersonBasicForm, contactInfoForm } = useRegistrationContext();

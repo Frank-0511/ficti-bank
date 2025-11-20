@@ -1,6 +1,6 @@
 import { IconArrowLeft, IconArrowRight, IconUserPlus } from '@tabler/icons-react';
 import { Button, Group } from '@mantine/core';
-import { useRegistrationContext } from '../context';
+import { useRegistrationContext } from '../context/RegistrationContext';
 
 export const RegistrationNavigation: React.FC = () => {
   const { isFirstStep, isLastStep, handleBack, handleFormNext, handleFormSubmit } =

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { accountService } from '../services';
+import { accountService } from '../services/account.service';
 
 export function useInactivateAccount() {
   const queryClient = useQueryClient();

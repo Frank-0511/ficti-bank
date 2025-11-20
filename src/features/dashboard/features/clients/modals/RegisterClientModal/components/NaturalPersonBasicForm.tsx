@@ -2,9 +2,9 @@ import React from 'react';
 import { IconCalendar, IconId, IconUser } from '@tabler/icons-react';
 import { Button, Grid, Loader, Stack, Text, TextInput } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useAutoFocus } from '@/lib/hooks';
+import { useAutoFocus } from '@/lib/hooks/utils/useAutoFocus';
 import { useDniToForm } from '../../../hooks/useDniToForm';
-import { useRegistrationContext } from '../context';
+import { useRegistrationContext } from '../context/RegistrationContext';
 
 export const NaturalPersonBasicForm: React.FC = () => {
   const { naturalPersonBasicForm } = useRegistrationContext();

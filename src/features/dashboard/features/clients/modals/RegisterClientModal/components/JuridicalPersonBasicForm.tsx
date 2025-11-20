@@ -1,9 +1,9 @@
 import React from 'react';
 import { IconBuilding, IconId, IconUser } from '@tabler/icons-react';
 import { Button, Grid, Loader, Stack, Text, TextInput } from '@mantine/core';
-import { useAutoFocus } from '@/lib/hooks';
+import { useAutoFocus } from '@/lib/hooks/utils/useAutoFocus';
 import { useRucToForm } from '../../../hooks/useRucToForm';
-import { useRegistrationContext } from '../context';
+import { useRegistrationContext } from '../context/RegistrationContext';
 
 export const JuridicalPersonBasicForm: React.FC = () => {
   const { juridicalPersonBasicForm } = useRegistrationContext();

@@ -1,17 +1,13 @@
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useForm } from '@mantine/form';
+import { ContactInfoFormData, contactInfoSchema } from '../schemas/forms/contact-info.schema';
 import {
-  contactInfoSchema,
+  JuridicalPersonFormData,
   juridicalPersonSchema,
-  naturalPersonSchema,
-  personTypeSchema,
-  securityInfoSchema,
-  type ContactInfoFormData,
-  type JuridicalPersonFormData,
-  type NaturalPersonFormData,
-  type PersonTypeFormData,
-  type SecurityInfoFormData,
-} from '../schemas';
+} from '../schemas/forms/juridical-person.schema';
+import { NaturalPersonFormData, naturalPersonSchema } from '../schemas/forms/natural-person.schema';
+import { PersonTypeFormData, personTypeSchema } from '../schemas/forms/person-type.schema';
+import { SecurityInfoFormData, securityInfoSchema } from '../schemas/forms/security-info.schema';
 
 export const useRegistrationForms = () => {
   const personTypeForm = useForm<PersonTypeFormData>({

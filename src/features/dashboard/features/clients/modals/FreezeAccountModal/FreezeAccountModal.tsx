@@ -2,9 +2,9 @@ import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Button, Group, NumberInput, Radio, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { ContextModalProps } from '@mantine/modals';
-import { CURRENCY_SYMBOLS, EMBARGO_TYPE } from '@/lib/constants';
-import { EmbargoType } from '@/lib/types';
-import { useFreezeAccount } from '../../hooks';
+import { CURRENCY_SYMBOLS, EMBARGO_TYPE } from '@/lib/constants/account.constants';
+import { EmbargoType } from '@/lib/types/account.types';
+import { useFreezeAccount } from '../../hooks/useFreezeAccount';
 import { FreezeFormValues, freezeSchema } from './schema';
 
 interface FreezeAccountModalProps {

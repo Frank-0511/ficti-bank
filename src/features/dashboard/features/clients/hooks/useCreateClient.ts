@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
-import { ApiResponseError, Client } from '@/lib/types';
-import { clientService } from '../services';
+import { ApiResponseError } from '@/lib/types/api.types';
+import { Client } from '@/lib/types/client.types';
+import { clientService } from '../services/client.service';
 
 export const useCreateClient = () => {
   const queryClient = useQueryClient();

@@ -1,5 +1,5 @@
-import { rucAdapter } from '../adapters';
-import { RucApiResponse, RucData } from '../types';
+import { rucAdapter } from '../adapters/ruc.adapter';
+import { RucApiResponse, RucData } from '../types/ruc.types';
 
 const API_URL = `${import.meta.env.VITE_API_URL_FACILIZA}/ruc/info`;
 const API_TOKEN = import.meta.env.VITE_TOKEN_FACILIZA;

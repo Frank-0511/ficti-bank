@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { PERSON_TYPE } from '@/lib/constants';
-import type { PersonType } from '../schemas';
+import { PERSON_TYPE } from '@/lib/constants/person.constants';
+import { PersonType } from '@/lib/types/common.types';
 
 export type Step = 'personType' | 'basicInfo' | 'contactInfo' | 'success';
 

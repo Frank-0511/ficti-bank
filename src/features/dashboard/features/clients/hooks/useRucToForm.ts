@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { fetchRucData } from '@/lib/services/ruc.service';
 import { RucData } from '@/lib/types/ruc.types';
-import { useRegistrationContext } from '../modals/RegisterClientModal/context';
+import { useRegistrationContext } from '../modals/RegisterClientModal/context/RegistrationContext';
 
 export function useRucToForm() {
   const { juridicalPersonBasicForm, contactInfoForm } = useRegistrationContext();

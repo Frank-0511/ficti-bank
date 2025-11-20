@@ -3,7 +3,7 @@ import { Button, Group, NumberInput, Stack, Text, TextInput } from '@mantine/cor
 import { useForm } from '@mantine/form';
 import { ContextModalProps } from '@mantine/modals';
 import { CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
-import { useDepositAccount } from '../../hooks';
+import { useDepositAccount } from '../../hooks/useDepositAccount';
 import { DepositFormValues, depositSchema } from './schema';
 
 interface DepositAccountModalProps {

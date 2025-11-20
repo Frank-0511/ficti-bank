@@ -2,17 +2,15 @@ import { useEffect } from 'react';
 import { IconUserPlus } from '@tabler/icons-react';
 import { Group, Stack, Text } from '@mantine/core';
 import { modals, type ContextModalProps } from '@mantine/modals';
-import { PERSON_TYPE } from '@/lib/constants';
-import {
-  ContactInfoForm,
-  JuridicalPersonBasicForm,
-  NaturalPersonBasicForm,
-  PersonTypeSelector,
-  RegistrationNavigation,
-  RegistrationProgress,
-  RegistrationSuccess,
-} from './components';
-import { RegistrationProvider, useRegistrationContext } from './context';
+import { PERSON_TYPE } from '@/lib/constants/person.constants';
+import { ContactInfoForm } from './components/ContactInfoForm';
+import { JuridicalPersonBasicForm } from './components/JuridicalPersonBasicForm';
+import { NaturalPersonBasicForm } from './components/NaturalPersonBasicForm';
+import { PersonTypeSelector } from './components/PersonTypeSelector';
+import { RegistrationNavigation } from './components/RegistrationNavigation';
+import { RegistrationProgress } from './components/RegistrationProgress';
+import { RegistrationSuccess } from './components/RegistrationSuccess';
+import { RegistrationProvider, useRegistrationContext } from './context/RegistrationContext';
 
 const RegisterModalContent: React.FC<{ id: string }> = ({ id }) => {
   const { currentStep, resetStepper, isSuccessStep, personType } = useRegistrationContext();

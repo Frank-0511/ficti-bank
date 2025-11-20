@@ -1,7 +1,7 @@
 import type { MRT_ColumnDef } from 'mantine-react-table';
 import { Badge, Text } from '@mantine/core';
-import { ENTITY_STATUS } from '@/lib/constants';
-import { Client } from '@/lib/types';
+import { ENTITY_STATUS } from '@/lib/constants/status.constants';
+import { Client } from '@/lib/types/client.types';
 
 const getClientName = (client: Client) => {
   if (client.personType === 'N') {

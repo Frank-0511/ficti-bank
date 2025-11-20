@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 import { useNavigate } from 'react-router-dom';
-import { Client } from '@/lib/types';
+import { Client } from '@/lib/types/client.types';
 import { ClientRowActions } from './ClientRowActions';
 import { getClientsColumns } from './columns';
 import { tableLocalizationES } from './localization';

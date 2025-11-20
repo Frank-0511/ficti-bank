@@ -1,4 +1,4 @@
-import { ExchangeRate } from '@/lib/types';
+import { ExchangeRate } from '@/lib/types/exchangeRate.types';
 
 export const EXCHANGE_RATES_STORAGE_KEY = 'T_EXCHANGE_RATES';
 

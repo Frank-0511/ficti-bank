@@ -5,9 +5,9 @@ import {
   ACCOUNT_STATUS_LABELS,
   ACCOUNT_TYPE,
   ACCOUNT_TYPE_LABELS,
-} from '@/lib/constants';
-import type { Account } from '@/lib/types';
-import { formatCurrency } from '@/lib/utils';
+} from '@/lib/constants/account.constants';
+import type { Account } from '@/lib/types/account.types';
+import { formatCurrency } from '@/lib/utils/currency';
 import { AccountActionsMenu } from './AccountActionsMenu';
 import classes from './AccountCard.module.css';
 

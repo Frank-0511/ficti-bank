@@ -1,11 +1,9 @@
 import { z } from 'zod';
-import {
-  contactInfoSchema,
-  juridicalPersonSchema,
-  naturalPersonSchema,
-  personTypeSchema,
-  securityInfoSchema,
-} from '../forms';
+import { contactInfoSchema } from '../forms/contact-info.schema';
+import { juridicalPersonSchema } from '../forms/juridical-person.schema';
+import { naturalPersonSchema } from '../forms/natural-person.schema';
+import { personTypeSchema } from '../forms/person-type.schema';
+import { securityInfoSchema } from '../forms/security-info.schema';
 
 export const completeRegistrationSchema = z.intersection(
   personTypeSchema,

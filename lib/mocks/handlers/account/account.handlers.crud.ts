@@ -1,6 +1,8 @@
 import { http, HttpResponse } from 'msw';
-import { ACCOUNT_STATUS } from '@/lib/constants';
-import { Account, AccountMovement, ApiResponse } from '@/lib/types';
+import { ACCOUNT_STATUS } from '@/lib/constants/account.constants';
+import { Account } from '@/lib/types/account.types';
+import { AccountMovement } from '@/lib/types/movement.type';
+import { ApiResponse } from '@/lib/types/api.types';
 import {
   getAccountsFromStorage,
   getMovementsFromStorage,

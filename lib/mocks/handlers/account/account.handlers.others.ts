@@ -4,10 +4,11 @@ import {
   ACCOUNT_TYPE,
   CURRENCY,
   EMBARGO_TYPE,
-  MOVEMENT_TYPE,
-} from '@/lib/constants';
-import { Account, ApiResponse, EmbargoType } from '@/lib/types';
-import { roundTwo } from '@/lib/utils';
+} from '@/lib/constants/account.constants';
+import { MOVEMENT_TYPE } from '@/lib/constants/movement.constants';
+import { Account, EmbargoType } from '@/lib/types/account.types';
+import { ApiResponse } from '@/lib/types/api.types';
+import { roundTwo } from '@/lib/utils/number';
 import { getTodayExchangeRate, hasTodayExchangeRate } from '../exchangeRate.handlers';
 import { addMovement, getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
 

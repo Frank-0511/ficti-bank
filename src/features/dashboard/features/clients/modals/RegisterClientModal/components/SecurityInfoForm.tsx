@@ -1,7 +1,7 @@
 import { IconLock } from '@tabler/icons-react';
 import { Grid, PasswordInput, Stack, Text } from '@mantine/core';
-import { useAutoFocus } from '@/lib/hooks';
-import { useRegistrationContext } from '../context';
+import { useAutoFocus } from '@/lib/hooks/utils/useAutoFocus';
+import { useRegistrationContext } from '../context/RegistrationContext';
 
 export const SecurityInfoForm: React.FC = () => {
   const { securityInfoForm } = useRegistrationContext();

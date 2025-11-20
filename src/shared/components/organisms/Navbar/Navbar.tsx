@@ -1,7 +1,7 @@
 import { IconUserPlus } from '@tabler/icons-react';
 import { Button, NavLink, Stack, Text } from '@mantine/core';
-import { ACCOUNT_TYPES } from '@/shared/constants';
-import { LoginButton } from '../../molecules/LoginButton';
+import { ACCOUNT_TYPES } from '@/shared/constants/navigation.constants';
+import { LoginButton } from '../../molecules/LoginButton/LoginButton';
 
 export function Navbar() {
   return (

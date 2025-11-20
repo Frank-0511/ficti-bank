@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { accountService } from '../services';
+import { accountService } from '../services/account.service';
 
 export const useAccounts = (clientCode?: string) => {
   return useQuery({

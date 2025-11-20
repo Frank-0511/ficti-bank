@@ -1,5 +1,10 @@
 import { apiClient } from '@/lib/api/client';
-import { ApiResponse, ExchangeRate, ExchangeRateData, ExchangeRateResponse } from '@/lib/types';
+import { ApiResponse } from '@/lib/types/api.types';
+import {
+  ExchangeRate,
+  ExchangeRateData,
+  ExchangeRateResponse,
+} from '@/lib/types/exchangeRate.types';
 
 export const exchangeRateService = {
   getAll: async (): Promise<ApiResponse<ExchangeRate[]>> => {

@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { ApiResponse, ExchangeRate } from '@/lib/types';
+import { ApiResponse } from '@/lib/types/api.types';
+import { ExchangeRate } from '@/lib/types/exchangeRate.types';
 import { EXCHANGE_RATES_STORAGE_KEY } from '../data';
 
 // Devuelve el tipo de cambio de hoy en formato { compra, venta }

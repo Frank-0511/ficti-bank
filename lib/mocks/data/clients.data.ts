@@ -1,5 +1,5 @@
-import { ENTITY_STATUS } from '@/lib/constants';
-import type { Client } from '@/lib/types';
+import { ENTITY_STATUS } from '@/lib/constants/status.constants';
+import type { Client } from '@/lib/types/client.types';
 
 export const CLIENTS_STORAGE_KEY = 'T_Cliente';
 

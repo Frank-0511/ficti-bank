@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { notifications } from '@mantine/notifications';
-import { ClientFilters } from '@/lib/types';
-import { clientService } from '../services';
+import { ClientFilters } from '@/lib/types/client.types';
+import { clientService } from '../services/client.service';
 
 export const useClients = (filters?: ClientFilters) => {
   const query = useQuery({

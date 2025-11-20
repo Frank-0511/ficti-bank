@@ -11,7 +11,7 @@ import {
   ThemeIcon,
   Title,
 } from '@mantine/core';
-import { LoginButton } from '@/shared/components/molecules/LoginButton';
+import { LoginButton } from '@/shared/components/molecules/LoginButton/LoginButton';
 import styles from './HeroSection.module.css';
 
 export function HeroSection() {

@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import { ENTITY_STATUS } from '@/lib/constants';
-import { ApiResponse, Client } from '@/lib/types';
+import { ENTITY_STATUS } from '@/lib/constants/status.constants';
+import { ApiResponse } from '@/lib/types/api.types';
+import { Client } from '@/lib/types/client.types';
 import { CLIENTS_STORAGE_KEY, DEFAULT_CLIENTS } from '../data/clients.data';
 
 // Helper para obtener clientes del localStorage o usar defaults

@@ -1,5 +1,6 @@
 import { apiClient } from '@/lib/api/client';
-import { ApiResponse, Client, ClientFilters } from '@/lib/types';
+import { ApiResponse } from '@/lib/types/api.types';
+import { Client, ClientFilters } from '@/lib/types/client.types';
 
 export const clientService = {
   /**

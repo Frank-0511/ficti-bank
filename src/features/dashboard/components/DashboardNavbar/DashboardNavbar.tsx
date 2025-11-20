@@ -2,7 +2,7 @@ import { IconChevronRight, IconLogout } from '@tabler/icons-react';
 import { Button, Divider, NavLink, ScrollArea, Stack, Text } from '@mantine/core';
 import { useLogout } from '@/lib/hooks/auth/useLogout';
 import { useAuthStore } from '@/lib/store/auth.store';
-import { DASHBOARD_MENU, filterMenuByRole } from '../../constants';
+import { DASHBOARD_MENU, filterMenuByRole } from '../../constants/menu.constants';
 import styles from './DashboardNavbar.module.css';
 
 interface DashboardNavbarProps {

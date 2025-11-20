@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/api/client';
-import { AccountMovementResponse } from '@/lib/types';
 import type { ApiResponse } from '@/lib/types/api.types';
+import { AccountMovementResponse } from '@/lib/types/movement.type';
 
 export async function getAccountMovements(
   accountNumber: string

@@ -2,7 +2,7 @@ import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 import { Container, Skeleton, Table, Title } from '@mantine/core';
 import { MOVEMENT_TYPE_LABELS } from '@/lib/constants/movement.constants';
 import { AccountMovement, MovementType } from '@/lib/types/movement.type';
-import { useDailyMovements } from '../hooks';
+import { useDailyMovements } from '../hooks/useDailyMovements';
 
 export function DailySummarySection() {
   const { data, isLoading, isFetching } = useDailyMovements();

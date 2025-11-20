@@ -2,7 +2,7 @@ import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Button, Group, NumberInput, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { type ContextModalProps } from '@mantine/modals';
-import { useRenewFixedTerm } from '../../hooks';
+import { useRenewFixedTerm } from '../../hooks/useRenewFixedTerm';
 import { renewFixedTermSchema, type RenewFixedTermFormValues } from './schema';
 
 interface RenewFixedTermModalProps {

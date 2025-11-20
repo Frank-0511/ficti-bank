@@ -1,12 +1,10 @@
 import { UseFormReturnType } from '@mantine/form';
-import {
-  type ContactInfoFormData,
-  type JuridicalPersonFormData,
-  type NaturalPersonFormData,
-  type PersonType,
-  type PersonTypeFormData,
-  type SecurityInfoFormData,
-} from '../schemas';
+import { ContactInfoFormData } from '../schemas/forms/contact-info.schema';
+import { JuridicalPersonFormData } from '../schemas/forms/juridical-person.schema';
+import { NaturalPersonFormData } from '../schemas/forms/natural-person.schema';
+import { PersonTypeFormData } from '../schemas/forms/person-type.schema';
+import { SecurityInfoFormData } from '../schemas/forms/security-info.schema';
+import { PersonType } from '../types';
 import { useFormValidation } from './useFormValidation';
 import { useNavigationActions } from './useNavigationActions';
 import { useRegistrationForms } from './useRegistrationForms';

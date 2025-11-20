@@ -4,7 +4,7 @@ import { ActionIcon, Badge, Burger, Container, Group, Loader, Text, Title } from
 import { useLogout } from '@/lib/hooks/auth/useLogout';
 import { useScrolled } from '@/lib/hooks/utils/useScrolled';
 import { useAuthStore } from '@/lib/store/auth.store';
-import { useExchangeRateToday } from '../../features/administration';
+import { useExchangeRateToday } from '../../features/administration/hooks/useExchangeRateToday';
 import styles from './DashboardHeader.module.css';
 
 interface DashboardHeaderProps {

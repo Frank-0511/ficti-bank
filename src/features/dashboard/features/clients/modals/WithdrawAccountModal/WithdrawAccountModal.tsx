@@ -3,7 +3,7 @@ import { Button, Group, NumberInput, Stack, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { ContextModalProps } from '@mantine/modals';
 import { ACCOUNT_TYPE, CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
-import { useWithdrawAccount } from '../../hooks';
+import { useWithdrawAccount } from '../../hooks/useWithdrawAccount';
 import { WithdrawFormValues, withdrawSchema } from './schema';
 
 interface WithdrawAccountModalProps {

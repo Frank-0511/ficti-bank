@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { notifications } from '@mantine/notifications';
-import { accountService } from '../services';
+import { accountService } from '../services/account.service';
 
 export function useRenewFixedTerm() {
   const queryClient = useQueryClient();

@@ -2,9 +2,10 @@ import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { Button, Group, Select, Stack, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import type { ContextModalProps } from '@mantine/modals';
-import { ENTITY_STATUS, USER_ROLE, USER_ROLE_LABELS } from '@/lib/constants';
-import type { User } from '@/lib/types';
-import { editUserSchema, type EditUserFormValues } from '../schemas';
+import { USER_ROLE, USER_ROLE_LABELS } from '@/lib/constants/role.constants';
+import { ENTITY_STATUS } from '@/lib/constants/status.constants';
+import type { User } from '@/lib/types/auth.types';
+import { editUserSchema, type EditUserFormValues } from '../schemas/editUser.schema';
 
 export interface EditUserModalProps {
   user: User;

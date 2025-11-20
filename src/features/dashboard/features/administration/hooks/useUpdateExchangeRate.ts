@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
-import { ApiResponseError, ExchangeRateData } from '@/lib/types';
-import { exchangeRateService } from '../services';
+import { ApiResponseError } from '@/lib/types/api.types';
+import { ExchangeRateData } from '@/lib/types/exchangeRate.types';
+import { exchangeRateService } from '../services/exchangeRate.service';
 
 export const useUpdateExchangeRate = () => {
   const queryClient = useQueryClient();

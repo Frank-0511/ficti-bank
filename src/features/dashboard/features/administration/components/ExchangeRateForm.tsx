@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Button, NumberInput, Paper, Stack, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { useExchangeRateToday, useRegisterExchangeRate, useUpdateExchangeRate } from '../hooks';
+import { useExchangeRateToday } from '../hooks/useExchangeRateToday';
+import { useRegisterExchangeRate } from '../hooks/useRegisterExchangeRate';
+import { useUpdateExchangeRate } from '../hooks/useUpdateExchangeRate';
 
 export function ExchangeRateForm() {
   const [rate, setRate] = useState<number | string>(0);

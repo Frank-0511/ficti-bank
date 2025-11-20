@@ -1,7 +1,6 @@
 import { apiClient } from '@/lib/api/client';
 import {
   Account,
-  ApiResponse,
   CancelFixedTermResponse,
   DepositAccountData,
   DepositAccountResponse,
@@ -15,7 +14,8 @@ import {
   UnfreezeAccountResponse,
   WithdrawAccountData,
   WithdrawAccountResponse,
-} from '@/lib/types';
+} from '@/lib/types/account.types';
+import { ApiResponse } from '@/lib/types/api.types';
 
 export const accountService = {
   getAll: async (clientCode?: string): Promise<ApiResponse<Account[]>> => {

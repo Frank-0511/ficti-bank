@@ -1,9 +1,9 @@
 import { IconLogout, IconPlus } from '@tabler/icons-react';
 import { Button, Divider, Grid, Group, Skeleton, Text } from '@mantine/core';
 import { PERSON_TYPE_LABELS } from '@/lib/constants/person.constants';
-import { useLogout } from '@/lib/hooks';
-import { Client } from '@/lib/types';
-import { useAccountModals } from '../../hooks';
+import { useLogout } from '@/lib/hooks/auth/useLogout';
+import { Client } from '@/lib/types/client.types';
+import { useAccountModals } from '../../hooks/useAccountModals';
 
 interface ClientDetailNavbarProps {
   client: Client | null;

@@ -1,5 +1,6 @@
 import { apiClient } from '@/lib/api/client';
-import { ApiResponse } from '@/lib/types/api.types';\nimport type { User } from '@/lib/types/auth.types';
+import { ApiResponse } from '@/lib/types/api.types';
+import type { User } from '@/lib/types/auth.types';
 
 export const usersService = {
   fetchUsers: async (): Promise<User[]> => {

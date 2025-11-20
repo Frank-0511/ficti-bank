@@ -1,5 +1,5 @@
-import { ACCOUNT_STATUS, ACCOUNT_TYPE, CURRENCY } from '@/lib/constants';
-import { Account } from '@/lib/types';
+import { ACCOUNT_STATUS, ACCOUNT_TYPE, CURRENCY } from '@/lib/constants/account.constants';
+import { Account } from '@/lib/types/account.types';
 
 export const ACCOUNTS_STORAGE_KEY = 'T_ACCOUNTS';
 export const DEFAULT_ACCOUNTS: Account[] = [

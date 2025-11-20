@@ -1,6 +1,6 @@
 import { IconEye } from '@tabler/icons-react';
 import { ActionIcon, Group, Tooltip } from '@mantine/core';
-import { Client } from '@/lib/types';
+import { Client } from '@/lib/types/client.types';
 
 interface ClientRowActionsProps {
   client: Client;

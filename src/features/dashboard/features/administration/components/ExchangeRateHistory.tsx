@@ -1,5 +1,5 @@
 import { Badge, Paper, ScrollArea, Stack, Table, Text } from '@mantine/core';
-import { useExchangeRates } from '../hooks';
+import { useExchangeRates } from '../hooks/useExchangeRates';
 
 export function ExchangeRateHistory() {
   const { data, isLoading } = useExchangeRates();

@@ -1,8 +1,8 @@
 import { IconInfoCircle } from '@tabler/icons-react';
 import { Alert, Center, SimpleGrid, Text } from '@mantine/core';
-import { useAccounts } from '../../hooks';
-import { AccountCard } from '../AccountCard';
-import { AccountCardSkeleton } from '../AccountCardSkeleton';
+import { useAccounts } from '../../hooks/useAccounts';
+import { AccountCard } from '../AccountCard/AccountCard';
+import { AccountCardSkeleton } from '../AccountCardSkeleton/AccountCardSkeleton';
 import styles from './AccountsList.module.css';
 
 interface AccountsListProps {

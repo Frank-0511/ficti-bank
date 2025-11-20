@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import type { User } from '@/lib//types';
+import type { User } from '@/lib/types/auth.types';
 import { DEFAULT_USERS, USERS_STORAGE_KEY, UserWithPassword } from '../data/users.data';
 
 // Helper para obtener usuarios del localStorage

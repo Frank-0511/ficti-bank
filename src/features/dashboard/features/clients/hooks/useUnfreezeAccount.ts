@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
-import { ApiResponseError } from '@/lib/types';
-import { accountService } from '../services';
+import { ApiResponseError } from '@/lib/types/api.types';
+import { accountService } from '../services/account.service';
 
 export const useUnfreezeAccount = () => {
   const queryClient = useQueryClient();

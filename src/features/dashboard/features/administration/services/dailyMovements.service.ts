@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api/client';
-import { AccountMovement } from '@/lib/types';
+import { AccountMovement } from '@/lib/types/movement.type';
 
 export async function getDailyMovements(): Promise<AccountMovement[]> {
   // Suponiendo que la API retorna solo los movimientos del día

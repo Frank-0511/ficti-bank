@@ -1,6 +1,8 @@
 import { http, HttpResponse } from 'msw';
-import { ACCOUNT_STATUS, EMBARGO_TYPE, MOVEMENT_TYPE } from '@/lib/constants';
-import { Account, ApiResponse } from '@/lib/types';
+import { ACCOUNT_STATUS, EMBARGO_TYPE } from '@/lib/constants/account.constants';
+import { MOVEMENT_TYPE } from '@/lib/constants/movement.constants';
+import { Account } from '@/lib/types/account.types';
+import { ApiResponse } from '@/lib/types/api.types';
 import { hasTodayExchangeRate } from '../exchangeRate.handlers';
 import { addMovement, getAccountsFromStorage, setAccountsToStorage } from './storage.utils';
 

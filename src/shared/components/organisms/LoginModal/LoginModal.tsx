@@ -7,7 +7,7 @@ import { Anchor, Group, PasswordInput, Stack, Text, TextInput } from '@mantine/c
 import { useForm } from '@mantine/form';
 import { type ContextModalProps } from '@mantine/modals';
 import { useLogin } from './hooks/useLogin';
-import { loginSchema, type LoginFormValues } from './schemas';
+import { loginSchema, type LoginFormValues } from './schemas/login.schema';
 
 export const LoginModal: React.FC<ContextModalProps> = ({ id, context }) => {
   const loginMutation = useLogin();

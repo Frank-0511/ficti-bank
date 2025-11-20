@@ -11,8 +11,8 @@ import {
 } from '@tabler/icons-react';
 import { Button, Menu } from '@mantine/core';
 import { openContextModal } from '@mantine/modals';
-import { ACCOUNT_STATUS, ACCOUNT_TYPE } from '@/lib/constants';
-import type { Account } from '@/lib/types';
+import { ACCOUNT_STATUS, ACCOUNT_TYPE } from '@/lib/constants/account.constants';
+import type { Account } from '@/lib/types/account.types';
 
 interface AccountActionsMenuProps {
   account: Account;

@@ -1,8 +1,9 @@
 import { IconPlus } from '@tabler/icons-react';
 import { Button, Container, Group, Title } from '@mantine/core';
-import { useClientModals, useClients } from '../../hooks';
-import { ClientsTable } from '../ClientsTable';
-import { ClientsTableSkeleton } from '../ClientsTableSkeleton';
+import { useClientModals } from '../../hooks/useClientModals';
+import { useClients } from '../../hooks/useClients';
+import { ClientsTable } from '../ClientsTable/ClientsTable';
+import { ClientsTableSkeleton } from '../ClientsTableSkeleton/ClientsTableSkeleton';
 
 export const ClientsSection = () => {
   const { openRegisterClientModal } = useClientModals();

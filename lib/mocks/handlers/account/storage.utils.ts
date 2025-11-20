@@ -1,4 +1,5 @@
-import { Account, AccountMovement, MovementType } from '@/lib/types';
+import { Account } from '@/lib/types/account.types';
+import { AccountMovement, MovementType } from '@/lib/types/movement.type';
 import { ACCOUNTS_STORAGE_KEY, MOVEMENTS_STORAGE_KEY } from '../../data';
 
 export function getMovementsFromStorage(): AccountMovement[] {

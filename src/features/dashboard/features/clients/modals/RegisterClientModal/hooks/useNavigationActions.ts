@@ -1,6 +1,7 @@
 import { UseFormReturnType } from '@mantine/form';
 import { useCreateClient } from '@/features/dashboard/features/clients/hooks/useCreateClient';
-import { type PersonType, type PersonTypeFormData } from '../schemas';
+import { PersonType } from '@/lib/types/common.types';
+import { type PersonTypeFormData } from '../schemas/forms/person-type.schema';
 import { type Step } from './useStepNavigation';
 
 interface NavigationActionsParams {

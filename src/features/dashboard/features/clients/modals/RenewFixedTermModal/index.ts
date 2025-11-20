@@ -1,1 +1,1 @@
-export { RenewFixedTermModal } from './RenewFixedTermModal';
+// Barrel file disabled to improve performance

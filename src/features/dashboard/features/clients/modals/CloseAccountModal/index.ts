@@ -1,1 +1,1 @@
-export { CloseAccountModal } from './CloseAccountModal';
+// Barrel file disabled to improve performance

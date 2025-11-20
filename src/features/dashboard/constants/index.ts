@@ -1,1 +1,1 @@
-export * from './menu.constants';
+// Barrel file disabled to improve performance

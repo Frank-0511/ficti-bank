@@ -1,17 +1,9 @@
 {
   "compilerOptions": {
-    "types": [
-      "node",
-      "jest",
-      "@testing-library/jest-dom",
-    ],
+    "types": ["node", "jest", "@testing-library/jest-dom"],
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -25,21 +17,14 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@tests/*": [
-        "./test-utils/*"
-      ]
+      "@/*": ["./src/*"],
+      "@tests/*": ["./test-utils/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@features/*": ["./src/features/*"],
+      "@dashboard/*": ["./src/features/dashboard/*"],
+      "@clients/*": ["./src/features/dashboard/features/clients/*"]
     }
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.ts",
-    "**/*.test.tsx"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
 }

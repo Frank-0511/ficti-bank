@@ -1,1 +1,1 @@
-export { ClientDetailHeader } from './ClientDetailHeader';
+// Barrel file disabled to improve performance

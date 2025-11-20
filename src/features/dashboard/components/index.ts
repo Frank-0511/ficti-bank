@@ -1,2 +1,1 @@
-export * from './DashboardHeader';
-export * from './DashboardNavbar';
+// Barrel file disabled to improve performance

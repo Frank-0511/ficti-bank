@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Group, Loader, Pagination, Table, Text } from '@mantine/core';
-import { CURRENCY, MOVEMENT_TYPE_LABELS } from '@/lib/constants';
-import { Currency } from '@/lib/types';
+import { CURRENCY } from '../../../../../../lib/constants/account.constants';
+import { MOVEMENT_TYPE_LABELS } from '../../../../../../lib/constants/movement.constants';
+import { Currency } from '../../../../../../lib/types/account.types';
+import { AccountMovementResponse } from '../../../../../../lib/types/movement.type';
 import { getAccountMovements } from '../../services/accountMovements.service';
 
 interface AccountMovementsModalProps {
@@ -50,7 +52,7 @@ export function AccountMovementsModal({ innerProps }: AccountMovementsModalProps
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
-              {pagedData.map((mov) => (
+              {pagedData.map((mov: AccountMovementResponse) => (
                 <Table.Tr key={mov.id}>
                   <Table.Td>{new Date(mov.date).toLocaleString()}</Table.Td>
                   <Table.Td>{MOVEMENT_TYPE_LABELS[mov.type] || mov.type}</Table.Td>

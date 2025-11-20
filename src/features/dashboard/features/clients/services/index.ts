@@ -1,2 +1,1 @@
-export * from './account.service';
-export * from './client.service';
+// Barrel file disabled to improve performance

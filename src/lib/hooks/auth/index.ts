@@ -1,2 +1,1 @@
-export * from './useInactivityLogout';
-export * from './useLogout';
+// Barrel file disabled to improve performance

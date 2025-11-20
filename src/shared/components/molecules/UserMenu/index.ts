@@ -1,1 +1,1 @@
-export { UserMenu } from './UserMenu';
+// Barrel file disabled to improve performance

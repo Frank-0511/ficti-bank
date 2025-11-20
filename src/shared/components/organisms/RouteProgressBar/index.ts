@@ -1,1 +1,1 @@
-export { RouteProgressBar } from './RouteProgressBar';
+// Barrel file disabled to improve performance

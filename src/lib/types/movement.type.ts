@@ -1,4 +1,4 @@
-import { MOVEMENT_TYPE } from '../constants';
+import { MOVEMENT_TYPE } from '../constants/movement.constants';
 
 export type MovementType = (typeof MOVEMENT_TYPE)[keyof typeof MOVEMENT_TYPE];
 

@@ -1,7 +1,11 @@
+import { FeaturesSection } from '@features/home/components/FeaturesSection/FeaturesSection';
+import { HeroSection } from '@features/home/components/HeroSection/HeroSection';
+import { ServicesSection } from '@features/home/components/ServicesSection/ServicesSection';
+import { Footer } from '@shared/components/organisms/Footer/Footer';
+import { Header } from '@shared/components/organisms/Header/Header';
+import { Navbar } from '@shared/components/organisms/Navbar/Navbar';
 import { AppShell, RemoveScroll } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { Footer, Header, Navbar } from '@/shared/components';
-import { FeaturesSection, HeroSection, ServicesSection } from '../..';
 import styles from './Home.module.css';
 
 export const HomePage = () => {

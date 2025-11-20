@@ -7,7 +7,11 @@ export const worker = setupWorker(...handlers);
 export async function initMSW() {
   initializeMockData();
 
-  return worker.start({
-    onUnhandledRequest: 'bypass',
-  });
+  try {
+    await worker.start({
+      onUnhandledRequest: 'bypass',
+    });
+  } catch (error) {
+    console.error('Failed to start worker:', error);
+  }
 }

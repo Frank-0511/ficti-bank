@@ -1,1 +1,1 @@
-export { ClientsTableSkeleton } from './ClientsTableSkeleton';
+// Barrel file disabled to improve performance

@@ -1,1 +1,1 @@
-export * from './editUser.schema';
+// Barrel file disabled to improve performance

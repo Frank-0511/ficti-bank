@@ -1,1 +1,1 @@
-export { ClientDetailNavbar } from './ClientDetailNavbar';
+// Barrel file disabled to improve performance

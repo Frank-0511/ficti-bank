@@ -1,2 +1,1 @@
-export * from './useAutoFocus';
-export * from './useScrolled';
+// Barrel file disabled to improve performance

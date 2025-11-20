@@ -1,1 +1,1 @@
-export { AccountsList } from './AccountsList';
+// Barrel file disabled to improve performance

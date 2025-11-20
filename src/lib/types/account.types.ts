@@ -1,4 +1,9 @@
-import { ACCOUNT_STATUS, ACCOUNT_TYPE, CURRENCY, EMBARGO_TYPE } from '../constants';
+import {
+  ACCOUNT_STATUS,
+  ACCOUNT_TYPE,
+  CURRENCY,
+  EMBARGO_TYPE,
+} from '../constants/account.constants';
 
 export type AccountType = (typeof ACCOUNT_TYPE)[keyof typeof ACCOUNT_TYPE];
 export type Currency = (typeof CURRENCY)[keyof typeof CURRENCY];

@@ -1,1 +1,1 @@
-export { DashboardHeader } from './DashboardHeader';
+// Barrel file disabled to improve performance

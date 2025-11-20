@@ -1,1 +1,1 @@
-export * from './RegisterClientModal';
+// Barrel file disabled to improve performance

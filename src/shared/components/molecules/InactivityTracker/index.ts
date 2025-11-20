@@ -1,1 +1,1 @@
-export * from './InactivityTracker';
+// Barrel file disabled to improve performance

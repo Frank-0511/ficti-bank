@@ -1,1 +1,1 @@
-export { ColorSchemeToggle } from './ColorSchemeToggle';
+// Barrel file disabled to improve performance

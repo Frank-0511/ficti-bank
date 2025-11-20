@@ -1,2 +1,1 @@
-export * from './currency';
-export * from './number';
+// Barrel file disabled to improve performance

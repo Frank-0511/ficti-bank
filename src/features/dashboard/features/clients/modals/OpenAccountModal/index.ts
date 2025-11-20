@@ -1,1 +1,1 @@
-export { OpenAccountModal } from './OpenAccountModal';
+// Barrel file disabled to improve performance

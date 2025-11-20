@@ -12,15 +12,13 @@ const VALIDATION_MESSAGES = {
 export const renewFixedTermSchema = z.object({
   term: z
     .number({
-      required_error: VALIDATION_MESSAGES.TERM_REQUIRED,
-      invalid_type_error: VALIDATION_MESSAGES.TERM_REQUIRED,
+      error: VALIDATION_MESSAGES.TERM_REQUIRED,
     })
     .positive(VALIDATION_MESSAGES.TERM_POSITIVE)
     .max(120, VALIDATION_MESSAGES.TERM_MAX),
   monthlyInterest: z
     .number({
-      required_error: VALIDATION_MESSAGES.MONTHLY_INTEREST_REQUIRED,
-      invalid_type_error: VALIDATION_MESSAGES.MONTHLY_INTEREST_REQUIRED,
+      error: VALIDATION_MESSAGES.MONTHLY_INTEREST_REQUIRED,
     })
     .positive(VALIDATION_MESSAGES.MONTHLY_INTEREST_POSITIVE)
     .max(15, VALIDATION_MESSAGES.MONTHLY_INTEREST_MAX),

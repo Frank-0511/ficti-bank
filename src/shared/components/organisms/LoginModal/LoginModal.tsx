@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { LoginButton } from '@shared/components/molecules/LoginButton/LoginButton';
 import { IconAt, IconLock } from '@tabler/icons-react';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useNavigate } from 'react-router-dom';
 import { Anchor, Group, PasswordInput, Stack, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { type ContextModalProps } from '@mantine/modals';
-import { LoginButton } from '@/shared/components';
 import { useLogin } from './hooks/useLogin';
 import { loginSchema, type LoginFormValues } from './schemas';
 

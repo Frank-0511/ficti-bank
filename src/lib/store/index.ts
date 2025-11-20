@@ -1,1 +1,1 @@
-export * from './auth.store';
+// Barrel file disabled to improve performance

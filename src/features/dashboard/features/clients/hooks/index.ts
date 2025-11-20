@@ -1,16 +1,1 @@
-export * from './useAccountModals';
-export * from './useAccounts';
-export * from './useCancelFixedTerm';
-export * from './useClientModals';
-export * from './useClients';
-export * from './useCloseAccount';
-export * from './useCreateClient';
-export * from './useDepositAccount';
-export * from './useDniToForm';
-export * from './useFreezeAccount';
-export * from './useInactivateAccount';
-export * from './useOpenAccount';
-export * from './useRenewFixedTerm';
-export * from './useRucToForm';
-export * from './useUnfreezeAccount';
-export * from './useWithdrawAccount';
+// Barrel file disabled to improve performance

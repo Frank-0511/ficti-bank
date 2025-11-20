@@ -1,10 +1,10 @@
+import { ColorSchemeToggle } from '@shared/components/molecules/ColorSchemeToggle/ColorSchemeToggle';
 import { IconArrowLeft, IconLogout, IconPlus } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { ActionIcon, Badge, Box, Burger, Button, Group, Text, Title } from '@mantine/core';
 import { ENTITY_STATUS } from '@/lib/constants';
 import { useLogout } from '@/lib/hooks';
 import { Client } from '@/lib/types';
-import { ColorSchemeToggle } from '@/shared/components';
 import { useAccountModals } from '../../hooks';
 
 interface ClientDetailHeaderProps {

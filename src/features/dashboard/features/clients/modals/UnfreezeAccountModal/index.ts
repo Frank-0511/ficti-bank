@@ -1,1 +1,1 @@
-export * from './UnfreezeAccountModal';
+// Barrel file disabled to improve performance

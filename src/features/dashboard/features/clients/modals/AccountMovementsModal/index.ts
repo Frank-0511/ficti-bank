@@ -1,1 +1,1 @@
-export * from './AccountMovementsModal';
+// Barrel file disabled to improve performance

@@ -1,1 +1,1 @@
-export { Footer } from './Footer';
+// Barrel file disabled to improve performance

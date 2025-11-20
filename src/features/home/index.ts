@@ -1,2 +1,1 @@
-export * from './components';
-export * from './pages';
+// Barrel file disabled to improve performance

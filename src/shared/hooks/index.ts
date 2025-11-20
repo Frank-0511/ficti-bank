@@ -1,1 +1,1 @@
-export * from './useProgressQuery';
+// Barrel file disabled to improve performance

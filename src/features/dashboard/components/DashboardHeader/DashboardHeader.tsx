@@ -1,8 +1,8 @@
+import { ColorSchemeToggle } from '@shared/components/molecules/ColorSchemeToggle/ColorSchemeToggle';
 import { IconLogout } from '@tabler/icons-react';
 import { ActionIcon, Badge, Burger, Container, Group, Loader, Text, Title } from '@mantine/core';
 import { useLogout, useScrolled } from '@/lib/hooks';
 import { useAuthStore } from '@/lib/store';
-import { ColorSchemeToggle } from '@/shared/components';
 import { useExchangeRateToday } from '../../features/administration';
 import styles from './DashboardHeader.module.css';
 

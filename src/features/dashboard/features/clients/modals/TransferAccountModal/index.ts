@@ -1,1 +1,1 @@
-export * from './TransferAccountModal';
+// Barrel file disabled to improve performance

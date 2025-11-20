@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { DashboardHeader } from '@dashboard/components/DashboardHeader/DashboardHeader';
+import { DashboardNavbar } from '@dashboard/components/DashboardNavbar/DashboardNavbar';
+import { DailySummarySection } from '@dashboard/features/administration/components/DailySummarySection';
+import { ExchangeRateSection } from '@dashboard/features/administration/components/ExchangeRateSection';
+import { UsersSection } from '@dashboard/features/administration/components/UsersSection';
+import { ClientsSection } from '@dashboard/features/clients/components/ClientsSection/ClientsSection';
 import { AppShell, Container } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { DashboardHeader, DashboardNavbar } from '../components';
-import { DailySummarySection, ExchangeRateSection, UsersSection } from '../features/administration';
-import { ClientsSection } from '../features/clients';
 import styles from './Dashboard.module.css';
 
 const DashboardPage: React.FC = () => {

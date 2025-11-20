@@ -1,2 +1,1 @@
-export * from './auth';
-export * from './utils';
+// Barrel file disabled to improve performance

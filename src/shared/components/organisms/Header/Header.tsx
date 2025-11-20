@@ -9,10 +9,12 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core';
-import { useScrolled } from '@/lib/hooks';
-import { useAuthStore } from '@/lib/store';
-import { ACCOUNT_TYPES } from '@/shared/constants';
-import { ColorSchemeToggle, LoginButton, UserMenu } from '../../molecules';
+import { useScrolled } from '../../../../lib/hooks/utils/useScrolled';
+import { useAuthStore } from '../../../../lib/store/auth.store';
+import { ACCOUNT_TYPES } from '../../../constants/navigation.constants';
+import { ColorSchemeToggle } from '../../molecules/ColorSchemeToggle/ColorSchemeToggle';
+import { LoginButton } from '../../molecules/LoginButton/LoginButton';
+import { UserMenu } from '../../molecules/UserMenu/UserMenu';
 import styles from './Header.module.css';
 
 interface HeaderProps {

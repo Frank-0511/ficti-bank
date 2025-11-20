@@ -1,1 +1,1 @@
-export { LoginButton } from './LoginButton';
+// Barrel file disabled to improve performance

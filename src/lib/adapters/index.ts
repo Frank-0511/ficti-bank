@@ -1,3 +1,1 @@
-export * from './dni.adapter';
-export * from './ruc-representante.adapter';
-export * from './ruc.adapter';
+// Barrel file disabled to improve performance

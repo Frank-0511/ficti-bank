@@ -1,1 +1,1 @@
-export * from './LoginModal';
+// Barrel file disabled to improve performance

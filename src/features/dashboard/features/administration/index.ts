@@ -1,4 +1,1 @@
-export * from './components';
-export * from './hooks';
-export * from './modals';
-export * from './services';
+// Barrel file disabled to improve performance

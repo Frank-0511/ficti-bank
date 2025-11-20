@@ -1,2 +1,1 @@
-export * from './AccountActionsMenu';
-export * from './AccountCard';
+// Barrel file disabled to improve performance

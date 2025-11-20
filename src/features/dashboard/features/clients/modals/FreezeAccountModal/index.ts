@@ -1,2 +1,1 @@
-export * from './FreezeAccountModal';
-export * from './schema';
+// Barrel file disabled to improve performance

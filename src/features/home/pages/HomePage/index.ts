@@ -1,1 +1,1 @@
-export * from './Home.page';
+// Barrel file disabled to improve performance

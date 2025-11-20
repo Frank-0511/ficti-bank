@@ -1,1 +1,1 @@
-export * from './exchangeRate.service';
+// Barrel file disabled to improve performance

@@ -1,1 +1,1 @@
-export * from './login.schema';
+// Barrel file disabled to improve performance

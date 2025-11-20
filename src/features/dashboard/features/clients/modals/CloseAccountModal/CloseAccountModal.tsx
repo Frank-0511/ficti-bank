@@ -2,8 +2,9 @@ import { IconAlertCircle, IconInfoCircle } from '@tabler/icons-react';
 import { Alert, Button, Group, Stack, Text } from '@mantine/core';
 import { type ContextModalProps } from '@mantine/modals';
 import { ACCOUNT_TYPE, CURRENCY_SYMBOLS } from '@/lib/constants/account.constants';
-import { AccountType, Currency } from '@/lib/types';
-import { useCancelFixedTerm, useCloseAccount } from '../../hooks';
+import { AccountType, Currency } from '../../../../../../lib/types/account.types';
+import { useCancelFixedTerm } from '../../hooks/useCancelFixedTerm';
+import { useCloseAccount } from '../../hooks/useCloseAccount';
 
 export const CloseAccountModal: React.FC<
   ContextModalProps<{

@@ -1,1 +1,1 @@
-export { cssVariablesResolver, theme } from './theme';
+// Barrel file disabled to improve performance

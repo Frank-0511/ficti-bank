@@ -1,1 +1,1 @@
-export { Header } from './Header';
+// Barrel file disabled to improve performance

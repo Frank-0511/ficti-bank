@@ -1,1 +1,1 @@
-export { InactivateAccountModal } from './InactivateAccountModal';
+// Barrel file disabled to improve performance

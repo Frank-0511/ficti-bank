@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
+import { AccountsList } from '@clients/components/AccountsList/AccountsList';
+import { ClientDetailHeader } from '@clients/components/ClientDetailHeader/ClientDetailHeader';
+import { ClientDetailNavbar } from '@clients/components/ClientDetailNavbar/ClientDetailNavbar';
 import { IconUserOff } from '@tabler/icons-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppShell, Button, Center, Container, Stack, Text } from '@mantine/core';
 import styles from '@/features/dashboard/pages/Dashboard.module.css';
 import { Client } from '@/lib/types';
-import { AccountsList } from '../components/AccountsList';
-import { ClientDetailHeader } from '../components/ClientDetailHeader';
-import { ClientDetailNavbar } from '../components/ClientDetailNavbar';
 import { clientService } from '../services/client.service';
 
 function ClientDetailPage() {

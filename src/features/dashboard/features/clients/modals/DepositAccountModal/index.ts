@@ -1,1 +1,1 @@
-export * from './DepositAccountModal';
+// Barrel file disabled to improve performance

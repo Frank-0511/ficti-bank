@@ -1,1 +1,1 @@
-export { AccountCardSkeleton } from './AccountCardSkeleton';
+// Barrel file disabled to improve performance

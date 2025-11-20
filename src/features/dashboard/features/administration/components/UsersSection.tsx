@@ -12,8 +12,9 @@ import {
   Tooltip,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { ENTITY_STATUS, USER_ROLE_LABELS } from '@/lib/constants';
-import type { User } from '@/lib/types';
+import { USER_ROLE_LABELS } from '@/lib/constants/role.constants';
+import { ENTITY_STATUS } from '@/lib/constants/status.constants';
+import type { User } from '@/lib/types/auth.types';
 import { useUsers } from '../hooks/useUsers';
 
 export function UsersSection() {

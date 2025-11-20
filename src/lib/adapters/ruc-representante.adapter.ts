@@ -1,4 +1,4 @@
-import { RucRepresentanteApiResponse, RucRepresentanteData } from '../types';
+import { RucRepresentanteApiResponse, RucRepresentanteData } from '../types/ruc.types';
 
 export function rucRepresentanteAdapter(
   response: RucRepresentanteApiResponse

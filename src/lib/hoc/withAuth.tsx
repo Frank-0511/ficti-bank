@@ -1,7 +1,7 @@
 import { ComponentType, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Center, Loader } from '@mantine/core';
-import { useAuthStore } from '../store';
+import { useAuthStore } from '../store/auth.store';
 
 export const withAuth = <P extends object>(Component: ComponentType<P>) => {
   const AuthenticatedComponent = (props: P) => {

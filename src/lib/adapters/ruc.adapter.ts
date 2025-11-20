@@ -1,4 +1,4 @@
-import { RucApiResponse, RucData } from '../types';
+import { RucApiResponse, RucData } from '../types/ruc.types';
 
 export function rucAdapter(response: RucApiResponse): RucData {
   return {

@@ -1,4 +1,4 @@
-import { ENTITY_STATUS } from '../constants';
+import { ENTITY_STATUS } from '../constants/status.constants';
 import { PersonType } from './common.types';
 
 export interface Client {

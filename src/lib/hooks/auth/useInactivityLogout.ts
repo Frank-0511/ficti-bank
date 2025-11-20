@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { modals } from '@mantine/modals';
-import { useAuthStore } from '@/lib/store';
+import { useAuthStore } from '@/lib/store/auth.store';
 import { useLogout } from './useLogout';
 
 const DEFAULT_TIMEOUT = 60000; // 1 minuto

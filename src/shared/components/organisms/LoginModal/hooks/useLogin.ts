@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { notifications } from '@mantine/notifications';
-import { authService } from '@/lib/services';
-import { useAuthStore } from '@/lib/store';
-import { ApiResponseError, LoginCredentials } from '@/lib/types';
+import { authService } from '@/lib/services/auth.service';
+import { useAuthStore } from '@/lib/store/auth.store';
+import { ApiResponseError } from '@/lib/types/api.types';
+import { LoginCredentials } from '@/lib/types/auth.types';
 
 export const useLogin = () => {
   const setAuth = useAuthStore((state) => state.setAuth);

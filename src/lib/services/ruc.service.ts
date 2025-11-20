@@ -1,4 +1,4 @@
-import { RucData } from '../types';
+import { RucData } from '../types/ruc.types';
 import { fetchLegalRepresentatives } from './legal-representative.service';
 import { fetchRucInfo } from './ruc-info.service';
 

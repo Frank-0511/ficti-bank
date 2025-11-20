@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { notifications } from '@mantine/notifications';
-import { useAuthStore } from '@/lib/store';
+import { useAuthStore } from '@/lib/store/auth.store';
 
 export const useLogout = () => {
   const navigate = useNavigate();

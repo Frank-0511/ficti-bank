@@ -1,7 +1,7 @@
 import { MantineReactTable, MRT_ColumnDef } from 'mantine-react-table';
 import { Container, Skeleton, Table, Title } from '@mantine/core';
-import { MOVEMENT_TYPE_LABELS } from '@/lib/constants';
-import { AccountMovement, MovementType } from '@/lib/types';
+import { MOVEMENT_TYPE_LABELS } from '@/lib/constants/movement.constants';
+import { AccountMovement, MovementType } from '@/lib/types/movement.type';
 import { useDailyMovements } from '../hooks';
 
 export function DailySummarySection() {

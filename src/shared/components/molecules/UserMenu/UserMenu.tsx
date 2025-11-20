@@ -1,7 +1,7 @@
 import { IconLogout, IconUser } from '@tabler/icons-react';
 import { Avatar, Group, Menu, Text, UnstyledButton } from '@mantine/core';
-import { useLogout } from '@/lib/hooks';
-import { useAuthStore } from '@/lib/store';
+import { useLogout } from '@/lib/hooks/auth/useLogout';
+import { useAuthStore } from '@/lib/store/auth.store';
 import styles from './UserMenu.module.css';
 
 export function UserMenu() {

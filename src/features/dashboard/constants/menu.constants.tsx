@@ -1,5 +1,5 @@
 import { IconSettings, IconUsers } from '@tabler/icons-react';
-import { USER_ROLE } from '@/lib/constants';
+import { USER_ROLE } from '@/lib/constants/role.constants';
 
 export interface MenuItem {
   label: string;

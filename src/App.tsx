@@ -10,73 +10,71 @@ import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import { withAuth } from '@/lib/hoc/withAuth';
 import { cssVariablesResolver, theme } from '@/lib/theme/theme';
+import { lazyModal } from './shared/components/molecules/LazyModalWrapper/LazyModalWrapper';
+import { LoginModal } from './shared/components/organisms/LoginModal/LoginModal';
 
 // Lazy load de páginas pesadas
 const DashboardPage = lazy(() => import('@dashboard/pages/Dashboard.page'));
 const ClientDetailPage = lazy(() => import('@clients/pages/ClientDetailPage'));
 
 // Lazy load de modales
-const AccountMovementsModal = lazy(() =>
+const AccountMovementsModal = lazyModal(() =>
   import('@clients/modals/AccountMovementsModal/AccountMovementsModal').then((module) => ({
     default: module.AccountMovementsModal,
   }))
 );
-const CloseAccountModal = lazy(() =>
+const CloseAccountModal = lazyModal(() =>
   import('@clients/modals/CloseAccountModal/CloseAccountModal').then((module) => ({
     default: module.CloseAccountModal,
   }))
 );
-const DepositAccountModal = lazy(() =>
+const DepositAccountModal = lazyModal(() =>
   import('@clients/modals/DepositAccountModal/DepositAccountModal').then((module) => ({
     default: module.DepositAccountModal,
   }))
 );
-const FreezeAccountModal = lazy(() =>
+const FreezeAccountModal = lazyModal(() =>
   import('@clients/modals/FreezeAccountModal/FreezeAccountModal').then((module) => ({
     default: module.FreezeAccountModal,
   }))
 );
-const InactivateAccountModal = lazy(() =>
+const InactivateAccountModal = lazyModal(() =>
   import('@clients/modals/InactivateAccountModal/InactivateAccountModal').then((module) => ({
     default: module.InactivateAccountModal,
   }))
 );
-const OpenAccountModal = lazy(() =>
+const OpenAccountModal = lazyModal(() =>
   import('@clients/modals/OpenAccountModal/OpenAccountModal').then((module) => ({
     default: module.OpenAccountModal,
   }))
 );
-const RegisterClientModal = lazy(() =>
+const RegisterClientModal = lazyModal(() =>
   import('@clients/modals/RegisterClientModal/RegisterClientModal').then((module) => ({
     default: module.RegisterClientModal,
   }))
 );
-const RenewFixedTermModal = lazy(() =>
+const RenewFixedTermModal = lazyModal(() =>
   import('@clients/modals/RenewFixedTermModal/RenewFixedTermModal').then((module) => ({
     default: module.RenewFixedTermModal,
   }))
 );
-const TransferAccountModal = lazy(() =>
+const TransferAccountModal = lazyModal(() =>
   import('@clients/modals/TransferAccountModal/TransferAccountModal').then((module) => ({
     default: module.TransferAccountModal,
   }))
 );
-const UnfreezeAccountModal = lazy(() =>
+const UnfreezeAccountModal = lazyModal(() =>
   import('@clients/modals/UnfreezeAccountModal/UnfreezeAccountModal').then((module) => ({
     default: module.UnfreezeAccountModal,
   }))
 );
-const WithdrawAccountModal = lazy(() =>
+const WithdrawAccountModal = lazyModal(() =>
   import('@clients/modals/WithdrawAccountModal/WithdrawAccountModal').then((module) => ({
     default: module.WithdrawAccountModal,
   }))
 );
-const LoginModal = lazy(() =>
-  import('@shared/components/organisms/LoginModal/LoginModal').then((module) => ({
-    default: module.LoginModal,
-  }))
-);
-const EditUserModal = lazy(() =>
+
+const EditUserModal = lazyModal(() =>
   import('@/features/dashboard/features/administration/modals/EditUserModal').then((module) => ({
     default: module.EditUserModal,
   }))
